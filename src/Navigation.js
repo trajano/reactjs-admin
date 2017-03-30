@@ -9,7 +9,7 @@ import {
 const Navigation = props => (
     <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
         <NavbarHeader />
-        <NavbarStaticSide />
+        <NavbarStaticSide hierarchy={props.hierarchy} />
     </nav>
 )
 

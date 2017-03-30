@@ -3,22 +3,25 @@ import ReactDOM from 'react-dom'
 import './app.scss'
 import Navigation from './Navigation.js'
 import 'font-awesome-webpack'
+import hierarchy from "./hierarchy"
 
 import {
     Link, Route, BrowserRouter as Router
 } from 'react-router-dom'
 
-const AppComponent = props => (
-    <Router>
+const AppComponent = props => {
+    
+    console.log (hierarchy)
+    return (<Router>
         <div id="wrapper">
-            <Navigation />
+            <Navigation hierarchy={hierarchy} />
             <Route exact path="/" component={Home} />
             <Route path="/blank" component={Blank} />
             <Route path="/buttons" component={Buttons} />
             <Route path="/flot" component={Flot} />
         </div>
-    </Router>
-)
+    </Router>)
+}
 
 const Home = () => (
     <div id="page-wrapper">
