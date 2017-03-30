@@ -2,14 +2,46 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './app.scss'
 import Navigation from './Navigation.js'
+import 'font-awesome-webpack'
+
+import {
+    Link, Route, BrowserRouter as Router
+} from 'react-router-dom'
 
 const AppComponent = props => (
-    <div id="wrapper">
-        <Navigation />
-        <div id="page-wrapper">
-            hello world
+    <Router>
+        <div id="wrapper">
+            <Navigation />
+            <Route exact path="/" component={Home} />
+            <Route path="/blank" component={Blank} />
+            <Route path="/buttons" component={Buttons} />
+            <Route path="/flot" component={Flot} />
         </div>
-    </div>
+    </Router>
+)
+
+const Home = () => (
+    <div id="page-wrapper">
+        hello world home
+     </div>
+)
+
+const Blank = () => (
+    <div id="page-wrapper">
+        hello world blank
+     </div>
+)
+
+const Buttons = () => (
+    <div id="page-wrapper">
+        hello world buttons
+     </div>
+)
+
+const Flot = () => (
+    <div id="page-wrapper">
+        hello world Flot
+     </div>
 )
 
 ReactDOM.render(<AppComponent />, document.getElementById("app"))

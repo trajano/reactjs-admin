@@ -12,7 +12,7 @@ const NavbarHeader = props => (
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
         </button>
-        <a className="navbar-brand" href="index.html">SB Admin v2.0</a>
+        <Link className="navbar-brand" to="/">SB Admin v2.0</Link>
     </div>
 )
 
