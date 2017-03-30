@@ -1,0 +1,33 @@
+sudo: false
+language: java
+jdk:
+- oraclejdk8
+node_js: node
+cache:
+  directories:
+  - "$HOME/.sonar/cache"
+  - node_modules
+addons:
+  sonarqube:
+    organization: trajano
+    token:
+      secure: Zm+qwFsSO/o3wOs8ErDlcHjVSKMvTL/eG5n/vpuydMcaH6eLckCJVxEypMroLT7AuDhrClroL8b6TYzpj2PgGtp7l219sO1kWPWLGxBeU3D8/MQ30/qJb74hbnC+erwwP2zU5Gif26Mr+be/0h9w/56SyF2PnX6Njkk23avAuOj0mWCVSfAhf2PRcrRmg28YQxSG4YRlYQ0GmV48kwn1ryAfBu7SFu9mE7tpFVHLsTPIQuwjCI3hfw8a09O6+kCQqQicyoqmKa97Kv5q5D1nbss9lJzP3/Ms33XjOiHRmPYc9D7A+MfhCbioPqodvUQmSNAVzoX6kG2ZJDgoZ4wa5zJjzdNC3uCrkQW0BJ1L98FL257c+89iV5sspfSFOzTSSJzxIJBwwT5/31csYFzRt96qN4mY3CzOy7hX9HYGmbTk4SRPGR6Cp/ceqqYvHlJmXgl4nmKX3moVplD2yWMF9zjQI6CQGlZLNixnwht+ewLpYrzz959+RwwxC1GIQaa0FnVN4vCSk6BhPw8tAfwbViBkXDBfZY6ZUIqYr8XkEGORNIAeQvnU3fm9k9z2OBadIMZlhRdGm5y8YxklW3NsWyoga7FWa55uShy+cOM2KzFJ3VSgQ3rJeibYzGXGALxzvKknVgtNBywGNykw1bs14dzTyozgMwX/pLkq94+LkKU=
+branches:
+  only:
+  - master
+env:
+  global:
+  - secure: GtSzc3G9INcQwfN/ta2Go2wVFApQpAsH3rLZeWmgrMVL/Hp/yLEwgz17aPaThNM7F57A9om8C6SUjKoPWdSLZuTPtp/whpvmnyubQhkposAtcKnMyC8z/0Bh6tYjTUWOnHHVzXgw55oIb7lh/prtMKNT2GyW6FCNpPkBuawVonfjJxu1CqWS1ugDcKSzu9BvoA41NaHVPvFYmdF082urR99gUl1FPH4KmwLqrwMD4csCNKvVW/X5RffeYL9+yX2EoM/GOk1w0TwOiWOE7tgoetomgw64jQ6yhXdT6I6EqOBI60Am72tZ+Mrfzm+Y7SHZbgQupxYYiSF9FTDCZ/Q74TMsDZ1cyC0969/yltmEIvY2kGNAO3+lDhWHiErXT0149CcJ5CLIXZa8g270o1MySBrG+TKfyfYW8Ws0+5VBZ/T1oW0oDrYTxEVwvgYMGwipbsfUTjwoqpzm6r6mBuz75dZtL5LeaxKLuiTi6PZdzoDkna3nZB70305E5pxdZ21KR7CpdZW+sxbuaXDYlXf0rI23S+8/4ncJdsYlpme1IYKx0CVi8foIGoOb02Zaz74oL0/ezSdrMt6HpR1whgZ9hD9QHCCCkbv83W/0jXdeegaKoOB6E4Xfi6bfDkuH7RgJB0AAU3sDPqVYN25qHvqHtBQXSW1jyLNqqoFQaSV/zdM=
+before_install:
+- nvm install node
+install:
+- npm install
+script:
+- sonar-scanner
+deploy:
+  provider: pages
+  local_dir: dist
+  skip_cleanup: true
+  github_token: "${SONAR_GITHUB_TOKEN}"
+  on:
+    branch: master

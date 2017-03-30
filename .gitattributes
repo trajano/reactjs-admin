@@ -1,0 +1,10 @@
+deploy-keys.tar.enc binary export-ignore
+.git* text=auto export-ignore
+
+* text=auto
+
+*.java diff=java
+
+*.ico binary
+*.jpg binary
+*.png binary
