@@ -22,6 +22,9 @@ module.exports = {
             }
         ]
     },
+    externals: {
+        "jquery": "jQuery"
+    },
     output: {
         path: './dist',
         filename: 'bundle.[hash].js'
