@@ -76,7 +76,7 @@ const BasicExample = () => (
     </Router>
 )
 
-ReactDOM.render(<BasicExample />,
+ReactDOM.render(<Router><App /></Router>,
     document.getElementById("app"))
 
 
