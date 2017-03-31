@@ -61,6 +61,10 @@ MenuItem.propTypes = {
      * Menu item data.
      */
     data: React.PropTypes.object.isRequired,
+    /**
+     * Active indicator.
+     */
+    active: React.PropTypes.bool.isRequired
 }
 class MenuGroup extends React.Component {
     constructor(props) {
@@ -73,12 +77,9 @@ class MenuGroup extends React.Component {
         let items = []
         this.props.content.forEach((elem, i) => {
             const key = `m${this.props.level},${i}`
-            const active = (this.props.activePath.length > this.props.level && this.props.activePath[this.props.level] == i)
-            if (active) {
-                console.log(elem.label)
-            }
+            const active = this.props.active && (this.props.activePath.length > this.props.level && this.props.activePath[this.props.level] == i)
             if (elem.content) {
-                let group = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} activePath={this.props.activePath}/>
+                let group = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} activePath={this.props.activePath} active={active}/>
                 items.push(<MenuItem key={key} data={elem} group={group} active={active}/>)
             } else {
                 items.push(<MenuItem key={key} data={elem} active={active}/>)
@@ -107,7 +108,11 @@ MenuGroup.propTypes = {
     /**
      * Active path array.   This is an array of indices to each content and level to determine if it is active or not.
      */
-    activePath: React.PropTypes.array.isRequired
+    activePath: React.PropTypes.array.isRequired,
+    /**
+     * Active indicator.
+     */
+    active: React.PropTypes.bool.isRequired
 }
 
 /**
@@ -135,7 +140,7 @@ class SideMenu extends React.Component {
 
     render() {
         return <div id={this.props.id}>
-            <MenuGroup content={this.props.content} level={0} classes={this.classes} activePath={this.state.activePath} />
+            <MenuGroup content={this.props.content} level={0} classes={this.classes} activePath={this.state.activePath} active={true} />
         </div>
     }
 
