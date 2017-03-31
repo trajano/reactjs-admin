@@ -6,7 +6,84 @@ import {
 } from 'react-router-dom'
 import Icon from './Icon'
 
+class MenuItem extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            active: -1
+        }
+    }
+    render() {
+        let icon = null;
+        if (this.props.data.icon) {
+            icon = <Icon name={this.props.data.icon} fw={true} />
+        }
+        if (!this.props.data.to) {
+            return (
+                <li>
+                    <a href="#">{icon}{this.props.data.label}</a>
+                </li>
+            )
+        } else if (this.props.data.externalLink) {
+            return (
+                <li>
+                    <a href={this.props.data.to}>{icon}{this.props.data.label}</a>
+                </li>
+            )
+        } else {
+            return (
+                <li>
+                    <Link to={this.props.data.to}>{icon}{this.props.data.label}</Link>
+                </li>
+            )
+        }
 
+    }
+}
+MenuItem.propTypes = {
+    /**
+     * Menu item data.
+     */
+    data: React.PropTypes.object.isRequired,
+}
+class MenuGroup extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            active: -1
+        }
+    }
+    render() {
+        let items = []
+        this.props.content.forEach((elem, i) => {
+            const key = `m${this.props.level},${i}`
+            items.push(<MenuItem key={key} data={elem} />)
+        })
+        return (
+            <ul className={this.props.classes[this.props.level].join(' ')}>
+                {items}
+            </ul>
+        )
+    }
+}
+MenuGroup.propTypes = {
+    /**
+     * Menu contents
+     */
+    content: React.PropTypes.array.isRequired,
+    /**
+     * Menu level.  Must be zero or higher.
+     */
+    level: React.PropTypes.number.isRequired,
+    /**
+     * Array of class values for the `ul` element depending on the level in the menu.
+     */
+    classes: React.PropTypes.array.isRequired
+}
+
+/**
+ * The Side Menu
+ */
 class SideMenu extends React.Component {
     constructor(props) {
         super(props)
@@ -18,11 +95,18 @@ class SideMenu extends React.Component {
                 ['nav', 'nav-third-level']
             ]
 
-        // for each entry in content create a 
+        // for each entry in content create a row to add to the menu group
+        // in addition calculate the key.
 
     }
 
     render() {
+        return <div id={this.props.id}>
+            <MenuGroup content={this.props.content} level={0} classes={this.classes} />
+        </div>
+    }
+
+    render2() {
         return <ul className={this.classes[0].join(' ')} id={this.props.id}>
             <li>
                 <a href="index.html"><Icon name="dashboard" fw="true" /> Dashboard</a>
