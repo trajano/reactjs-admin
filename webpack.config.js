@@ -34,7 +34,7 @@ module.exports = {
             to: 'assets'
         }]),
         new HtmlWebpackPlugin({
-            template: "./src/app.html",
+            template: "./src/ui/template.html",
             minify: {
                 minifyJS: optimizeMinimize,
                 minifyCSS: optimizeMinimize,
