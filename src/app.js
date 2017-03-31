@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'font-awesome-webpack'
 import './app.scss'
 
 const AppComponent = props => (
