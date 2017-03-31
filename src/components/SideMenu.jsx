@@ -20,28 +20,35 @@ class MenuItem extends React.Component {
         }
         let toggle = null
         let menuGroup = null
+        let groupActiveClass = null
+        let activeClass = null
         if (this.props.group) {
             toggle = <span className="fa arrow"></span>
             menuGroup = this.props.group
         }
+        if (this.props.group && this.props.active) {
+            groupActiveClass="active"
+        } else if (this.props.active) {
+            activeClass="active"
+        }
         if (!this.props.data.to) {
             return (
-                <li>
-                    <a href="#">{icon}{this.props.data.label}{toggle}</a>
+                <li className={groupActiveClass}>
+                    <a className={activeClass} href="#">{icon}{this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
         } else if (this.props.data.externalLink) {
             return (
-                <li>
-                    <a href={this.props.data.to}>{icon}{this.props.data.label}{toggle}</a>
+                <li className={groupActiveClass}>
+                    <a className={activeClass} href={this.props.data.to}>{icon}{this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
         } else {
             return (
-                <li>
-                    <Link to={this.props.data.to}>{icon}{this.props.data.label}{toggle}</Link>
+                <li className={groupActiveClass}>
+                    <Link className={activeClass} to={this.props.data.to}>{icon}{this.props.data.label}{toggle}</Link>
                     {menuGroup}
                 </li>
             )
@@ -66,11 +73,15 @@ class MenuGroup extends React.Component {
         let items = []
         this.props.content.forEach((elem, i) => {
             const key = `m${this.props.level},${i}`
+            const active = (this.props.activePath.length > this.props.level && this.props.activePath[this.props.level] == i)
+            if (active) {
+                console.log(elem.label)
+            }
             if (elem.content) {
-                let group = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} />
-                items.push(<MenuItem key={key} data={elem} group={group}/>) 
+                let group = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} activePath={this.props.activePath}/>
+                items.push(<MenuItem key={key} data={elem} group={group} active={active}/>)
             } else {
-                items.push(<MenuItem key={key} data={elem} />)
+                items.push(<MenuItem key={key} data={elem} active={active}/>)
             }
         })
         return (
@@ -92,7 +103,11 @@ MenuGroup.propTypes = {
     /**
      * Array of class values for the `ul` element depending on the level in the menu.
      */
-    classes: React.PropTypes.array.isRequired
+    classes: React.PropTypes.array.isRequired,
+    /**
+     * Active path array.   This is an array of indices to each content and level to determine if it is active or not.
+     */
+    activePath: React.PropTypes.array.isRequired
 }
 
 /**
@@ -109,14 +124,18 @@ class SideMenu extends React.Component {
                 ['nav', 'nav-third-level']
             ]
 
-        // for each entry in content create a row to add to the menu group
-        // in addition calculate the key.
+        this.state = { activePath: [0] }
 
+    }
+
+    componentWillMount() {
+        // Find out what is active when first mounted.  This should be based on the location.  This will set the activePath state.
+        this.setState({ activePath: [3, 0] })
     }
 
     render() {
         return <div id={this.props.id}>
-            <MenuGroup content={this.props.content} level={0} classes={this.classes} />
+            <MenuGroup content={this.props.content} level={0} classes={this.classes} activePath={this.state.activePath} />
         </div>
     }
 
