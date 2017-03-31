@@ -28,6 +28,37 @@ const App = (props) => {
             ]
         },
         {
+            icon: 'sitemap',
+            label: 'Multi-Level Dropdown',
+            content: [
+                {
+                    label: 'Second Level Item'
+                },
+                {
+                    label: 'Second Level Item'
+                },
+                {
+                    label: 'Third Level',
+                    content: [
+                        {
+                            label: 'Third Level Item'
+                        },
+                        {
+                            label: 'Third Level Item'
+                        },
+                        {
+                            label: 'Third Level Item'
+                        },
+                        {
+                            label: 'Third Level Item'
+                        }
+                    ]
+                }
+
+            ]
+        },
+
+        {
             icon: 'files-o',
             label: 'Sample Pages',
             content: [

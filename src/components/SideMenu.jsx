@@ -14,26 +14,35 @@ class MenuItem extends React.Component {
         }
     }
     render() {
-        let icon = null;
+        let icon = null
         if (this.props.data.icon) {
             icon = <Icon name={this.props.data.icon} fw={true} />
+        }
+        let toggle = null
+        let menuGroup = null
+        if (this.props.group) {
+            toggle = <span className="fa arrow"></span>
+            menuGroup = this.props.group
         }
         if (!this.props.data.to) {
             return (
                 <li>
-                    <a href="#">{icon}{this.props.data.label}</a>
+                    <a href="#">{icon}{this.props.data.label}{toggle}</a>
+                    {menuGroup}
                 </li>
             )
         } else if (this.props.data.externalLink) {
             return (
                 <li>
-                    <a href={this.props.data.to}>{icon}{this.props.data.label}</a>
+                    <a href={this.props.data.to}>{icon}{this.props.data.label}{toggle}</a>
+                    {menuGroup}
                 </li>
             )
         } else {
             return (
                 <li>
-                    <Link to={this.props.data.to}>{icon}{this.props.data.label}</Link>
+                    <Link to={this.props.data.to}>{icon}{this.props.data.label}{toggle}</Link>
+                    {menuGroup}
                 </li>
             )
         }
@@ -57,7 +66,12 @@ class MenuGroup extends React.Component {
         let items = []
         this.props.content.forEach((elem, i) => {
             const key = `m${this.props.level},${i}`
-            items.push(<MenuItem key={key} data={elem} />)
+            if (elem.content) {
+                let group = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} />
+                items.push(<MenuItem key={key} data={elem} group={group}/>) 
+            } else {
+                items.push(<MenuItem key={key} data={elem} />)
+            }
         })
         return (
             <ul className={this.props.classes[this.props.level].join(' ')}>
