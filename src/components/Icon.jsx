@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Icon = (props) => {
+const Icon = props => {
     let classes = ['fa', 'fa-' + props.name]
     if (props.fw) {
         classes.push('fa-fw')
