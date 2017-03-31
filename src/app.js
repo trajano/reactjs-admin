@@ -2,9 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'font-awesome-webpack'
 import './app.scss'
+import Icon from './components/Icon'
 
 const AppComponent = props => (
-    <div>hello world</div>
+    <div>
+        <Icon name="fighter-jet" /> there should be an icon on this line
+        <div>hello world</div></div>
 )
 
 ReactDOM.render(<AppComponent />, document.getElementById("app"))
@@ -14,15 +17,15 @@ ReactDOM.render(<AppComponent />, document.getElementById("app"))
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
-$(function() {
+$(function () {
     $('#side-menu').metisMenu();
 });
 
 //Loads the correct sidebar on window load,
 //collapses the sidebar on window resize.
 // Sets the min-height of #page-wrapper to window size
-$(function() {
-    $(window).bind("load resize", function() {
+$(function () {
+    $(window).bind("load resize", function () {
         var topOffset = 50;
         var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
         if (width < 768) {
@@ -44,7 +47,7 @@ $(function() {
     // var element = $('ul.nav a').filter(function() {
     //     return this.href == url;
     // }).addClass('active').parent().parent().addClass('in').parent();
-    var element = $('ul.nav a').filter(function() {
+    var element = $('ul.nav a').filter(function () {
         return this.href == url;
     }).addClass('active').parent();
 

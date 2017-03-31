@@ -6,6 +6,13 @@ var optimizeMinimize = yargs.alias('p', 'optimize-minimize').argv.optimizeMinimi
 
 module.exports = {
     entry: ['./src/app'],
+    resolve: {
+        extensions: [
+            '',
+            '.js',
+            '.jsx',
+        ],
+    },
     module: {
         loaders: [
             {
