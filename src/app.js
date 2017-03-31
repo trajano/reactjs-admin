@@ -3,14 +3,11 @@ import ReactDOM from 'react-dom'
 import 'font-awesome-webpack'
 import './app.scss'
 import Icon from './components/Icon'
+import App from './components/App'
+//import { Router, Route, hashHistory } from 'react-router';
 
-const AppComponent = props => (
-    <div>
-        <Icon name="fighter-jet" /> there should be an icon on this line
-        <div>hello world</div></div>
-)
-
-ReactDOM.render(<AppComponent />, document.getElementById("app"))
+// ReactDOM.render(<AppComponent />, document.getElementById("app"))
+ReactDOM.render(<App />, document.getElementById("app"))
 
 /*!
  * Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
