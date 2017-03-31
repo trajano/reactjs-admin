@@ -8,14 +8,28 @@ import Icon from './Icon'
 
 
 class SideMenu extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.classes = props.classes ||
+            [
+                ['nav'],
+                ['nav', 'nav-second-level'],
+                ['nav', 'nav-third-level']
+            ]
+
+        // for each entry in content create a 
+
+    }
+
     render() {
-        return <ul className="nav" id="side-menu">
+        return <ul className={this.classes[0].join(' ')} id={this.props.id}>
             <li>
                 <a href="index.html"><Icon name="dashboard" fw="true" /> Dashboard</a>
             </li>
             <li>
                 <a href="#"><Icon name="bar-chart-o" fw="true" /> Charts<span className="fa arrow"></span></a>
-                <ul className="nav nav-second-level">
+                <ul className={this.classes[1].join(' ')}>
                     <li>
                         <a href="flot.html">Flot Charts</a>
                     </li>
@@ -32,7 +46,7 @@ class SideMenu extends React.Component {
             </li>
             <li>
                 <a href="#"><i className="fa fa-wrench fa-fw"></i> UI Elements<span className="fa arrow"></span></a>
-                <ul className="nav nav-second-level">
+                <ul className={this.classes[1].join(' ')}>
                     <li>
                         <a href="panels-wells.html">Panels and Wells</a>
                     </li>
@@ -55,7 +69,7 @@ class SideMenu extends React.Component {
             </li>
             <li>
                 <a href="#"><i className="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span className="fa arrow"></span></a>
-                <ul className="nav nav-second-level">
+                <ul className={this.classes[1].join(' ')}>
                     <li>
                         <a href="#">Second Level Item</a>
                     </li>
@@ -64,7 +78,7 @@ class SideMenu extends React.Component {
                     </li>
                     <li>
                         <a href="#">Third Level <span className="fa arrow"></span></a>
-                        <ul className="nav nav-third-level">
+                        <ul className={this.classes[2].join(' ')}>
                             <li>
                                 <a href="#">Third Level Item</a>
                             </li>
@@ -82,10 +96,10 @@ class SideMenu extends React.Component {
                 </ul>
             </li>
             <li className="active">
-                <a href="#"><Icon name="files-o" fw="true"/> Sample Pages<span className="fa arrow"></span></a>
-                <ul className="nav nav-second-level">
+                <a href="#"><Icon name="files-o" fw="true" /> Sample Pages<span className="fa arrow"></span></a>
+                <ul className={this.classes[1].join(' ')}>
                     <li>
-                        <a className="active" href="blank.html"><Icon name="files-o" fw="true"/> Blank Page</a>
+                        <a className="active" href="blank.html"><Icon name="files-o" fw="true" /> Blank Page</a>
                     </li>
                     <li>
                         <a href="login.html">Login Page</a>
@@ -94,5 +108,15 @@ class SideMenu extends React.Component {
             </li>
         </ul>
     }
+}
+SideMenu.propTypes = {
+    /**
+     * Menu contents
+     */
+    content: React.PropTypes.array.isRequired,
+    /**
+     * Array of class values for the `ul` element depending on the level in the menu.  If not specified, it will use the class names used by sb-admin-2
+     */
+    classes: React.PropTypes.array
 }
 export default SideMenu

@@ -3,6 +3,49 @@ import SideMenu from './SideMenu'
 import 'font-awesome-webpack'
 
 const App = (props) => {
+    const menu = [
+        {
+            icon: 'dashboard',
+            externalLink: true,
+            to: 'index.html',
+            label: 'Dashboard'
+        },
+        {
+            icon: 'bar-chart-o',
+            label: 'Charts',
+            content: [
+                {
+                    externalLink: true,
+                    to: 'flot.html',
+                    label: 'Flot Charts'
+                },
+                {
+                    externalLink: true,
+                    to: 'morris.html',
+                    label: 'Morris.js Charts'
+                }
+
+            ]
+        },
+        {
+            icon: 'files-o',
+            label: 'Sample Pages',
+            content: [
+                {
+                    icon: 'files-o',
+                    externalLink: true,
+                    to: 'blank.html',
+                    label: 'Blank Page'
+                },
+                {
+                    externalLink: true,
+                    to: 'login.html',
+                    label: 'Login Page'
+                }
+
+            ]
+        }
+    ]
     return <div id="wrapper">
         <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
             <div className="navbar-header">
@@ -95,8 +138,8 @@ const App = (props) => {
                                         <span className="pull-right text-muted">20% Complete</span>
                                     </p>
                                     <div className="progress progress-striped active">
-                                        <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" 
-                                        style={{ width: "20%" }}>>
+                                        <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                            style={{ width: "20%" }}>>
                                             <span className="sr-only">20% Complete</span>
                                         </div>
                                     </div>
@@ -222,7 +265,7 @@ const App = (props) => {
 
             <div className="navbar-default sidebar" role="navigation">
                 <div className="sidebar-nav navbar-collapse">
-                    <SideMenu />
+                    <SideMenu content={menu} id="side-menu" />
                 </div>
             </div>
         </nav>
