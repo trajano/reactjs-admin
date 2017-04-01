@@ -85,7 +85,7 @@ ReactDOM.render(<Router><App /></Router>,
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 $(function () {
-    $('#side-menu').metisMenu();
+ //   $('#side-menu').metisMenu();
 });
 
 //Loads the correct sidebar on window load,

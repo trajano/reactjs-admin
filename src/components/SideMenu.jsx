@@ -12,11 +12,21 @@ class MenuItem extends React.Component {
         this.handleClick = this.handleClick.bind(this)
     }
     handleClick(e) {
-        console.log(this.props.menu.state)
-        console.log(this.props.path)
-        this.props.menu.setState({ something: this.props.data.label })
+        this.props.menu.setState({ activePath: this.props.path })
+    }
+    isActive() {
+
+        for (let i = 0; i < this.props.path.length; ++i) {
+
+            if (this.props.menu.state.activePath[i] != this.props.path[i]) {
+                return false
+            }
+        }
+        return true
     }
     render() {
+        // Determine if this path is active
+        const active = this.isActive()
         let icon = null
         if (this.props.data.icon) {
             icon = <Icon name={this.props.data.icon} fw={true} />
@@ -25,15 +35,21 @@ class MenuItem extends React.Component {
         let menuGroup = null
         let groupActiveClass = null
         let activeClass = null
-        if (this.props.group) {
+        if (this.props.group && active) {
             toggle = <span className="fa arrow"></span>
-            menuGroup = this.props.group
-        }
-        if (this.props.group && this.props.active) {
             groupActiveClass = "active"
-        } else if (this.props.active) {
+            menuGroup = this.props.group
+        } else if (this.props.group && !active) {
+            toggle = <span className="fa arrow"></span>
+        } else if (!this.props.group && active) {
             activeClass = "active"
         }
+
+        /*
+        
+         If this is a group and 
+         */
+
         if (!this.props.data.to) {
             return (
                 <li className={groupActiveClass}>
@@ -69,9 +85,9 @@ MenuItem.propTypes = {
      */
     menu: React.PropTypes.object.isRequired,
     /**
-     * Active indicator.
+     * Path. This is an array of indices that would indicate the path to the menu group or item.
      */
-    active: React.PropTypes.bool.isRequired
+    path: React.PropTypes.array.isRequired
 }
 class MenuGroup extends React.Component {
     constructor(props) {
