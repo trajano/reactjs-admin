@@ -47,29 +47,24 @@ class MenuItem extends React.Component {
             activeClass = "active"
         }
 
-        /*
-        
-         If this is a group and 
-         */
-
         if (!this.props.data.to) {
             return (
                 <li className={groupActiveClass}>
-                    <a className={activeClass} href="#" onClick={this.handleClick}>{icon}{this.props.data.label}{toggle}</a>
+                    <a className={activeClass} href="#" onClick={this.handleClick}>{icon} {this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
         } else if (this.props.data.externalLink) {
             return (
                 <li className={groupActiveClass}>
-                    <a className={activeClass} href={this.props.data.to}>{icon}{this.props.data.label}{toggle}</a>
+                    <a className={activeClass} href={this.props.data.to}>{icon} {this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
         } else {
             return (
                 <li className={groupActiveClass}>
-                    <Link className={activeClass} to={this.props.data.to}>{icon}{this.props.data.label}{toggle}</Link>
+                    <Link className={activeClass} to={this.props.data.to}>{icon} {this.props.data.label}{toggle}</Link>
                     {menuGroup}
                 </li>
             )

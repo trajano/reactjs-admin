@@ -74,7 +74,9 @@ const BasicExample = () => (
         </div>
     </Router>
 )
-
+/**
+ * TODO use basename parameter on router later since each module will be its own base.
+ */
 ReactDOM.render(<Router><App /></Router>,
     document.getElementById("app"))
 
