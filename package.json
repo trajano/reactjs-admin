@@ -38,6 +38,7 @@
     "webpack-dev-server": "^1.16.3"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "font-awesome-webpack": "0.0.5-beta.2",
     "jquery": "^2.2.4",
     "materialize-css": "^0.98.0",

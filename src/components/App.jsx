@@ -1,6 +1,8 @@
+import 'bootstrap'
+import 'font-awesome-webpack'
+
 import React from 'react'
 import SideMenu from './SideMenu'
-import 'font-awesome-webpack'
 
 const App = (props) => {
     const menu = [
