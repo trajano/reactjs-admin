@@ -1,0 +1,8 @@
+.menugroup-appear {
+  opacity: 0.01;
+}
+
+.menugroup-appear.menugroup-appear-active {
+  opacity: 1;
+  transition: opacity .2s ease-in;
+}

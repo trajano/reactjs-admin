@@ -4,7 +4,9 @@ import {
     Route,
     Link
 } from 'react-router-dom'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Icon from './Icon'
+import './SideMenu.scss'
 
 class MenuItem extends React.Component {
     constructor(props) {
@@ -107,9 +109,16 @@ class MenuGroup extends React.Component {
             }
         })
         return (
-            <ul className={this.props.menu.classes[this.props.level].join(' ')}>
-                {items}
-            </ul>
+            <ReactCSSTransitionGroup
+                transitionName="menugroup"
+                transitionAppear={true}
+                transitionAppearTimeout={500}
+                transitionEnter={false}
+                transitionLeave={false}>
+                <ul className={this.props.menu.classes[this.props.level].join(' ')}>
+                    {items}
+                </ul>
+            </ReactCSSTransitionGroup >
         )
     }
 }
