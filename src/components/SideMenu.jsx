@@ -9,9 +9,11 @@ import Icon from './Icon'
 class MenuItem extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            active: -1
-        }
+        this.handleClick = this.handleClick.bind(this)
+    }
+    handleClick(e) {
+        console.log(this.props.menu.state)
+        this.props.menu.setState({something: this.props.data.label})
     }
     render() {
         let icon = null
@@ -27,14 +29,14 @@ class MenuItem extends React.Component {
             menuGroup = this.props.group
         }
         if (this.props.group && this.props.active) {
-            groupActiveClass="active"
+            groupActiveClass = "active"
         } else if (this.props.active) {
-            activeClass="active"
+            activeClass = "active"
         }
         if (!this.props.data.to) {
             return (
                 <li className={groupActiveClass}>
-                    <a className={activeClass} href="#">{icon}{this.props.data.label}{toggle}</a>
+                    <a className={activeClass} href="#" onClick={this.handleClick}>{icon}{this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
@@ -62,6 +64,10 @@ MenuItem.propTypes = {
      */
     data: React.PropTypes.object.isRequired,
     /**
+     * The menu.  This contains the top level state data that will be updated by the items here.
+     */
+    menu: React.PropTypes.object.isRequired,
+    /**
      * Active indicator.
      */
     active: React.PropTypes.bool.isRequired
@@ -76,17 +82,16 @@ class MenuGroup extends React.Component {
     render() {
         let items = []
         this.props.content.forEach((elem, i) => {
-            const key = `m${this.props.level},${i}`
             const active = this.props.active && (this.props.activePath.length > this.props.level && this.props.activePath[this.props.level] == i)
             if (elem.content) {
-                let group = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} activePath={this.props.activePath} active={active}/>
-                items.push(<MenuItem key={key} data={elem} group={group} active={active}/>)
+                let group = <MenuGroup content={elem.content} level={this.props.level + 1} activePath={this.props.activePath} active={active} menu={this.props.menu} />
+                items.push(<MenuItem key={i} data={elem} group={group} active={active} menu={this.props.menu} />)
             } else {
-                items.push(<MenuItem key={key} data={elem} active={active}/>)
+                items.push(<MenuItem key={i} data={elem} active={active} menu={this.props.menu} />)
             }
         })
         return (
-            <ul className={this.props.classes[this.props.level].join(' ')}>
+            <ul className={this.props.menu.classes[this.props.level].join(' ')}>
                 {items}
             </ul>
         )
@@ -102,15 +107,17 @@ MenuGroup.propTypes = {
      */
     level: React.PropTypes.number.isRequired,
     /**
-     * Array of class values for the `ul` element depending on the level in the menu.
+     * The menu.  This contains the top level state data that will be updated by the items here.
      */
-    classes: React.PropTypes.array.isRequired,
+    menu: React.PropTypes.object.isRequired,
     /**
      * Active path array.   This is an array of indices to each content and level to determine if it is active or not.
+     * @deprecated use the one in menu
      */
     activePath: React.PropTypes.array.isRequired,
     /**
      * Active indicator.
+     * @deprecated calculate this one
      */
     active: React.PropTypes.bool.isRequired
 }
@@ -140,7 +147,7 @@ class SideMenu extends React.Component {
 
     render() {
         return <div id={this.props.id}>
-            <MenuGroup content={this.props.content} level={0} classes={this.classes} activePath={this.state.activePath} active={true} />
+            <MenuGroup content={this.props.content} level={0} classes={this.classes} activePath={this.state.activePath} active={true} menu={this} />
         </div>
     }
 
