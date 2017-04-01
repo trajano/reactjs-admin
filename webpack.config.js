@@ -1,3 +1,4 @@
+var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var yargs = require("yargs")
@@ -41,9 +42,6 @@ module.exports = {
             }
         ]
     },
-    externals: {
-        "jquery": "jQuery"
-    },
     output: {
         path: './dist',
         filename: 'bundle.[hash].js'
@@ -62,6 +60,10 @@ module.exports = {
                 collapseWhitespace: optimizeMinimize,
                 html5: true
             }
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
         })
     ],
     devtool: 'source-map',
