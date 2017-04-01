@@ -13,7 +13,8 @@ class MenuItem extends React.Component {
     }
     handleClick(e) {
         console.log(this.props.menu.state)
-        this.props.menu.setState({something: this.props.data.label})
+        console.log(this.props.path)
+        this.props.menu.setState({ something: this.props.data.label })
     }
     render() {
         let icon = null
@@ -75,19 +76,18 @@ MenuItem.propTypes = {
 class MenuGroup extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            active: -1
-        }
     }
     render() {
         let items = []
         this.props.content.forEach((elem, i) => {
+            let path = this.props.path.slice(0)
+            path.push(i)
             const active = this.props.active && (this.props.activePath.length > this.props.level && this.props.activePath[this.props.level] == i)
             if (elem.content) {
-                let group = <MenuGroup content={elem.content} level={this.props.level + 1} activePath={this.props.activePath} active={active} menu={this.props.menu} />
-                items.push(<MenuItem key={i} data={elem} group={group} active={active} menu={this.props.menu} />)
+                let group = <MenuGroup content={elem.content} level={this.props.level + 1} activePath={this.props.activePath} active={active} menu={this.props.menu} path={path} />
+                items.push(<MenuItem key={i} data={elem} group={group} active={active} menu={this.props.menu} path={path} />)
             } else {
-                items.push(<MenuItem key={i} data={elem} active={active} menu={this.props.menu} />)
+                items.push(<MenuItem key={i} data={elem} active={active} menu={this.props.menu} path={path} />)
             }
         })
         return (
@@ -115,6 +115,10 @@ MenuGroup.propTypes = {
      * @deprecated use the one in menu
      */
     activePath: React.PropTypes.array.isRequired,
+    /**
+     * Path. This is an array of indices that would indicate the path to the menu group or item.
+     */
+    path: React.PropTypes.array.isRequired,
     /**
      * Active indicator.
      * @deprecated calculate this one
@@ -147,7 +151,7 @@ class SideMenu extends React.Component {
 
     render() {
         return <div id={this.props.id}>
-            <MenuGroup content={this.props.content} level={0} classes={this.classes} activePath={this.state.activePath} active={true} menu={this} />
+            <MenuGroup content={this.props.content} level={0} classes={this.classes} activePath={this.state.activePath} active={true} path={[]} menu={this} />
         </div>
     }
 
