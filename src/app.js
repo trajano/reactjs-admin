@@ -6,7 +6,7 @@ import {
     Link
 } from 'react-router-dom'
 import Icon from './components/Icon'
-import App from './components/App'
+import Module from './components/Module'
 
 const Home = () => (
     <div>
@@ -73,10 +73,87 @@ const BasicExample = () => (
         </div>
     </Router>
 )
+
+const moduleConfig = {
+    content: [
+        {
+            icon: 'dashboard',
+            externalLink: true,
+            to: 'index.html',
+            label: 'Dashboard'
+        },
+        {
+            icon: 'bar-chart-o',
+            label: 'Charts',
+            content: [
+                {
+                    externalLink: true,
+                    to: 'flot.html',
+                    label: 'Flot Charts'
+                },
+                {
+                    externalLink: true,
+                    to: 'morris.html',
+                    label: 'Morris.js Charts'
+                }
+
+            ]
+        },
+        {
+            icon: 'sitemap',
+            label: 'Multi-Level Dropdown',
+            content: [
+                {
+                    label: 'Second Level Item'
+                },
+                {
+                    label: 'Second Level Item'
+                },
+                {
+                    label: 'Third Level',
+                    content: [
+                        {
+                            label: 'Third Level Item'
+                        },
+                        {
+                            label: 'Third Level Item'
+                        },
+                        {
+                            label: 'Third Level Item'
+                        },
+                        {
+                            label: 'Third Level Item'
+                        }
+                    ]
+                }
+
+            ]
+        },
+
+        {
+            icon: 'files-o',
+            label: 'Sample Pages',
+            content: [
+                {
+                    icon: 'files-o',
+                    externalLink: true,
+                    to: 'blank.html',
+                    label: 'Blank Page'
+                },
+                {
+                    externalLink: true,
+                    to: 'login.html',
+                    label: 'Login Page'
+                }
+
+            ]
+        }
+    ]
+}
 /**
  * TODO use basename parameter on router later since each module will be its own base.
  */
-ReactDOM.render(<Router><App /></Router>,
+ReactDOM.render(<Module config={moduleConfig}/>,
     document.getElementById("app"))
 
 
@@ -86,7 +163,7 @@ ReactDOM.render(<Router><App /></Router>,
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 $(function () {
- //   $('#side-menu').metisMenu();
+    //   $('#side-menu').metisMenu();
 });
 
 //Loads the correct sidebar on window load,
