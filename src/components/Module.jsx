@@ -19,6 +19,7 @@ import {
 import './app.scss'
 import SideMenu from './SideMenu'
 import moduleReducers from './reducers'
+import { updateNavActivePath } from './actions'
 
 /**
  * @typedef {Object} MenuItem
@@ -32,7 +33,11 @@ class Module extends React.Component {
     constructor(props) {
         super(props)
         this.routes = this.determineRoutesFromContent(props.config.content)
-        this.store = createStore(moduleReducers)
+        // TODO merge this so we only iterate once
+        this.pathToRoutes = this.determinePathToRoutesFromContent(props.config.content, [])
+        this.store = createStore(moduleReducers,
+            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        )
     }
     /**
      * This will recursively scan the content array to determine and generate Routes.
@@ -41,15 +46,38 @@ class Module extends React.Component {
      */
     determineRoutesFromContent(content) {
         let routes = []
-        content.forEach(elem => {
+        content.forEach((elem, i) => {
             if (elem.content) {
                 routes.push(...this.determineRoutesFromContent(elem.content))
             }
             if (!elem.externalLink && elem.to && elem.component) {
-                routes.push(<Route key={elem.to} exact path={elem.to} component={elem.component} />)
+                routes.push(<Route key={elem.to} exact path={elem.to} render={props => {
+                    this.store.dispatch(updateNavActivePath(this.pathToRoutes[elem.to]))
+                    return elem.component(props)
+                }} />)
                 elem.aliases && elem.aliases.forEach(alias => {
                     routes.push(<Route key={alias} exact path={elem.to} render={() => <Redirect to={elem.to} />} />)
                 })
+            }
+        })
+        return routes
+    }
+    /**
+     * This will recursively scan the content array to determine and activation paths
+     * @param {MenuItem[]} content menu content array
+     * @param {number[]} parentPath parent path
+     * @returns {object} route path to activation path map
+     */
+    determinePathToRoutesFromContent(content, parentPath) {
+        let routes = {}
+        content.forEach((elem, i) => {
+            let currentPath = parentPath.slice(0)
+            currentPath.push(i)
+            if (elem.content) {
+                Object.assign(routes, this.determinePathToRoutesFromContent(elem.content, currentPath))
+            }
+            if (!elem.externalLink && elem.to && elem.component) {
+                routes[elem.to] = currentPath
             }
         })
         return routes

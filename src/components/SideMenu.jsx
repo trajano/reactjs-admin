@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Icon from './Icon'
+import { updateNavActivePath } from './actions'
+
 import './SideMenu.scss'
 
 class MenuItem extends React.Component {
@@ -15,15 +17,18 @@ class MenuItem extends React.Component {
     }
     handleClick(e) {
         this.props.menu.setState({ activePath: this.props.path })
+        console.log('click', this.props.path)
+        //this.props.dispatch(updateNavActivePath(this.props.path))
     }
     isActive() {
-
         for (let i = 0; i < this.props.path.length; ++i) {
 
             if (this.props.menu.state.activePath[i] != this.props.path[i]) {
+//        console.log('active check', this.props.menu.state.activePath, this.props.path, false)
                 return false
             }
         }
+//        console.log('active check', this.props.menu.state.activePath, this.props.path, true)
         return true
     }
     render() {
@@ -159,7 +164,7 @@ class SideMenu extends React.Component {
 
     componentWillMount() {
         // Find out what is active when first mounted.  This should be based on the location.  This will set the activePath state.
-        this.setState({ activePath: [3, 0] })
+        //this.setState({ activePath: [3, 0] })
     }
 
     render() {
