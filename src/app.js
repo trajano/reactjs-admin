@@ -6,7 +6,11 @@ import {
     Link
 } from 'react-router-dom'
 import Icon from './components/Icon'
-import {bootstrap} from './components/Module'
+import { bootstrap } from './components/Module'
+
+import MyBlank from './myapp/Blank'
+import Index from './myapp/Index'
+import SecondPage from './myapp/SecondPage'
 
 const Home = () => (
     <div>
@@ -74,6 +78,7 @@ const BasicExample = () => (
     </Router>
 )
 
+
 /**
  * Module configuration.  This must be an EcmaScript object rather than a
  * JSON file, because it can contain ReactJS components and functions.
@@ -82,8 +87,9 @@ const moduleConfig = {
     content: [
         {
             icon: 'dashboard',
-            externalLink: true,
-            to: 'index.html',
+            to: '/',
+            component: Index,
+            aliases: ['index.html'],
             label: 'Dashboard'
         },
         {
@@ -140,13 +146,13 @@ const moduleConfig = {
             content: [
                 {
                     icon: 'files-o',
-                    externalLink: true,
-                    to: 'blank.html',
+                    to: '/blank.html',
+                    component: SecondPage,
                     label: 'Blank Page'
                 },
                 {
-                    externalLink: true,
-                    to: 'login.html',
+                    to: '/login.html',
+                    component: MyBlank,
                     label: 'Login Page'
                 }
 
@@ -156,15 +162,6 @@ const moduleConfig = {
 }
 bootstrap(moduleConfig)
 
-
-/*!
- * Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-$(function () {
-    //   $('#side-menu').metisMenu();
-});
 
 //Loads the correct sidebar on window load,
 //collapses the sidebar on window resize.
@@ -188,19 +185,4 @@ $(function () {
         }
     });
 
-    var url = window.location;
-    // var element = $('ul.nav a').filter(function() {
-    //     return this.href == url;
-    // }).addClass('active').parent().parent().addClass('in').parent();
-    var element = $('ul.nav a').filter(function () {
-        return this.href == url;
-    }).addClass('active').parent();
-
-    while (true) {
-        if (element.is('li')) {
-            element = element.parent().addClass('in').parent();
-        } else {
-            break;
-        }
-    }
 });

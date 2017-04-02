@@ -10,15 +10,49 @@ import 'font-awesome-webpack'
 import {
     BrowserRouter as Router,
     Route,
+    Redirect,
     Link
 } from 'react-router-dom'
 
 import './app.scss'
 import SideMenu from './SideMenu'
 
+// TODO these should be removed and be read as part of the config
+import Blank from '../myapp/Blank'
+import Index from '../myapp/Index'
+
+/**
+ * @typedef {Object} MenuItem
+ * @property {boolean} externalLink whether the link is external (i.e. not a route)
+ * @property {string} label label (TODO remove this eventually and make it i18n)
+ * @property {string} to route (should be unique)
+ * @property {object} component component
+ * @property {string[]} aliases aliases (should also be unique)
+ */
 class Module extends React.Component {
     constructor(props) {
         super(props)
+        this.routes = this.determineRoutesFromContent(props.config.content)
+    }
+    /**
+     * This will recursively scan the content array to determine and generate Routes.
+     * @param {MenuItem[]} content menu content array
+     * @returns {Array} of Routes
+     */
+    determineRoutesFromContent(content) {
+        let routes = []
+        content.forEach(elem => {
+            if (elem.content) {
+                routes.push(...this.determineRoutesFromContent(elem.content))
+            }
+            if (!elem.externalLink && elem.to && elem.component) {
+                routes.push(<Route key={elem.to} exact path={elem.to} component={elem.component} />)
+                elem.aliases && elem.aliases.forEach(alias => {
+                    routes.push(<Route key={alias} exact path={elem.to} render={() => <Redirect to={elem.to} />} />)
+                })
+            }
+        })
+        return routes
     }
     render() {
         return <Router>
@@ -259,15 +293,7 @@ class Module extends React.Component {
                 </nav>
 
                 <div id="page-wrapper">
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <h1 className="page-header">Blank</h1>
-                                <div id="app">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {this.routes}
                 </div>
 
             </div>

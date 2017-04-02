@@ -2,7 +2,7 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    NavLink
 } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Icon from './Icon'
@@ -57,14 +57,14 @@ class MenuItem extends React.Component {
         } else if (this.props.data.externalLink) {
             return (
                 <li className={groupActiveClass}>
-                    <a className={activeClass} href={this.props.data.to}>{icon} {this.props.data.label}{toggle}</a>
+                    <a href={this.props.data.to}>{icon} {this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
         } else {
             return (
                 <li className={groupActiveClass}>
-                    <Link className={activeClass} to={this.props.data.to}>{icon} {this.props.data.label}{toggle}</Link>
+                    <NavLink activeClassName="active" exact to={this.props.data.to}>{icon} {this.props.data.label}{toggle}</NavLink>
                     {menuGroup}
                 </li>
             )
