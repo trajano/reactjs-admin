@@ -49,21 +49,21 @@ class MenuItem extends React.Component {
 
         if (!this.props.data.to) {
             return (
-                <li className={groupActiveClass}>
+                <li>
                     <a className={activeClass} href="#" onClick={this.handleClick}>{icon} {this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
         } else if (this.props.data.externalLink) {
             return (
-                <li className={groupActiveClass}>
+                <li>
                     <a href={this.props.data.to}>{icon} {this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
         } else {
             return (
-                <li className={groupActiveClass}>
+                <li>
                     <NavLink activeClassName="active" exact to={this.props.data.to}>{icon} {this.props.data.label}{toggle}</NavLink>
                     {menuGroup}
                 </li>

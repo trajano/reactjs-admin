@@ -10,6 +10,7 @@ import { bootstrap } from './components/Module'
 
 import MyBlank from './myapp/Blank'
 import Index from './myapp/Index'
+import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
 
 const Home = () => (
@@ -143,6 +144,8 @@ const moduleConfig = {
         {
             icon: 'files-o',
             label: 'Sample Pages',
+            to: "/sample",
+            component: SamplePages,
             content: [
                 {
                     icon: 'files-o',
