@@ -3,6 +3,7 @@ import 'font-awesome-webpack'
 
 import React from 'react'
 import SideMenu from './SideMenu'
+import './app.scss'
 
 const App = (props) => {
     const menu = [

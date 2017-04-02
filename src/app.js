@@ -5,7 +5,6 @@ import {
     Route,
     Link
 } from 'react-router-dom'
-import './app.scss'
 import Icon from './components/Icon'
 import App from './components/App'
 
