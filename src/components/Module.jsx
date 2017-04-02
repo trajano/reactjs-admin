@@ -1,14 +1,20 @@
+/**
+ * In terms of design, this is the entry point for the framework and should not try to access anything else above this tree.
+ */
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 import 'bootstrap'
 import 'font-awesome-webpack'
 
-import React from 'react'
-import SideMenu from './SideMenu'
-import './app.scss'
 import {
     BrowserRouter as Router,
     Route,
     Link
 } from 'react-router-dom'
+
+import './app.scss'
+import SideMenu from './SideMenu'
 
 class Module extends React.Component {
     constructor(props) {
@@ -269,6 +275,16 @@ class Module extends React.Component {
     }
 }
 Module.propTypes = {
-
+    config: React.PropTypes.object.isRequired
 }
-export default Module
+
+/**
+ * Bootstrap the application
+ * @param {Object} config configuration for the module
+ * @param {Object|function} modules 
+ */
+export function bootstrap(config, modules) {
+    ReactDOM.render(<Module config={config} />,
+        document.getElementById("app"))
+}
+

@@ -6,7 +6,7 @@ import {
     Link
 } from 'react-router-dom'
 import Icon from './components/Icon'
-import Module from './components/Module'
+import {bootstrap} from './components/Module'
 
 const Home = () => (
     <div>
@@ -74,6 +74,10 @@ const BasicExample = () => (
     </Router>
 )
 
+/**
+ * Module configuration.  This must be an EcmaScript object rather than a
+ * JSON file, because it can contain ReactJS components and functions.
+ */
 const moduleConfig = {
     content: [
         {
@@ -150,11 +154,7 @@ const moduleConfig = {
         }
     ]
 }
-/**
- * TODO use basename parameter on router later since each module will be its own base.
- */
-ReactDOM.render(<Module config={moduleConfig}/>,
-    document.getElementById("app"))
+bootstrap(moduleConfig)
 
 
 /*!
