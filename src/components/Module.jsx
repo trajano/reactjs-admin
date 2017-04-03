@@ -54,23 +54,25 @@ class Module extends React.Component {
     }
     constructor(props) {
         super(props)
-        this.routes = this.determineRoutesFromContent(props.config.content)
-        this.pathToRoutes = this.determinePathToRoutesFromContent(props.config.content, [])
+        this.isPathActive = this.isPathActive.bind(this)
+    }
+    componentWillMount() {
+        this.routes = this.determineRoutesFromContent(this.props.config.content)
+        this.pathToRoutes = this.determinePathToRoutesFromContent(this.props.config.content, [])
         this.history = createBrowserHistory({
-            basename: ((typeof props.config.basename === "function") ? props.config.basename() : props.config.basename) || ""
+            basename: ((typeof this.props.config.basename === "function") ? this.props.config.basename() : this.props.config.basename) || ""
         })
 
         /** @type {ModuleState} */
         this.state = {
             activePath: []
         }
-        this.isPathActive = this.isPathActive.bind(this)
     }
 
     isPathActive(pathForLink) {
         for (let i = 0; i < pathForLink.length; ++i) {
 
-            if (this.state.activePath[i] != pathForLink[i]) {
+            if (i >= this.state.activePath.length || this.state.activePath[i] != pathForLink[i]) {
                 return false
             }
         }
@@ -82,7 +84,7 @@ class Module extends React.Component {
 
         this.unlisten = this.history.listen((location, action) => {
             if (action === "PUSH") {
-                this.setState({ activePath: this.pathToRoutes[location.pathname] })
+                this.setState({ activePath: this.pathToRoutes[location.pathname] || [] })
             }
         })
     }
@@ -106,7 +108,7 @@ class Module extends React.Component {
             if (!elem.externalLink && elem.to && elem.component) {
                 routes.push(<Route key={elem.to} exact path={elem.to} component={elem.component} />)
                 elem.aliases && elem.aliases.forEach(alias => {
-                    routes.push(<Route key={alias} exact path={elem.to} render={() => <Redirect to={elem.to} />} />)
+                    routes.push(<Route key={alias} exact path={alias} render={() => <Redirect to={elem.to} />} />)
                 })
             }
         })

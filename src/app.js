@@ -96,7 +96,7 @@ const moduleConfig = {
             icon: 'dashboard',
             to: '/',
             component: Index,
-            aliases: ['index.html'],
+            aliases: ['/index.html'],
             label: 'Dashboard'
         },
         {
@@ -123,6 +123,7 @@ const moduleConfig = {
                 {
                     label: 'Second Level Item',
                     to: '/s1',
+                    aliases: ['/index2.html'],
                     component: ThirdLevelItem
                 },
                 {
