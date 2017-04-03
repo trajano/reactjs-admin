@@ -56,7 +56,9 @@ class Module extends React.Component {
         super(props)
         this.routes = this.determineRoutesFromContent(props.config.content)
         this.pathToRoutes = this.determinePathToRoutesFromContent(props.config.content, [])
-        this.history = createBrowserHistory()
+        this.history = createBrowserHistory({
+            basename: ((typeof props.config.basename === "function") ? props.config.basename() : props.config.basename) || ""
+        })
 
         /** @type {ModuleState} */
         this.state = {
