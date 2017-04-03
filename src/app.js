@@ -84,7 +84,11 @@ const BasicExample = () => (
 /** @type {ModuleConfig} */
 const moduleConfig = {
     basename: () => {
-        return ""
+        if (location.host === "trajano.github.io") {
+            return "/reactjs-admin"
+        } else {
+            return ""
+        }
     },
     notFoundComponent: Index,
     content: [
