@@ -13,6 +13,7 @@ import Index from './myapp/Index'
 import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
 import ThirdLevelItem from './myapp/ThirdLevelItem'
+import FourOhFour from './myapp/FourOhFour'
 
 const Home = () => (
     <div>
@@ -90,7 +91,7 @@ const moduleConfig = {
             return ""
         }
     },
-    notFoundComponent: Index,
+    notFoundComponent: FourOhFour,
     content: [
         {
             icon: 'dashboard',

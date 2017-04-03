@@ -10,6 +10,7 @@ import 'font-awesome-webpack'
 import {
     Router,
     Route,
+    Switch,
     Redirect,
     Link,
     NavLink,
@@ -58,6 +59,7 @@ class Module extends React.Component {
     }
     componentWillMount() {
         this.routes = this.determineRoutesFromContent(this.props.config.content)
+        this.routes.push(<Route key={"notFound"} component={this.props.config.notFoundComponent} />)
         this.pathToRoutes = this.determinePathToRoutesFromContent(this.props.config.content, [])
         this.history = createBrowserHistory({
             basename: ((typeof this.props.config.basename === "function") ? this.props.config.basename() : this.props.config.basename) || ""
@@ -84,7 +86,12 @@ class Module extends React.Component {
 
         this.unlisten = this.history.listen((location, action) => {
             if (action === "PUSH") {
-                this.setState({ activePath: this.pathToRoutes[location.pathname] || [] })
+                const newActivePath = this.pathToRoutes[location.pathname]
+                if (newActivePath === undefined) {
+                    this.setState({ activePath: [] })
+                } else {
+                    this.setState({ activePath: newActivePath })
+                }
             }
         })
     }
@@ -133,6 +140,15 @@ class Module extends React.Component {
             }
         })
         return routes
+    }
+    /**
+     * The module component normally does not need to update itself.
+     */
+    shouldComponentUpdate() {
+        return false
+    }
+    componentDidUpdate(prevProps, prevState) {
+        console.log("componentDidUpdate")
     }
     render() {
         return <Router history={this.history}>
@@ -373,7 +389,9 @@ class Module extends React.Component {
                 </nav>
 
                 <div id="page-wrapper">
-                    {this.routes}
+                    <Switch>
+                        {this.routes}
+                    </Switch>
                 </div>
 
             </div>
