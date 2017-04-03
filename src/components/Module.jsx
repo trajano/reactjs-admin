@@ -141,15 +141,6 @@ class Module extends React.Component {
         })
         return routes
     }
-    /**
-     * The module component normally does not need to update itself.
-     */
-    shouldComponentUpdate() {
-        return false
-    }
-    componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate")
-    }
     render() {
         return <Router history={this.history}>
             <div id="wrapper">
