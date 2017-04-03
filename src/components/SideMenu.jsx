@@ -2,33 +2,32 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Route,
-    NavLink
+    Link,
+    NavLink,
+    withRouter
 } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Icon from './Icon'
-import { updateNavActivePath } from './actions'
+import { connect } from 'react-redux'
 
 import './SideMenu.scss'
+import Icon from './Icon'
+import { updateNavActivePath } from './redux/actions'
 
 class MenuItem extends React.Component {
     constructor(props) {
         super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
-    handleClick(e) {
-        this.props.menu.setState({ activePath: this.props.path })
-        console.log('click', this.props.path)
-        //this.props.dispatch(updateNavActivePath(this.props.path))
     }
     isActive() {
+        const activePath = this.props.sideMenuActivePath
+        if (activePath === undefined) {
+            return false
+        }
         for (let i = 0; i < this.props.path.length; ++i) {
 
-            if (this.props.menu.state.activePath[i] != this.props.path[i]) {
-//        console.log('active check', this.props.menu.state.activePath, this.props.path, false)
+            if (activePath[i] != this.props.path[i]) {
                 return false
             }
         }
-//        console.log('active check', this.props.menu.state.activePath, this.props.path, true)
         return true
     }
     render() {
@@ -51,14 +50,24 @@ class MenuItem extends React.Component {
         } else if (!this.props.group && active) {
             activeClass = "active"
         }
+        if (!this.props.data.to && this.props.data.content && this.props.data.content[0].to) {
+            // Then this will create a link to the first element
+            let to = this.props.data.content[0].to
+            return (
+                <li>
+                    <Link to={to}>{icon} {this.props.data.label}{toggle}</Link>
+                    {menuGroup}
+                </li>
+            )
 
-        if (!this.props.data.to) {
+        } else if (!this.props.data.to) {
             return (
                 <li>
                     <a className={activeClass} href="#" onClick={this.handleClick}>{icon} {this.props.data.label}{toggle}</a>
                     {menuGroup}
                 </li>
             )
+
         } else if (this.props.data.externalLink) {
             return (
                 <li>
@@ -83,10 +92,6 @@ MenuItem.propTypes = {
      */
     data: React.PropTypes.object.isRequired,
     /**
-     * The menu.  This contains the top level state data that will be updated by the items here.
-     */
-    menu: React.PropTypes.object.isRequired,
-    /**
      * Path. This is an array of indices that would indicate the path to the menu group or item.
      */
     path: React.PropTypes.array.isRequired
@@ -106,9 +111,9 @@ class MenuGroup extends React.Component {
             path.push(i)
             if (elem.content) {
                 let group = <MenuGroup content={elem.content} level={this.props.level + 1} menu={this.props.menu} path={path} />
-                items.push(<MenuItem key={i} data={elem} group={group} menu={this.props.menu} path={path} />)
+                items.push(<VisibleMenuItem key={i} data={elem} group={group} path={path} />)
             } else {
-                items.push(<MenuItem key={i} data={elem} menu={this.props.menu} path={path} />)
+                items.push(<VisibleMenuItem key={i} data={elem} path={path} />)
             }
         })
         return (
@@ -135,7 +140,7 @@ MenuGroup.propTypes = {
      */
     level: React.PropTypes.number.isRequired,
     /**
-     * The menu.  This contains the top level state data that will be updated by the items here.
+     * The menu.  This contains the classes to be rendered for each group level.
      */
     menu: React.PropTypes.object.isRequired,
     /**
@@ -157,19 +162,44 @@ class SideMenu extends React.Component {
                 ['nav', 'nav-second-level'],
                 ['nav', 'nav-third-level']
             ]
-
-        this.state = { activePath: [0] }
+        this.pathToRoutes = this.determinePathToRoutesFromContent(props.content, [])
 
     }
+    componentDidMount() {
+        this.unlisten = this.props.history.listen((location, action) => {
+            if (action === "PUSH") {
+                this.props.onRouteChange(this.pathToRoutes[location.pathname])
+            }
 
-    componentWillMount() {
-        // Find out what is active when first mounted.  This should be based on the location.  This will set the activePath state.
-        //this.setState({ activePath: [3, 0] })
+        })
+    }
+    componentWillUnmount() {
+        this.unlisten()
     }
 
+    /**
+     * This will recursively scan the content array to determine and activation paths
+     * @param {MenuItem[]} content menu content array
+     * @param {number[]} parentPath parent path
+     * @returns {object} route path to activation path map
+     */
+    determinePathToRoutesFromContent(content, parentPath) {
+        let routes = {}
+        content.forEach((elem, i) => {
+            let currentPath = parentPath.slice(0)
+            currentPath.push(i)
+            if (elem.content) {
+                Object.assign(routes, this.determinePathToRoutesFromContent(elem.content, currentPath))
+            }
+            if (!elem.externalLink && elem.to && elem.component) {
+                routes[elem.to] = currentPath
+            }
+        })
+        return routes
+    }
     render() {
         return <div id={this.props.id}>
-            <MenuGroup content={this.props.content} level={0} classes={this.classes} path={[]} menu={this} />
+            <MenuGroup content={this.props.content} level={0} path={[]} menu={this} />
         </div>
     }
 
@@ -270,4 +300,22 @@ SideMenu.propTypes = {
      */
     classes: React.PropTypes.array
 }
-export default SideMenu
+const VisibleMenuItem = connect(
+    (state) => {
+        return { sideMenuActivePath: state.sideMenuActivePath }
+    }
+)(MenuItem)
+
+const RoutedSideMenu = connect(
+    (state) => {
+        return { sideMenuActivePath: state.sideMenuActivePath }
+    },
+    (dispatch) => {
+        return {
+            onRouteChange: (newActivePath) => {
+                dispatch(updateNavActivePath(newActivePath))
+            }
+        }
+    })(withRouter(SideMenu))
+
+export default RoutedSideMenu

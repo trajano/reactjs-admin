@@ -18,8 +18,8 @@ import {
 
 import './app.scss'
 import SideMenu from './SideMenu'
-import moduleReducers from './reducers'
-import { updateNavActivePath } from './actions'
+import moduleReducers from './redux/reducers'
+import { updateNavActivePath } from './redux/actions'
 
 /**
  * @typedef {Object} MenuItem
@@ -51,10 +51,11 @@ class Module extends React.Component {
                 routes.push(...this.determineRoutesFromContent(elem.content))
             }
             if (!elem.externalLink && elem.to && elem.component) {
-                routes.push(<Route key={elem.to} exact path={elem.to} render={props => {
+                /*routes.push(<Route key={elem.to} exact path={elem.to} render={props => {
                     this.store.dispatch(updateNavActivePath(this.pathToRoutes[elem.to]))
                     return elem.component(props)
-                }} />)
+                }} />)*/
+                routes.push(<Route key={elem.to} exact path={elem.to} component={elem.component} />)
                 elem.aliases && elem.aliases.forEach(alias => {
                     routes.push(<Route key={alias} exact path={elem.to} render={() => <Redirect to={elem.to} />} />)
                 })

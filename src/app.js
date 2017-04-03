@@ -12,6 +12,7 @@ import MyBlank from './myapp/Blank'
 import Index from './myapp/Index'
 import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
+import ThirdLevelItem from './myapp/ThirdLevelItem'
 
 const Home = () => (
     <div>
@@ -98,14 +99,14 @@ const moduleConfig = {
             label: 'Charts',
             content: [
                 {
-                    externalLink: true,
-                    to: 'flot.html',
-                    label: 'Flot Charts'
+                    to: '/flot.html',
+                    label: 'Flot Charts',
+                    component: ThirdLevelItem
                 },
                 {
-                    externalLink: true,
-                    to: 'morris.html',
-                    label: 'Morris.js Charts'
+                    to: '/morris.html',
+                    label: 'Morris.js Charts',
+                    component: ThirdLevelItem
                 }
 
             ]
@@ -115,25 +116,34 @@ const moduleConfig = {
             label: 'Multi-Level Dropdown',
             content: [
                 {
-                    label: 'Second Level Item'
+                    label: 'Second Level Item',
+                    to: '/s1',
+                    component: ThirdLevelItem
                 },
                 {
-                    label: 'Second Level Item'
+                    label: 'Second Level Item',
+                    to: '/s2',
+                    component: ThirdLevelItem
                 },
                 {
                     label: 'Third Level',
                     content: [
                         {
-                            label: 'Third Level Item'
+                            label: 'Third Level Item',
+                            to: '/t1',
+                            component: ThirdLevelItem,
                         },
                         {
-                            label: 'Third Level Item'
+                            label: 'Third Level Item', to: '/t2',
+                            component: ThirdLevelItem,
                         },
                         {
-                            label: 'Third Level Item'
+                            label: 'Third Level Item', to: '/t3',
+                            component: ThirdLevelItem,
                         },
                         {
-                            label: 'Third Level Item'
+                            label: 'Third Level Item', to: '/t4',
+                            component: ThirdLevelItem,
                         }
                     ]
                 }

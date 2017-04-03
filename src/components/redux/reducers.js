@@ -5,10 +5,9 @@ import { UPDATE_NAV_ACTIVE_PATH } from './actions'
  * 
  */
 function sideMenuActivePath(state = [], action) {
-    console.log(sideMenuActivePath, state)
     switch (action.type) {
         case UPDATE_NAV_ACTIVE_PATH:
-            return action.newActivePath
+            return state = action.newActivePath
         default:
             return state
     }
