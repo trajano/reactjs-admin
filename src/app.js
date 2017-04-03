@@ -81,11 +81,12 @@ const BasicExample = () => (
 )
 
 
-/**
- * Module configuration.  This must be an EcmaScript object rather than a
- * JSON file, because it can contain ReactJS components and functions.
- */
+/** @type {ModuleConfig} */
 const moduleConfig = {
+    basename: () => {
+        return ""
+    },
+    notFoundComponent: Index,
     content: [
         {
             icon: 'dashboard',

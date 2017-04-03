@@ -3,24 +3,40 @@
  */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 
 import 'bootstrap'
 import 'font-awesome-webpack'
 
 import {
-    BrowserRouter as Router,
+    Router,
     Route,
     Redirect,
-    Link
+    Link,
+    NavLink,
+    withRouter
 } from 'react-router-dom'
+import createBrowserHistory from 'history/createBrowserHistory'
+const history = createBrowserHistory()
 
 import './app.scss'
 import SideMenu from './SideMenu'
-import moduleReducers from './redux/reducers'
-import { updateNavActivePath } from './redux/actions'
 
+/**
+ * Module configuration.  This must be an EcmaScript object rather than a
+ * JSON file, because it can contain ReactJS components and functions.
+ * @typedef {Object} ModuleConfig
+ * @property {string|function} basename base name (if a function is provided then the basename is calculated from the given function)
+ * @property {Object[]} content menu content
+ * @property {Object} notFoundComponent component to render when the path was not found.
+ */
+
+/**
+ * @typedef {Object} ModuleState
+ * @property {number[]} activePath
+ */
+
+const MyWorld = (props) => (<div>My world</div>)
+const MyHome = (props) => (<div>My home</div>)
 /**
  * @typedef {Object} MenuItem
  * @property {boolean} externalLink whether the link is external (i.e. not a route)
@@ -30,17 +46,52 @@ import { updateNavActivePath } from './redux/actions'
  * @property {string[]} aliases aliases (should also be unique)
  */
 class Module extends React.Component {
+    static propTypes = {
+        /**
+         * Module configuration
+         */
+        config: React.PropTypes.object.isRequired
+    }
     constructor(props) {
         super(props)
         this.routes = this.determineRoutesFromContent(props.config.content)
-        // TODO merge this so we only iterate once
         this.pathToRoutes = this.determinePathToRoutesFromContent(props.config.content, [])
-        this.store = createStore(moduleReducers,
-            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-        )
+        this.history = createBrowserHistory()
+
+        /** @type {ModuleState} */
+        this.state = {
+            activePath: []
+        }
+        this.isPathActive = this.isPathActive.bind(this)
     }
+
+    isPathActive(pathForLink) {
+        for (let i = 0; i < pathForLink.length; ++i) {
+
+            if (this.state.activePath[i] != pathForLink[i]) {
+                return false
+            }
+        }
+        return true
+    }
+
+    componentDidMount() {
+        this.setState({ activePath: this.pathToRoutes[location.pathname] })
+
+        this.unlisten = this.history.listen((location, action) => {
+            if (action === "PUSH") {
+                this.setState({ activePath: this.pathToRoutes[location.pathname] })
+            }
+        })
+    }
+
+    componentWillUnmount() {
+        this.unlisten()
+    }
+
     /**
      * This will recursively scan the content array to determine and generate Routes.
+     * @todo rename to reduceRouteConfiguration
      * @param {MenuItem[]} content menu content array
      * @returns {Array} of Routes
      */
@@ -51,10 +102,6 @@ class Module extends React.Component {
                 routes.push(...this.determineRoutesFromContent(elem.content))
             }
             if (!elem.externalLink && elem.to && elem.component) {
-                /*routes.push(<Route key={elem.to} exact path={elem.to} render={props => {
-                    this.store.dispatch(updateNavActivePath(this.pathToRoutes[elem.to]))
-                    return elem.component(props)
-                }} />)*/
                 routes.push(<Route key={elem.to} exact path={elem.to} component={elem.component} />)
                 elem.aliases && elem.aliases.forEach(alias => {
                     routes.push(<Route key={alias} exact path={elem.to} render={() => <Redirect to={elem.to} />} />)
@@ -84,260 +131,255 @@ class Module extends React.Component {
         return routes
     }
     render() {
-        return <Provider store={this.store}>
-            <Router>
-                <div id="wrapper">
-                    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
-                        <div className="navbar-header">
-                            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                            </button>
-                            <a className="navbar-brand" href="index.html">SB Admin v2.0</a>
-                        </div>
-
-                        <ul className="nav navbar-top-links navbar-right">
-                            <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i className="fa fa-envelope fa-fw"></i> <i className="fa fa-caret-down"></i>
-                                </a>
-                                <ul className="dropdown-menu dropdown-messages">
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <strong>John Smith</strong>
-                                                <span className="pull-right text-muted">
-                                                    <em>Yesterday</em>
-                                                </span>
-                                            </div>
-                                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <strong>John Smith</strong>
-                                                <span className="pull-right text-muted">
-                                                    <em>Yesterday</em>
-                                                </span>
-                                            </div>
-                                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <strong>John Smith</strong>
-                                                <span className="pull-right text-muted">
-                                                    <em>Yesterday</em>
-                                                </span>
-                                            </div>
-                                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a className="text-center" href="#">
-                                            <strong>Read All Messages</strong>
-                                            <i className="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i className="fa fa-tasks fa-fw"></i> <i className="fa fa-caret-down"></i>
-                                </a>
-                                <ul className="dropdown-menu dropdown-tasks">
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <p>
-                                                    <strong>Task 1</strong>
-                                                    <span className="pull-right text-muted">40% Complete</span>
-                                                </p>
-                                                <div className="progress progress-striped active">
-                                                    <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
-                                                        style={{ width: "40%" }}>
-                                                        <span className="sr-only">40% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <p>
-                                                    <strong>Task 2</strong>
-                                                    <span className="pull-right text-muted">20% Complete</span>
-                                                </p>
-                                                <div className="progress progress-striped active">
-                                                    <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-                                                        style={{ width: "20%" }}>>
-                                            <span className="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <p>
-                                                    <strong>Task 3</strong>
-                                                    <span className="pull-right text-muted">60% Complete</span>
-                                                </p>
-                                                <div className="progress progress-striped active">
-                                                    <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                                        style={{ width: "60%" }}>
-                                                        <span className="sr-only">60% Complete (warning)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <p>
-                                                    <strong>Task 4</strong>
-                                                    <span className="pull-right text-muted">80% Complete</span>
-                                                </p>
-                                                <div className="progress progress-striped active">
-                                                    <div className="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
-                                                        style={{ width: "80%" }}>
-                                                        <span className="sr-only">80% Complete (danger)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a className="text-center" href="#">
-                                            <strong>See All Tasks</strong>
-                                            <i className="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i className="fa fa-bell fa-fw"></i> <i className="fa fa-caret-down"></i>
-                                </a>
-                                <ul className="dropdown-menu dropdown-alerts">
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <i className="fa fa-comment fa-fw"></i> New Comment
-                                    <span className="pull-right text-muted small">4 minutes ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <i className="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span className="pull-right text-muted small">12 minutes ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <i className="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span className="pull-right text-muted small">4 minutes ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <i className="fa fa-tasks fa-fw"></i> New Task
-                                    <span className="pull-right text-muted small">4 minutes ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <div>
-                                                <i className="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span className="pull-right text-muted small">4 minutes ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a className="text-center" href="#">
-                                            <strong>See All Alerts</strong>
-                                            <i className="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i className="fa fa-user fa-fw"></i> <i className="fa fa-caret-down"></i>
-                                </a>
-                                <ul className="dropdown-menu dropdown-user">
-                                    <li><a href="#"><i className="fa fa-user fa-fw"></i> User Profile</a>
-                                    </li>
-                                    <li><a href="#"><i className="fa fa-gear fa-fw"></i> Settings</a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li><a href="login.html"><i className="fa fa-sign-out fa-fw"></i> Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <div className="navbar-default sidebar" role="navigation">
-                            <div className="sidebar-nav navbar-collapse">
-                                <ul className="nav">
-                                    <li className="sidebar-search">
-                                        <div className="input-group custom-search-form">
-                                            <input type="text" className="form-control" placeholder="Search..." />
-                                            <span className="input-group-btn">
-                                                <button className="btn btn-default" type="button">
-                                                    <i className="fa fa-search"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <SideMenu content={this.props.config.content} id="side-menu" />
-                            </div>
-                        </div>
-                    </nav>
-
-                    <div id="page-wrapper">
-                        {this.routes}
+        return <Router history={this.history}>
+            <div id="wrapper">
+                <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
+                    <div className="navbar-header">
+                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                        <a className="navbar-brand" href="index.html">SB Admin v2.0</a>
                     </div>
 
+                    <ul className="nav navbar-top-links navbar-right">
+                        <li className="dropdown">
+                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i className="fa fa-envelope fa-fw"></i> <i className="fa fa-caret-down"></i>
+                            </a>
+                            <ul className="dropdown-menu dropdown-messages">
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <strong>John Smith</strong>
+                                            <span className="pull-right text-muted">
+                                                <em>Yesterday</em>
+                                            </span>
+                                        </div>
+                                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <strong>John Smith</strong>
+                                            <span className="pull-right text-muted">
+                                                <em>Yesterday</em>
+                                            </span>
+                                        </div>
+                                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <strong>John Smith</strong>
+                                            <span className="pull-right text-muted">
+                                                <em>Yesterday</em>
+                                            </span>
+                                        </div>
+                                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a className="text-center" href="#">
+                                        <strong>Read All Messages</strong>
+                                        <i className="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li className="dropdown">
+                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i className="fa fa-tasks fa-fw"></i> <i className="fa fa-caret-down"></i>
+                            </a>
+                            <ul className="dropdown-menu dropdown-tasks">
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p>
+                                                <strong>Task 1</strong>
+                                                <span className="pull-right text-muted">40% Complete</span>
+                                            </p>
+                                            <div className="progress progress-striped active">
+                                                <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                                    style={{ width: "40%" }}>
+                                                    <span className="sr-only">40% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p>
+                                                <strong>Task 2</strong>
+                                                <span className="pull-right text-muted">20% Complete</span>
+                                            </p>
+                                            <div className="progress progress-striped active">
+                                                <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                    style={{ width: "20%" }}>>
+                                            <span className="sr-only">20% Complete</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p>
+                                                <strong>Task 3</strong>
+                                                <span className="pull-right text-muted">60% Complete</span>
+                                            </p>
+                                            <div className="progress progress-striped active">
+                                                <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                                    style={{ width: "60%" }}>
+                                                    <span className="sr-only">60% Complete (warning)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p>
+                                                <strong>Task 4</strong>
+                                                <span className="pull-right text-muted">80% Complete</span>
+                                            </p>
+                                            <div className="progress progress-striped active">
+                                                <div className="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+                                                    style={{ width: "80%" }}>
+                                                    <span className="sr-only">80% Complete (danger)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a className="text-center" href="#">
+                                        <strong>See All Tasks</strong>
+                                        <i className="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li className="dropdown">
+                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i className="fa fa-bell fa-fw"></i> <i className="fa fa-caret-down"></i>
+                            </a>
+                            <ul className="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i className="fa fa-comment fa-fw"></i> New Comment
+                                    <span className="pull-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i className="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <span className="pull-right text-muted small">12 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i className="fa fa-envelope fa-fw"></i> Message Sent
+                                    <span className="pull-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i className="fa fa-tasks fa-fw"></i> New Task
+                                    <span className="pull-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <i className="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span className="pull-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li className="divider"></li>
+                                <li>
+                                    <a className="text-center" href="#">
+                                        <strong>See All Alerts</strong>
+                                        <i className="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li className="dropdown">
+                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i className="fa fa-user fa-fw"></i> <i className="fa fa-caret-down"></i>
+                            </a>
+                            <ul className="dropdown-menu dropdown-user">
+                                <li><a href="#"><i className="fa fa-user fa-fw"></i> User Profile</a>
+                                </li>
+                                <li><a href="#"><i className="fa fa-gear fa-fw"></i> Settings</a>
+                                </li>
+                                <li className="divider"></li>
+                                <li><a href="login.html"><i className="fa fa-sign-out fa-fw"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div className="navbar-default sidebar" role="navigation">
+                        <div className="sidebar-nav navbar-collapse">
+                            <ul className="nav">
+                                <li className="sidebar-search">
+                                    <div className="input-group custom-search-form">
+                                        <input type="text" className="form-control" placeholder="Search..." />
+                                        <span className="input-group-btn">
+                                            <button className="btn btn-default" type="button">
+                                                <i className="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <SideMenu content={this.props.config.content} isPathActive={this.isPathActive} />
+                        </div>
+                    </div>
+                </nav>
+
+                <div id="page-wrapper">
+                    {this.routes}
                 </div>
-            </Router>
-        </Provider>
+
+            </div>
+        </Router>
     }
-}
-Module.propTypes = {
-    config: React.PropTypes.object.isRequired
 }
 
 /**
  * Bootstrap the application
- * @param {Object} config configuration for the module
+ * @param {ModuleConfig} config configuration for the module
  * @param {Object|function} modules 
  */
 export function bootstrap(config, modules) {
