@@ -166,6 +166,7 @@ class SideMenu extends React.Component {
 
     }
     componentDidMount() {
+        this.props.onRouteChange(this.pathToRoutes[location.pathname])
         this.unlisten = this.props.history.listen((location, action) => {
             if (action === "PUSH") {
                 this.props.onRouteChange(this.pathToRoutes[location.pathname])
