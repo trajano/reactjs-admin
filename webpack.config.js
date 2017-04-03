@@ -1,15 +1,15 @@
-var webpack = require('webpack')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var yargs = require("yargs")
+const path = require('path')
+const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const yargs = require("yargs")
 
-var optimizeMinimize = yargs.alias('p', 'optimize-minimize').argv.optimizeMinimize
+const optimizeMinimize = yargs.alias('p', 'optimize-minimize').argv.optimizeMinimize
 
 module.exports = {
     entry: ['./src/app'],
     resolve: {
         extensions: [
-            '',
             '.js',
             '.jsx',
         ],
@@ -43,7 +43,7 @@ module.exports = {
         ]
     },
     output: {
-        path: './dist',
+        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.[hash].js'
     },
     plugins: [
