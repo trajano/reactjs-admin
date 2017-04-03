@@ -153,6 +153,16 @@ MenuGroup.propTypes = {
  * The Side Menu
  */
 class SideMenu extends React.Component {
+    static propTypes = {
+        /**
+         * Menu contents
+         */
+        content: React.PropTypes.array.isRequired,
+        /**
+         * Array of class values for the `ul` element depending on the level in the menu.  If not specified, it will use the class names used by sb-admin-2
+         */
+        classes: React.PropTypes.array
+    }
     constructor(props) {
         super(props)
 
@@ -291,16 +301,7 @@ class SideMenu extends React.Component {
         </ul>
     }
 }
-SideMenu.propTypes = {
-    /**
-     * Menu contents
-     */
-    content: React.PropTypes.array.isRequired,
-    /**
-     * Array of class values for the `ul` element depending on the level in the menu.  If not specified, it will use the class names used by sb-admin-2
-     */
-    classes: React.PropTypes.array
-}
+
 const VisibleMenuItem = connect(
     (state) => {
         return { sideMenuActivePath: state.sideMenuActivePath }
