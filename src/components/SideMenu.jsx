@@ -3,9 +3,7 @@ import {
     Link,
     NavLink
 } from 'react-router-dom'
-import CSSTransitionGroup from 'react-addons-css-transition-group'
-
-import './SideMenu.scss'
+import SlideAnimation from 'react-slide-animation'
 import Icon from './Icon'
 
 /**
@@ -82,17 +80,10 @@ class MenuGroup extends React.PureComponent {
                 </li>)
             }
         })
-        return <CSSTransitionGroup
-            transitionName="menugroup"
-            transitionAppear={true}
-            transitionAppearTimeout={200}
-            transitionEnter={false}
-            transitionEnterTimeout={500}
-            transitionLeave={false}
-            transitionLeaveTimeout={200}
+        return <SlideAnimation
             component="ul" className={this.props.classes[this.props.level].join(' ')}>
             {items}
-        </CSSTransitionGroup>
+        </SlideAnimation>
     }
 }
 
