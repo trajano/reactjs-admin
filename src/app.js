@@ -10,6 +10,7 @@ import { bootstrap } from './components/Module'
 
 import MyBlank from './myapp/Blank'
 import Index from './myapp/Index'
+import Forms from './myapp/Forms'
 import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
 import ThirdLevelItem from './myapp/ThirdLevelItem'
@@ -116,6 +117,12 @@ const moduleConfig = {
                 }
 
             ]
+        },
+        {
+            icon: 'edit',
+            to: '/forms',
+            component: Forms,
+            label: 'Forms'
         },
         {
             icon: 'sitemap',
