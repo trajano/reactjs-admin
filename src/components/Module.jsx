@@ -20,7 +20,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 const history = createBrowserHistory()
 
 import './app.scss'
-import SidebarNav from './SidebarNav'
+import SideMenu from './SideMenu'
 
 /**
  * Module configuration.  This must be an EcmaScript object rather than a
@@ -159,6 +159,10 @@ class Module extends React.Component {
         return routes
     }
     render() {
+        let sidebarNavClassName = "sidebar-nav navbar-collapse"
+        if (this.state.width < 768) {
+            sidebarNavClassName += " collapse"
+        }
         return <Router history={this.history}>
             <div id="wrapper">
                 <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
@@ -378,7 +382,21 @@ class Module extends React.Component {
                     </ul>
 
                     <div className="navbar-default sidebar" role="navigation">
-                        <SidebarNav content={this.props.config.content} isPathActive={this.isPathActive} />
+                        <div className={sidebarNavClassName}>
+                            <ul className="nav">
+                                <li className="sidebar-search">
+                                    <div className="input-group custom-search-form">
+                                        <input type="text" className="form-control" placeholder="Search..." />
+                                        <span className="input-group-btn">
+                                            <button className="btn btn-default" type="button">
+                                                <i className="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <SideMenu content={this.props.config.content} isPathActive={this.isPathActive} />
+                        </div>
                     </div>
                 </nav>
 
@@ -387,7 +405,6 @@ class Module extends React.Component {
                         {this.routes}
                     </Switch>
                 </div>
-
             </div>
         </Router>
     }
