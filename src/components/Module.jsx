@@ -119,6 +119,9 @@ class Module extends React.Component {
     }
 
     isPathActive(pathForLink) {
+        if (this.state.activePath === undefined) {
+            return false
+        }
         for (let i = 0; i < pathForLink.length; ++i) {
 
             if (i >= this.state.activePath.length || this.state.activePath[i] != pathForLink[i]) {
