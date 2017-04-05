@@ -1,0 +1,58 @@
+/**
+ * In terms of design, this is the entry point for the framework and should not try to access anything else above this tree.
+ */
+import React from 'react'
+import {
+    Router
+} from 'react-router-dom'
+import createBrowserHistory from 'history/createBrowserHistory'
+
+import Navbar from './Navbar'
+// import SideNav from './SideNav'
+// import ContentSwitcher from './ContentSwitcher'
+
+const SideNav = () => (<div id="side-nav" />)
+const ContentSwitcher = () => (<div id="page-wrapper"><h1>HTML Ipsum Presents</h1>
+
+    <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+    <h2>Header Level 2</h2>
+
+    <ol>
+        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+        <li>Aliquam tincidunt mauris eu risus.</li>
+    </ol>
+
+    <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+
+    <h3>Header Level 3</h3>
+
+    <ul>
+        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+        <li>Aliquam tincidunt mauris eu risus.</li>
+    </ul>
+
+</div>)
+
+class Module extends React.Component {
+    static propTypes = {
+        /**
+         * Module configuration
+         */
+        config: React.PropTypes.object.isRequired
+    }
+    componentWillMount() {
+        this.history = createBrowserHistory()
+    }
+    render() {
+        return <Router history={this.history}>
+            <div className="container">
+                <Navbar title={this.props.config.title} />
+                <SideNav />
+                <ContentSwitcher />
+            </div>
+        </Router>
+    }
+}
+
+export default Module

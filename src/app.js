@@ -1,4 +1,4 @@
-import { bootstrap } from './components/Module'
+import bootstrap from './framework'
 
 import MyBlank from './myapp/Blank'
 import Index from './myapp/Index'
@@ -10,6 +10,7 @@ import FourOhFour from './myapp/FourOhFour'
 
 /** @type {ModuleConfig} */
 const moduleConfig = {
+    title: "Sample Module",
     basename: () => {
         if (location.host === "trajano.github.io") {
             return "/reactjs-admin"
