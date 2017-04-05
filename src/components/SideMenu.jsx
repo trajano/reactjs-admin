@@ -3,7 +3,7 @@ import {
     Link,
     NavLink
 } from 'react-router-dom'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import CSSTransitionGroup from 'react-addons-css-transition-group'
 
 import './SideMenu.scss'
 import Icon from './Icon'
@@ -11,7 +11,7 @@ import Icon from './Icon'
 /**
  * Menu group for the side menu scomponent.
  */
-class MenuGroup extends React.Component {
+class MenuGroup extends React.PureComponent {
     static propTypes = {
         /**
          * Menu contents
@@ -61,39 +61,38 @@ class MenuGroup extends React.Component {
             }
 
             if (elem.to !== undefined && !elem.externalLink) {
-                items.push(<li key={i} className={groupActiveClass}>
+                items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
                     <NavLink exact to={elem.to} activeClassName="active">{icon} {elem.label}{toggle}</NavLink>
                     {menuGroup}
                 </li>)
             } else if (elem.to !== undefined && elem.externalLink) {
-                items.push(<li key={i} className={groupActiveClass}>
+                items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
                     <a href={elem.to}>{icon} {elem.label}{toggle}</a>
                     {menuGroup}
                 </li>)
             } else if (elem.to === undefined && elem.content && elem.content[0] && elem.content[0].to !== undefined && !elem.content[0].externalLink) {
-                items.push(<li key={i} className={groupActiveClass}>
+                items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
                     <Link to={elem.content[0].to}>{icon} {elem.label}{toggle}</Link>
                     {menuGroup}
                 </li>)
             } else {
-                items.push(<li key={i} className={groupActiveClass}>
+                items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
                     <a href="#" onClick={this.handleClick}>{icon} {elem.label}</a>
                     {menuGroup}
                 </li>)
             }
         })
-        return (
-            <ReactCSSTransitionGroup
-                transitionName="menugroup"
-                transitionAppear={true}
-                transitionAppearTimeout={500}
-                transitionEnter={false}
-                transitionLeave={false}>
-                <ul className={this.props.classes[this.props.level].join(' ')}>
-                    {items}
-                </ul>
-            </ReactCSSTransitionGroup >
-        )
+        return <CSSTransitionGroup
+            transitionName="menugroup"
+            transitionAppear={true}
+            transitionAppearTimeout={200}
+            transitionEnter={false}
+            transitionEnterTimeout={500}
+            transitionLeave={false}
+            transitionLeaveTimeout={200}
+            component="ul" className={this.props.classes[this.props.level].join(' ')}>
+            {items}
+        </CSSTransitionGroup>
     }
 }
 
