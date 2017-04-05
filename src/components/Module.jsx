@@ -4,6 +4,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import Navbar from './FullWidthNavbar'
+import Nav from 'react-bootstrap/lib/Nav'
+
 import 'bootstrap'
 import 'font-awesome-webpack'
 
@@ -36,8 +39,6 @@ import SideMenu from './SideMenu'
  * @property {number[]} activePath
  */
 
-const MyWorld = (props) => (<div>My world</div>)
-const MyHome = (props) => (<div>My home</div>)
 /**
  * @typedef {Object} MenuItem
  * @property {boolean} externalLink whether the link is external (i.e. not a route)
@@ -200,16 +201,16 @@ class Module extends React.Component {
         }
         return <Router history={this.history}>
             <div id="wrapper">
-                <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <a className="navbar-brand" href="index.html">SB Admin v2.0</a>
-                    </div>
+                <Navbar
+                    staticTop
+                    componentClass="nav"
+                    role="navigation"
+                    style={{ marginBottom: 0 }}
+                >
+                    <Navbar.Header>
+                        <Navbar.Brand><Link to="index.html">SB Admin ReactJS v2.0</Link></Navbar.Brand>
+                        <Navbar.Toggle />
+                    </Navbar.Header>
 
                     <ul className="nav navbar-top-links navbar-right">
                         <li className="dropdown">
@@ -433,7 +434,7 @@ class Module extends React.Component {
                             <SideMenu content={this.props.config.content} isPathActive={this.isPathActive} />
                         </div>
                     </div>
-                </nav>
+                </Navbar>
 
                 <div id="page-wrapper" style={pageWrapperAdditionalStyles}>
                     <Switch>
