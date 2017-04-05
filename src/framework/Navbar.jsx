@@ -8,7 +8,10 @@ import Icon from './Icon'
 /**
  * This provides the navigation bar of the framework.  The navigation bar 
  * consists of an icon/toggle, title and notification icons.  The brand title
- * disappears for smaller than sm screens.
+ * disappears for sm or smaller.  In its place a home icon will appear along
+ * with the other notification icons.
+ * 
+ * There are 
  */
 class Navbar extends React.Component {
     static propTypes = {
