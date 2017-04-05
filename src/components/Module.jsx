@@ -59,6 +59,9 @@ class Module extends React.Component {
         this.updateDimensions = this.updateDimensions.bind(this)
     }
 
+    /**
+     * @todo check how well this performs
+     */
     updateDimensions() {
 
         const w = window,
@@ -69,7 +72,34 @@ class Module extends React.Component {
             height = w.innerHeight || documentElement.clientHeight || body.clientHeight
 
         // the state will only be set if the threshold marks are changed
-        this.setState({ width, height })
+        let sidebarNavClassNameNeedsCollapse = false
+        let topOffset = 50
+        if (this.state.width < 768) {
+            topOffset = 100
+            sidebarNavClassNameNeedsCollapse = true
+        }
+        let minHeight = this.state.height - topOffset
+        if (minHeight < 1) {
+            minHeight = 1
+        }
+        let pageWrapperMinHeight = 0
+        if (minHeight > topOffset) {
+            pageWrapperMinHeight = minHeight;
+        }
+
+        this.setState((prevState) => {
+
+            if (sidebarNavClassNameNeedsCollapse != prevState.sidebarNavClassNameNeedsCollapse || pageWrapperMinHeight != prevState.pageWrapperMinHeight) {
+                return {
+                    sidebarNavClassNameNeedsCollapse,
+                    pageWrapperMinHeight,
+                    width,
+                    height
+                }
+            } else {
+                return null
+            }
+        })
     }
 
     componentWillMount() {
@@ -161,18 +191,12 @@ class Module extends React.Component {
     }
     render() {
         let sidebarNavClassName = "sidebar-nav navbar-collapse"
-        let topOffset = 50
-        if (this.state.width < 768) {
-            topOffset = 100
+        if (this.state.sidebarNavClassNameNeedsCollapse) {
             sidebarNavClassName += " collapse"
         }
-        let height = this.state.height - topOffset
-        if (height < 1) {
-            height = 1
-        }
         let pageWrapperAdditionalStyles = {}
-        if (height > topOffset) {
-            pageWrapperAdditionalStyles = { minHeight: `$(height)px` }
+        if (this.state.pageWrapperMinHeight > 0) {
+            pageWrapperAdditionalStyles = { minHeight: `$(this.state.pageWrapperMinHeight)px` }
         }
         return <Router history={this.history}>
             <div id="wrapper">
