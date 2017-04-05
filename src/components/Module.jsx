@@ -68,6 +68,7 @@ class Module extends React.Component {
             width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
             height = w.innerHeight || documentElement.clientHeight || body.clientHeight
 
+        // the state will only be set if the threshold marks are changed
         this.setState({ width, height })
     }
 
@@ -160,8 +161,18 @@ class Module extends React.Component {
     }
     render() {
         let sidebarNavClassName = "sidebar-nav navbar-collapse"
+        let topOffset = 50
         if (this.state.width < 768) {
+            topOffset = 100
             sidebarNavClassName += " collapse"
+        }
+        let height = this.state.height - topOffset
+        if (height < 1) {
+            height = 1
+        }
+        let pageWrapperAdditionalStyles = {}
+        if (height > topOffset) {
+            pageWrapperAdditionalStyles = { minHeight: `$(height)px` }
         }
         return <Router history={this.history}>
             <div id="wrapper">
@@ -400,7 +411,7 @@ class Module extends React.Component {
                     </div>
                 </nav>
 
-                <div id="page-wrapper">
+                <div id="page-wrapper" style={pageWrapperAdditionalStyles}>
                     <Switch>
                         {this.routes}
                     </Switch>
