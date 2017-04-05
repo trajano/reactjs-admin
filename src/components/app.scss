@@ -1,2 +1,5 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import './sb-admin-2.css';
+html {
+  overflow-y: scroll;
+}
