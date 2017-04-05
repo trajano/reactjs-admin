@@ -20,7 +20,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 const history = createBrowserHistory()
 
 import './app.scss'
-import SideMenu from './SideMenu'
+import SidebarNav from './SidebarNav'
 
 /**
  * Module configuration.  This must be an EcmaScript object rather than a
@@ -56,7 +56,21 @@ class Module extends React.Component {
     constructor(props) {
         super(props)
         this.isPathActive = this.isPathActive.bind(this)
+        this.updateDimensions = this.updateDimensions.bind(this)
     }
+
+    updateDimensions() {
+
+        const w = window,
+            d = document,
+            documentElement = d.documentElement,
+            body = d.getElementsByTagName('body')[0],
+            width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
+            height = w.innerHeight || documentElement.clientHeight || body.clientHeight
+
+        this.setState({ width, height })
+    }
+
     componentWillMount() {
         this.routes = this.determineRoutesFromContent(this.props.config.content)
         this.routes.push(<Route key={"notFound"} component={this.props.config.notFoundComponent} />)
@@ -69,6 +83,7 @@ class Module extends React.Component {
         this.state = {
             activePath: []
         }
+        this.updateDimensions();
     }
 
     isPathActive(pathForLink) {
@@ -94,10 +109,12 @@ class Module extends React.Component {
                 }
             }
         })
+        window.addEventListener("resize", this.updateDimensions)
     }
 
     componentWillUnmount() {
         this.unlisten()
+        window.removeEventListener("resize", this.updateDimensions)
     }
 
     /**
@@ -361,21 +378,7 @@ class Module extends React.Component {
                     </ul>
 
                     <div className="navbar-default sidebar" role="navigation">
-                        <div className="sidebar-nav navbar-collapse">
-                            <ul className="nav">
-                                <li className="sidebar-search">
-                                    <div className="input-group custom-search-form">
-                                        <input type="text" className="form-control" placeholder="Search..." />
-                                        <span className="input-group-btn">
-                                            <button className="btn btn-default" type="button">
-                                                <i className="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <SideMenu content={this.props.config.content} isPathActive={this.isPathActive} />
-                        </div>
+                        <SidebarNav content={this.props.config.content} isPathActive={this.isPathActive} />
                     </div>
                 </nav>
 
