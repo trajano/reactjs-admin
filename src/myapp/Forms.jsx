@@ -126,11 +126,11 @@ export default (props) => (
                                 <form role="form">
                                     <fieldset disabled>
                                         <div className="form-group">
-                                            <label for="disabledSelect">Disabled input</label>
+                                            <label htmlFor="disabledSelect">Disabled input</label>
                                             <input className="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled />
                                         </div>
                                         <div className="form-group">
-                                            <label for="disabledSelect">Disabled select menu</label>
+                                            <label htmlFor="disabledSelect">Disabled select menu</label>
                                             <select id="disabledSelect" className="form-control">
                                                 <option>Disabled select</option>
                                             </select>
@@ -146,15 +146,15 @@ export default (props) => (
                                 <h1>Form Validation States</h1>
                                 <form role="form">
                                     <div className="form-group has-success">
-                                        <label className="control-label" for="inputSuccess">Input with success</label>
+                                        <label className="control-label" htmlFor="inputSuccess">Input with success</label>
                                         <input type="text" className="form-control" id="inputSuccess" />
                                     </div>
                                     <div className="form-group has-warning">
-                                        <label className="control-label" for="inputWarning">Input with warning</label>
+                                        <label className="control-label" htmlFor="inputWarning">Input with warning</label>
                                         <input type="text" className="form-control" id="inputWarning" />
                                     </div>
                                     <div className="form-group has-error">
-                                        <label className="control-label" for="inputError">Input with error</label>
+                                        <label className="control-label" htmlFor="inputError">Input with error</label>
                                         <input type="text" className="form-control" id="inputError" />
                                     </div>
                                 </form>
