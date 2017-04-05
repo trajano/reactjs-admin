@@ -71,7 +71,7 @@ export default (props) => (
                                         <label>Radio Buttons</label>
                                         <div className="radio">
                                             <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked />Radio 1
+                                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" defaultChecked />Radio 1
                                                 </label>
                                         </div>
                                         <div className="radio">
@@ -88,7 +88,7 @@ export default (props) => (
                                     <div className="form-group">
                                         <label>Inline Radio Buttons</label>
                                         <label className="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked />1
+                                            <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" defaultChecked />1
                                             </label>
                                         <label className="radio-inline">
                                             <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2" />2
