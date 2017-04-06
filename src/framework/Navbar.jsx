@@ -20,18 +20,26 @@ class Navbar extends React.Component {
          */
         title: React.PropTypes.string.isRequired,
         /**
-         * If true, then the small navbar is shown.
+         * If true, then the small device navigation navbar is shown.
          */
-        showSmallNavbar: React.PropTypes.boolean.isRequired
+        smallDeviceNavigation: React.PropTypes.bool.isRequired
     }
     render() {
-        return (<nav className="navbar navbar-toggleable-xs navbar-light bg-faded fixed-top" role="navigation">
-            <div className="navbar-header">
-                <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span></button>
-                <Link className="navbar-brand" to="/">{this.props.title}</Link>
-            </div>
-        </nav>)
+        if (this.props.smallDeviceNavigation) {
+            return (<nav className="navbar navbar-toggleable-xs navbar-light bg-faded fixed-top" role="navigation">
+                <div className="navbar-header">
+                    <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span></button>
+                    <Link className="navbar-brand" to="/">{this.props.title}</Link>
+                </div>
+            </nav>)
+        } else {
+            return (<nav className="navbar navbar-toggleable-xs navbar-light bg-faded fixed-top" role="navigation">
+                <div className="navbar-header">
+                    <Link className="navbar-brand" to="/">{this.props.title}</Link>
+                </div>
+            </nav>)
+        }
     }
 }
 export default Navbar

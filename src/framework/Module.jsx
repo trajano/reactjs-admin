@@ -48,6 +48,12 @@ class Module extends React.Component {
         this.updateDeviceSize = this.updateDeviceSize.bind(this)
     }
 
+    getDefaultState() {
+        return {
+            
+        }
+    }
+
     componentWillMount() {
         this.pathToRoutes = this.determinePathToRoutesFromContent(this.props.config.content, [])
         this.history = createBrowserHistory({
@@ -59,53 +65,6 @@ class Module extends React.Component {
             activePath: []
         }
         this.updateDeviceSize();
-    }
-
-    /**
-     * This will trigger a state change based on the state.
-     */
-    updateDeviceSize() {
-
-        const w = window,
-            d = document,
-            documentElement = d.documentElement,
-            body = d.getElementsByTagName('body')[0],
-            width = w.innerWidth || documentElement.clientWidth || body.clientWidth
-        // height = w.innerHeight || documentElement.clientHeight || body.clientHeight
-
-        let deviceSize = 'xs'
-        if (width >= 1200) {
-            deviceSize = 'xl'
-        } else if (width >= 992) {
-            deviceSize = 'lg'
-        } else if (width >= 768) {
-            deviceSize = 'md'
-        } else if (width >= 567) {
-            deviceSize = 'sm'
-        }
-        this.setState((prevState) => {
-            if (prevState.deviceSize != deviceSize) {
-                return {
-                    deviceSize
-                }
-            } else {
-                return null
-            }
-        })
-    }
-
-
-    isPathActive(pathForLink) {
-        if (this.state.activePath === undefined) {
-            return false
-        }
-        for (let i = 0; i < pathForLink.length; ++i) {
-
-            if (i >= this.state.activePath.length || this.state.activePath[i] != pathForLink[i]) {
-                return false
-            }
-        }
-        return true
     }
 
     componentDidMount() {
@@ -128,6 +87,55 @@ class Module extends React.Component {
         this.unlisten()
         window.removeEventListener("resize", this.updateDeviceSize)
     }
+
+    /**
+     * This will trigger a state change based on the device size.
+     */
+    updateDeviceSize() {
+
+        const w = window,
+            d = document,
+            documentElement = d.documentElement,
+            body = d.getElementsByTagName('body')[0],
+            width = w.innerWidth || documentElement.clientWidth || body.clientWidth
+        // height = w.innerHeight || documentElement.clientHeight || body.clientHeight
+
+        let stateChanges = {}
+        if (width >= 567) {
+            if (!this.state.smallDeviceNavigation) {
+                stateChanges.smallDeviceNavigation = false
+            }
+            if (!this.state.sideNavVisisble) {
+                stateChanges.sideNavVisisble = true
+            }
+        } else {
+            if (!this.state.smallDeviceNavigation) {
+                // Force hide the side nav if the smallDeviceNavigation was false before.
+                stateChanges.sideNavVisisble = false
+            }
+            if (!this.state.smallDeviceNavigation) {
+                stateChanges.smallDeviceNavigation = true
+            }
+        }
+        if (stateChanges !== {}) {
+            console.debug("state changes from window update ", stateChanges)
+            this.setState(stateChanges)
+        }
+    }
+
+    isPathActive(pathForLink) {
+        if (this.state.activePath === undefined) {
+            return false
+        }
+        for (let i = 0; i < pathForLink.length; ++i) {
+
+            if (i >= this.state.activePath.length || this.state.activePath[i] != pathForLink[i]) {
+                return false
+            }
+        }
+        return true
+    }
+
 
     /**
      * This will recursively scan the content array to determine and activation paths
@@ -153,7 +161,7 @@ class Module extends React.Component {
     render() {
         return <Router history={this.history}>
             <div className="container">
-                <Navbar title={this.props.config.title} deviceSize={this.state.deviceSize} />
+                <Navbar title={this.props.config.title} deviceSize={this.state.deviceSize} smallDeviceNavigation={this.state.smallDeviceNavigation} />
                 <SideNav deviceSize={this.state.deviceSize} sideNavVisisble={this.state.sideNavVisisble} />
                 <ContentSwitcher deviceSize={this.state.deviceSize} sideNavVisisble={this.state.sideNavVisisble} />
             </div>
