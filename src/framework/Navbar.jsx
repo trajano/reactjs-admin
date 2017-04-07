@@ -13,7 +13,7 @@ import Icon from './Icon'
  * 
  * There are 
  */
-class Navbar extends React.Component {
+export default class Navbar extends React.Component {
     static propTypes = {
         /**
          * Module title
@@ -46,35 +46,4 @@ class Navbar extends React.Component {
             </nav>)
         }
     }
-    /*
-
-<nav class="nav ml-auto justify-content-end">
-                <a className="nav-link  " href="#"><Icon name="dashboard" fw /></a>
-</nav >
-                <button className="nav-item p-2 justify-content-end btn "><Icon name="phone" fw /></button>
-                    <ul className="nav justify-content-end">
-                    <li className="nav-item">
-                        <a className="nav-link active" href="#">Active</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                </ul>
-*/
-    /*<nav className="nav justify-content-end">
-      <a className="nav-link active" href="#">Active</a>
-      <a className="nav-link" href="#">Link</a>
-      <a className="nav-link" href="#">Link</a>
-      <a className="nav-link disabled" href="#">Disabled</a>
-    </nav>*/
-    //                    <a className="nav-link ml-auto nav-item p-2 justify-content-end btn " href="#"><Icon name="dashboard" fw /></a>
-    //                  <button className="nav-item p-2 justify-content-end btn "><Icon name="phone" fw /></button>
-
 }
-export default Navbar
