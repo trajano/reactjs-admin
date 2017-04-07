@@ -45,12 +45,11 @@ class Module extends React.Component {
     constructor(props) {
         super(props)
         this.isPathActive = this.isPathActive.bind(this)
-        this.updateDeviceSize = this.updateDeviceSize.bind(this)
-    }
-
-    getDefaultState() {
-        return {
-            
+        this.updateStatesBasedOnWindowSize = this.updateStatesBasedOnWindowSize.bind(this)
+        this.state = {
+            activePath: [],
+            smallDeviceNavigation: false,
+            sideNavVisisble: true
         }
     }
 
@@ -60,11 +59,7 @@ class Module extends React.Component {
             basename: ((typeof this.props.config.basename === "function") ? this.props.config.basename() : this.props.config.basename) || ""
         })
 
-        /** @type {ModuleState} */
-        this.state = {
-            activePath: []
-        }
-        this.updateDeviceSize();
+        this.updateStatesBasedOnWindowSize();
     }
 
     componentDidMount() {
@@ -80,18 +75,18 @@ class Module extends React.Component {
                 }
             }
         })
-        window.addEventListener("resize", this.updateDeviceSize)
+        window.addEventListener("resize", this.updateStatesBasedOnWindowSize)
     }
 
     componentWillUnmount() {
         this.unlisten()
-        window.removeEventListener("resize", this.updateDeviceSize)
+        window.removeEventListener("resize", this.updateStatesBasedOnWindowSize)
     }
 
     /**
      * This will trigger a state change based on the device size.
      */
-    updateDeviceSize() {
+    updateStatesBasedOnWindowSize() {
 
         const w = window,
             d = document,
@@ -100,26 +95,21 @@ class Module extends React.Component {
             width = w.innerWidth || documentElement.clientWidth || body.clientWidth
         // height = w.innerHeight || documentElement.clientHeight || body.clientHeight
 
-        let stateChanges = {}
         if (width >= 567) {
-            if (!this.state.smallDeviceNavigation) {
-                stateChanges.smallDeviceNavigation = false
+            if (this.state.smallDeviceNavigation) {
+                this.setState({smallDeviceNavigation: false})
             }
             if (!this.state.sideNavVisisble) {
-                stateChanges.sideNavVisisble = true
+                this.setState({sideNavVisisble: true})
             }
         } else {
             if (!this.state.smallDeviceNavigation) {
                 // Force hide the side nav if the smallDeviceNavigation was false before.
-                stateChanges.sideNavVisisble = false
+                this.setState({sideNavVisisble: false})
             }
             if (!this.state.smallDeviceNavigation) {
-                stateChanges.smallDeviceNavigation = true
+                this.setState({smallDeviceNavigation: true})
             }
-        }
-        if (stateChanges !== {}) {
-            console.debug("state changes from window update ", stateChanges)
-            this.setState(stateChanges)
         }
     }
 
@@ -161,7 +151,7 @@ class Module extends React.Component {
     render() {
         return <Router history={this.history}>
             <div className="container">
-                <Navbar title={this.props.config.title} deviceSize={this.state.deviceSize} smallDeviceNavigation={this.state.smallDeviceNavigation} />
+                <Navbar title={this.props.config.title} deviceSize={this.state.deviceSize} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} />
                 <SideNav deviceSize={this.state.deviceSize} sideNavVisisble={this.state.sideNavVisisble} />
                 <ContentSwitcher deviceSize={this.state.deviceSize} sideNavVisisble={this.state.sideNavVisisble} />
             </div>

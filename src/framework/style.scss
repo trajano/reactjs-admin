@@ -1,8 +1,15 @@
 @import '~bootstrap/scss/bootstrap.scss';
-
 html {
-  overflow-y: scroll;
+    overflow-y: scroll;
 }
-body { 
-  padding-top: 70px; 
+
+body {
+    padding-top: 70px;
+}
+
+.navbar-brand>img {
+    display: inline-block;
+    height: 30px;
+    margin-top: -5px;
+    margin-right: 15px;
 }

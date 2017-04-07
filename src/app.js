@@ -7,10 +7,12 @@ import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
 import ThirdLevelItem from './myapp/ThirdLevelItem'
 import FourOhFour from './myapp/FourOhFour'
+import logo from './myapp/logo-2048x2048.png'
 
 /** @type {ModuleConfig} */
 const moduleConfig = {
     title: "Sample Module",
+    logo,
     basename: () => {
         if (location.host === "trajano.github.io") {
             return "/reactjs-admin"
