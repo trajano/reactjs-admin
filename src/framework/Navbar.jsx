@@ -30,19 +30,32 @@ export default class Navbar extends React.Component {
     }
     render() {
         if (this.props.smallDeviceNavigation) {
-            return (<nav className="navbar navbar-toggleable-xs navbar-light bg-faded fixed-top" role="navigation">
-                <div className="navbar-header">
-                    <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span></button>
-                </div>
+            return (<nav className="navbar navbar-toggleable-sm navbar-light bg-faded fixed-top" role="navigation">
+                <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span></button>
+                <Link className="navbar-brand mr-auto" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} />{this.props.title}</Link>
+                <ul className="navbar-nav">
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="envelope" fw /></a></li>
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="tasks" fw /></a>
+                    </li>
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="comment" fw /></a>
+                    </li>
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="user" fw /></a>
+                    </li>
+                </ul>
             </nav>)
         } else {
-            return (<nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top" role="navigation">
-                <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} />{this.props.title}</Link>
-                <a className="nav-link ml-auto justify-content-end" href="#"><Icon name="envelope" fw /></a>
-                <a className="nav-link justify-content-end" href="#"><Icon name="tasks" fw /></a>
-                <a className="nav-link justify-content-end" href="#"><Icon name="comment" fw /></a>
-                <a className="nav-link justify-content-end" href="#"><Icon name="user" fw /></a>
+            return (<nav className="navbar navbar-toggleable-sm navbar-light bg-faded fixed-top" role="navigation">
+                <Link className="navbar-brand mr-auto" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} />{this.props.title}</Link>
+                <ul className="navbar-nav">
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="envelope" fw /></a></li>
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="tasks" fw /></a>
+                    </li>
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="comment" fw /></a>
+                    </li>
+                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="user" fw /></a>
+                    </li>
+                </ul>
             </nav>)
         }
     }

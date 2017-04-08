@@ -11,7 +11,7 @@ import Navbar from './Navbar'
 import SideNav from './SideNav'
 // import ContentSwitcher from './ContentSwitcher'
 
-const ContentSwitcher = () => (<div id="page-wrapper"><h1>HTML Ipsum Presents</h1>
+const ContentSwitcher = () => (<main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3"><h1>HTML Ipsum Presents</h1>
 
     <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
 
@@ -31,7 +31,7 @@ const ContentSwitcher = () => (<div id="page-wrapper"><h1>HTML Ipsum Presents</h
         <li>Aliquam tincidunt mauris eu risus.</li>
     </ul>
 
-</div>)
+</main>)
 
 class Module extends React.Component {
     static propTypes = {
@@ -94,20 +94,20 @@ class Module extends React.Component {
             width = w.innerWidth || documentElement.clientWidth || body.clientWidth
         // height = w.innerHeight || documentElement.clientHeight || body.clientHeight
 
-        if (width >= 567) {
+        if (width >= 768) {
             if (this.state.smallDeviceNavigation) {
-                this.setState({smallDeviceNavigation: false})
+                this.setState({ smallDeviceNavigation: false })
             }
             if (!this.state.sideNavVisisble) {
-                this.setState({sideNavVisisble: true})
+                this.setState({ sideNavVisisble: true })
             }
         } else {
             if (!this.state.smallDeviceNavigation) {
                 // Force hide the side nav if the smallDeviceNavigation was false before.
-                this.setState({sideNavVisisble: false})
+                this.setState({ sideNavVisisble: false })
             }
             if (!this.state.smallDeviceNavigation) {
-                this.setState({smallDeviceNavigation: true})
+                this.setState({ smallDeviceNavigation: true })
             }
         }
     }
@@ -151,8 +151,10 @@ class Module extends React.Component {
         return <Router history={this.history}>
             <div className="container">
                 <Navbar title={this.props.config.title} deviceSize={this.state.deviceSize} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} />
-                <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} />
-                <ContentSwitcher deviceSize={this.state.deviceSize} sideNavVisisble={this.state.sideNavVisisble} />
+                <div className="container-fluid"><div className="row">
+                    <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} />
+                    <ContentSwitcher deviceSize={this.state.deviceSize} sideNavVisisble={this.state.sideNavVisisble} /></div>
+                </div>
             </div>
         </Router>
     }
