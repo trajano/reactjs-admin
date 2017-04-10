@@ -30,19 +30,20 @@ export default class Navbar extends React.Component {
     }
     render() {
         if (this.props.smallDeviceNavigation) {
-            return (<nav className="navbar navbar-toggleable-sm navbar-light bg-faded fixed-top" role="navigation">
-                <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span></button>
-                <Link className="navbar-brand mr-auto" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} />{this.props.title}</Link>
-                <ul className="navbar-nav">
-                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="envelope" fw /></a></li>
-                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="tasks" fw /></a>
-                    </li>
-                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="comment" fw /></a>
-                    </li>
-                    <li className="nav-item"><a className="nav-link justify-content-end" href="#"><Icon name="user" fw /></a>
-                    </li>
-                </ul>
+            return (<nav className="navbar navbar-light bg-faded fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span></button>
+                    <div className="pull-right">
+                        <span className="pull-right"><a className="nav-link" href="#"><Icon name="user" fw /></a>
+                        </span>
+                        <span className="pull-right"><a className="nav-link" href="#"><Icon name="comment" fw /></a>
+                        </span>
+                        <span className="pull-right"><a className="nav-link" href="#"><Icon name="tasks" fw /></a>
+                        </span>
+                        <span className="pull-right"><a className="nav-link" href="#"><Icon name="envelope" fw /></a></span>
+                    </div>
+                </div>
             </nav>)
         } else {
             return (<nav className="navbar navbar-toggleable-sm navbar-light bg-faded fixed-top" role="navigation">
