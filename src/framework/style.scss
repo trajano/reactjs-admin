@@ -1,5 +1,5 @@
 @import '~bootstrap/scss/bootstrap.scss';
-$navbar-height : 50px !default;
+$navbar-height: 50px !default;
 html {
     overflow-y: scroll;
 }
@@ -14,34 +14,56 @@ body {
     margin-top: -5px;
     margin-right: 15px;
 }
+.navbar {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
 
 .sidebar {
     position: fixed;
-    top: $navbar-height + 1px;
+    top: $navbar-height + 7px;
     bottom: 0;
     left: 0;
-    z-index: $zindex-navbar;
-    padding: 20px;
+    z-index: $zindex-navbar + 100;
     overflow-x: hidden;
     overflow-y: auto;
     /* Scrollable contents if viewport is shorter than content. */
     border-right: 1px solid #eee;
     padding-left: 0;
     padding-right: 0;
-}
-
-.sidebar .nav {
-    margin-bottom: 20px;
-}
-
-.sidebar .nav-item {
-    width: 100%;
-}
-
-.sidebar .nav-item+.nav-item {
-    margin-left: 0;
-}
-
-.sidebar .nav-link {
-    border-radius: 0;
+    .arrow {
+        float: right;
+    }
+    .fa.arrow:before {
+        content: "\f104";
+    }
+    .active>a>.fa.arrow:before {
+        content: "\f107";
+    }
+    .nav li a {
+        display: block;
+        padding: 10px 15px;
+    }
+    .nav>li {
+        &>.nav>li {
+            border-bottom: none;
+            &>a {
+                padding-left: 37px;
+            }
+            &>.nav>li {
+                border-bottom: none;
+                &>a {
+                    padding-left: 52px;
+                }
+            }
+        }
+    }
+    ul {
+        @extend .flex-column;
+    }
+    ul li {
+        border-bottom: 1px solid #e7e7e7;
+    }
+    a:focus {
+        text-decoration: none;
+    }
 }
