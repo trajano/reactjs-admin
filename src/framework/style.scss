@@ -1,5 +1,6 @@
 @import '~bootstrap/scss/bootstrap.scss';
 $navbar-height: 50px !default;
+$nav-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.2) !default;
 html {
     overflow-y: scroll;
 }
@@ -16,10 +17,11 @@ body {
 }
 
 .navbar {
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: $nav-shadow;
 }
 
 .sidebar {
+    box-shadow: $nav-shadow;
     position: fixed;
     top: $navbar-height + 7px;
     bottom: 0;
