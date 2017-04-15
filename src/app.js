@@ -2,6 +2,7 @@ import bootstrap from './framework'
 
 import MyBlank from './myapp/Blank'
 import Index from './myapp/Index'
+import Main from './myapp/Main'
 import Forms from './myapp/Forms'
 import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
@@ -25,7 +26,7 @@ const moduleConfig = {
         {
             icon: 'dashboard',
             to: '/',
-            component: Index,
+            component: Main,
             aliases: ['/index.html'],
             label: 'Dashboard'
         },
