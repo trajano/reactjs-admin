@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from './Icon'
+import 'react-slide-animation/lib/index.css';
 import SlideAnimation from 'react-slide-animation'
 import {
     Link,
@@ -76,15 +77,10 @@ class MenuGroup extends React.PureComponent {
                 </li>)
             }
         })
-        /*
         return <SlideAnimation
             component="ul" className="nav">
             {items}
         </SlideAnimation>
-        */
-        return <ul className="nav">
-            {items}
-        </ul>
     }
 }
 
@@ -94,6 +90,10 @@ export default class SideNav extends React.Component {
          * Menu content
          */
         content: React.PropTypes.array.isRequired,
+        /**
+         * Function to determine if the path is active.
+         */
+        isPathActive: React.PropTypes.func.isRequired,
         /**
          * Side nav is visible
          */
