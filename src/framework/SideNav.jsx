@@ -100,7 +100,7 @@ export default class SideNav extends React.Component {
         visible: React.PropTypes.bool.isRequired
     }
     render() {
-        return (<nav className="sidebar col-sm-3 col-md-2 hidden-xs-down bg-faded" role="navigaton">
+        return (<nav className="sidebar col-sm-4 col-md-4 col-lg-3 hidden-xs-down bg-faded" role="navigaton">
             <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} />
         </nav>)
     }

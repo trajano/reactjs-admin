@@ -34,8 +34,7 @@ export default class ContentSwitcher extends React.Component {
     }
 
     render() {
-        console.log(this.props.routes)
-        return (<main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+        return (<main className="col-sm-8 offset-sm-4 col-md-8 offset-md-4 col-lg-9 offset-lg-3 pt-3">
             <Switch>
                 {this.routes}
             </Switch>

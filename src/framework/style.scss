@@ -45,6 +45,10 @@ body {
     .nav li {
         a {
             color: $body-color;
+            font-size: $font-size-sm;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             display: block;
             padding: 10px 15px;
             @include hover-focus {
