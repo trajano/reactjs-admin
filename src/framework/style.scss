@@ -43,9 +43,6 @@ body {
         content: "\f107";
     }
     .nav li {
-        .active>a {
-            background-color: darken($nav-link-hover-bg, 5%);
-        }
         a {
             color: $body-color;
             display: block;
@@ -53,6 +50,12 @@ body {
             @include hover-focus {
                 background-color: $nav-link-hover-bg;
                 text-decoration: none;
+            }
+            &.active {
+                background-color: darken($nav-link-hover-bg, 5%);
+                @include hover-focus {
+                    background-color: $nav-link-hover-bg;
+                }
             }
         }
     }
