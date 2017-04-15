@@ -31,7 +31,7 @@ export default class Navbar extends React.Component {
     render() {
         if (this.props.smallDeviceNavigation) {
             return (<nav className="navbar navbar-light bg-faded fixed-top" role="navigation">
-                <div class="navbar-header">
+                <div className="navbar-header">
                     <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span></button>
                     <div className="pull-right">

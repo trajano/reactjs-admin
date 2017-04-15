@@ -152,7 +152,7 @@ class Module extends React.Component {
             <div className="container">
                 <Navbar title={this.props.config.title} deviceSize={this.state.deviceSize} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} />
                 <div className="container-fluid"><div className="row">
-                    <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} />
+                    <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} isPathActive={this.isPathActive} />
                     <ContentSwitcher deviceSize={this.state.deviceSize} sideNavVisisble={this.state.sideNavVisisble} /></div>
                 </div>
             </div>
