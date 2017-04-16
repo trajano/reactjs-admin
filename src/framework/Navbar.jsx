@@ -23,6 +23,7 @@ export default class Navbar extends React.Component {
          * Module logo
          */
         title: React.PropTypes.string.isRequired,
+        toggleSideNav: React.PropTypes.func.isRequired,
         /**
          * If true, then the small device navigation navbar is shown.
          */
@@ -32,7 +33,7 @@ export default class Navbar extends React.Component {
         if (this.props.smallDeviceNavigation) {
             return (<nav className="navbar navbar-light bg-faded fixed-top" role="navigation">
                 <div className="navbar-header">
-                    <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation">
+                    <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation" onClick={this.props.toggleSideNav}>
                         <span className="navbar-toggler-icon"></span></button>
                     <div className="pull-right">
                         <span className="pull-right"><a className="nav-link" href="#"><Icon name="user" fw /></a>

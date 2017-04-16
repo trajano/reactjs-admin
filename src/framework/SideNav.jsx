@@ -24,6 +24,10 @@ class MenuGroup extends React.PureComponent {
          * Path. This is an array of indices that would indicate the path to the menu group or item.
          */
         path: React.PropTypes.array.isRequired,
+        /**
+         * Click handler.  See Module for definition.
+         */
+        onClick: React.PropTypes.func.isRequired,
     }
     constructor(props) {
         super(props)
@@ -50,14 +54,14 @@ class MenuGroup extends React.PureComponent {
             if (elem.content) {
                 toggle = <span className="fa arrow"></span>
                 if (this.props.isPathActive(path)) {
-                    menuGroup = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} path={path} isPathActive={this.props.isPathActive} />
+                    menuGroup = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} path={path} isPathActive={this.props.isPathActive} onClick={this.props.onClick} />
                     groupActiveClass = "active"
                 }
             }
 
             if (elem.to !== undefined && !elem.externalLink) {
                 items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
-                    <NavLink exact to={elem.to} activeClassName="active">{icon} {elem.label}{toggle}</NavLink>
+                    <NavLink exact to={elem.to} activeClassName="active" onClick={this.props.onClick}>{icon} {elem.label}{toggle}</NavLink>
                     {menuGroup}
                 </li>)
             } else if (elem.to !== undefined && elem.externalLink) {
@@ -95,13 +99,25 @@ export default class SideNav extends React.Component {
          */
         isPathActive: React.PropTypes.func.isRequired,
         /**
+         * If this is true then the side nav will make itself hidden.
+         */
+        hideOnSelect: React.PropTypes.bool,
+        /**
+         * Click handler.  See Module for definition.
+         */
+        onLinkClick: React.PropTypes.func.isRequired,
+        /**
          * Side nav is visible
          */
         visible: React.PropTypes.bool.isRequired
     }
     render() {
-        return (<nav className="sidebar col-sm-4 col-md-4 col-lg-3 hidden-xs-down bg-faded" role="navigaton">
-            <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} />
-        </nav>)
+        if (this.props.visible) {
+            return (<nav className="sidebar col-sm-4 col-md-4 col-lg-3 bg-faded" role="navigaton">
+                <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} onClick={this.props.onLinkClick}/>
+            </nav>)
+        } else {
+            return null
+        }
     }
 }

@@ -22,6 +22,8 @@ class Module extends React.Component {
     constructor(props) {
         super(props)
         this.isPathActive = this.isPathActive.bind(this)
+        this.onSideNavLinkClick = this.onSideNavLinkClick.bind(this)
+        this.toggleSideNav = this.toggleSideNav.bind(this)
         this.updateStatesBasedOnWindowSize = this.updateStatesBasedOnWindowSize.bind(this)
         this.state = {
             activePath: [],
@@ -102,7 +104,21 @@ class Module extends React.Component {
         }
         return true
     }
+    /**
+     * Toggles the side nav for smaller screens.
+     */
+    toggleSideNav() {
+        this.setState(({ sideNavVisisble }) => ({ sideNavVisisble: !sideNavVisisble }))
+    }
 
+    /**
+     * When the side nav link is clicked and smallDeviceNavigation state is true then set the result to false otherwise set it to true.
+     */
+    onSideNavLinkClick() {
+        if (this.state.smallDeviceNavigation) {
+            this.setState({ sideNavVisisble: false })
+        }
+    }
     /**
      * This will recursively scan the content array to determine and activation paths
      * @param {MenuItem[]} content menu content array
@@ -127,11 +143,11 @@ class Module extends React.Component {
     render() {
         return <Router history={this.history}>
             <div className="container">
-                <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} />
+                <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
                 <div className="container-fluid"><div className="row">
-                    <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} isPathActive={this.isPathActive} />
+                    <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
                     <ContentSwitcher content={this.props.config.content} sideNavVisisble={this.state.sideNavVisisble} /></div>
-                </div> 
+                </div>
             </div>
         </Router>
     }
