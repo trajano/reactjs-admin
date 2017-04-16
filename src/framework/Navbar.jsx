@@ -63,6 +63,19 @@ export default class Navbar extends React.Component {
                 <span className="navbar-toggler-icon"></span>
             </button>)
         }
+        let userDropdown = <li className="nav-item dropdown">
+            <a className="nav-link" href="#" onClick={this.toggleUserDropdown} id="userDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.userDropdownOpen}><Icon name="user" fw /></a>
+        </li>
+        if (this.state.userDropdownOpen) {
+            userDropdown = <li className="nav-item dropdown show">
+                <a className="nav-link" href="#" onClick={this.toggleUserDropdown} id="userDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.userDropdownOpen}><Icon name="user" fw /></a>
+                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropDownMenuLink">
+                    <a className="dropdown-item" href="#">Action</a>
+                    <a className="dropdown-item" href="#">Another action</a>
+                    <a className="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        }
         return (<nav className="navbar navbar-light navbar-toggleable bg-faded fixed-top" role="navigation">
             {leftside}
             <ul className="navbar-nav">
@@ -75,14 +88,7 @@ export default class Navbar extends React.Component {
                 <li className="nav-item dropdown">
                     <a className="nav-link" href="#" id="alertDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.alertDropdownOpen}><Icon name="bell" fw /></a>
                 </li>
-                <li className={"nav-item dropdown " + (this.state.userDropdownOpen ? "show" : "")}>
-                    <a className="nav-link" href="#" onClick={this.toggleUserDropdown} id="userDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.userDropdownOpen}><Icon name="user" fw /></a>
-                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropDownMenuLink">
-                        <a className="dropdown-item" href="#">Action</a>
-                        <a className="dropdown-item" href="#">Another action</a>
-                        <a className="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
+                {userDropdown}
             </ul>
         </nav>)
     }
