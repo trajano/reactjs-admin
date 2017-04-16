@@ -47,7 +47,6 @@ export default class ContentSwitcher extends React.Component {
 
     render() {
         return (<main className="col-sm-8 offset-sm-4 col-md-8 offset-md-4 col-lg-9 offset-lg-3 col-xl-10 offset-xl-2 pt-3">
-            <h1>TITLE</h1>
             <Switch>
                 {this.routes}
                 this.props.notFoundComponent && <Route component={this.props.notFoundComponent} />
