@@ -17,7 +17,7 @@ export default class ContentSwitcher extends React.Component {
         /**
          * Component to render when the URL is not found.
          */
-        notFoundComponent: PropTypes.element
+        notFoundComponent: PropTypes.func
     }
 
     componentWillMount() {
