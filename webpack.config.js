@@ -12,17 +12,7 @@ module.exports = {
         extensions: [
             '.js',
             '.jsx',
-        ],
-        alias: {
-            'react$': path.join(__dirname, 'node_modules', 'react', 'dist',
-                (optimizeMinimize ? 'react.min.js' : 'react.js')),
-            'react-dom$': path.join(__dirname, 'node_modules', 'react-dom', 'dist',
-                (optimizeMinimize ? 'react-dom.min.js' : 'react-dom.js')),
-            'redux$': path.join(__dirname, 'node_modules', 'redux', 'dist',
-                (optimizeMinimize ? 'redux.min.js' : 'redux.js')),
-            'react-redux$': path.join(__dirname, 'node_modules', 'react-redux', 'dist',
-                (optimizeMinimize ? 'react-redux.min.js' : 'react-redux.js'))
-        }
+        ]
     },
     module: {
         loaders: [
