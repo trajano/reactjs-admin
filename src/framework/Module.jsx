@@ -74,7 +74,6 @@ class Module extends React.Component {
             body = d.getElementsByTagName('body')[0],
             width = w.innerWidth || documentElement.clientWidth || body.clientWidth
         // height = w.innerHeight || documentElement.clientHeight || body.clientHeight
-        console.log("width", width)
         if (width >= 576) {
             if (this.state.smallDeviceNavigation) {
                 this.setState({ smallDeviceNavigation: false })
