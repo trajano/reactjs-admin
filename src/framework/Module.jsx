@@ -2,6 +2,7 @@
  * In terms of design, this is the entry point for the framework and should not try to access anything else above this tree.
  */
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
     Router
 } from 'react-router-dom'
@@ -16,7 +17,7 @@ class Module extends React.Component {
         /**
          * Module configuration
          */
-        config: React.PropTypes.object.isRequired
+        config: PropTypes.object.isRequired
     }
 
     constructor(props) {

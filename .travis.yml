@@ -24,6 +24,7 @@ install:
 - npm install
 script:
 - sonar-scanner
+- cp dist/index.html dist/404.html
 deploy:
   provider: pages
   local_dir: dist

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import 'font-awesome-webpack'
 
 const Icon = props => {
@@ -10,8 +11,8 @@ const Icon = props => {
 }
 
 Icon.PropTypes = {
-    name: React.PropTypes.string.isRequired,
-    fw: React.PropTypes.bool
+    name: PropTypes.string.isRequired,
+    fw: PropTypes.bool
 }
 
 export default Icon

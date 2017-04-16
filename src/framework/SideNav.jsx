@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Icon from './Icon'
 import 'react-slide-animation/lib/index.css';
 import SlideAnimation from 'react-slide-animation'
@@ -15,19 +16,19 @@ class MenuGroup extends React.PureComponent {
         /**
          * Menu contents
          */
-        content: React.PropTypes.array.isRequired,
+        content: PropTypes.array.isRequired,
         /**
          * Menu level.  Must be zero or higher.
          */
-        level: React.PropTypes.number.isRequired,
+        level: PropTypes.number.isRequired,
         /**
          * Path. This is an array of indices that would indicate the path to the menu group or item.
          */
-        path: React.PropTypes.array.isRequired,
+        path: PropTypes.array.isRequired,
         /**
          * Click handler.  See Module for definition.
          */
-        onClick: React.PropTypes.func.isRequired,
+        onClick: PropTypes.func.isRequired,
     }
     constructor(props) {
         super(props)
@@ -93,29 +94,31 @@ export default class SideNav extends React.Component {
         /**
          * Menu content
          */
-        content: React.PropTypes.array.isRequired,
+        content: PropTypes.array.isRequired,
         /**
          * Function to determine if the path is active.
          */
-        isPathActive: React.PropTypes.func.isRequired,
+        isPathActive: PropTypes.func.isRequired,
         /**
          * If this is true then the side nav will make itself hidden.
          */
-        hideOnSelect: React.PropTypes.bool,
+        hideOnSelect: PropTypes.bool,
         /**
          * Click handler.  See Module for definition.
          */
-        onLinkClick: React.PropTypes.func.isRequired,
+        onLinkClick: PropTypes.func.isRequired,
         /**
          * Side nav is visible
          */
-        visible: React.PropTypes.bool.isRequired
+        visible: PropTypes.bool.isRequired
     }
     render() {
         if (this.props.visible) {
-            return (<nav className="sidebar col-sm-4 col-md-4 col-lg-3 bg-faded" role="navigaton">
+            return (
+            <SlideAnimation><nav className="sidebar col-sm-4 col-md-4 col-lg-3 bg-faded" role="navigaton">
                 <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} onClick={this.props.onLinkClick}/>
-            </nav>)
+                </nav>
+            </SlideAnimation>)
         } else {
             return null
         }

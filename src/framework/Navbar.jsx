@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
     Link
 } from 'react-router-dom'
@@ -18,16 +19,16 @@ export default class Navbar extends React.Component {
         /**
          * Module title
          */
-        title: React.PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
         /**
          * Module logo
          */
-        title: React.PropTypes.string.isRequired,
-        toggleSideNav: React.PropTypes.func.isRequired,
+        title: PropTypes.string.isRequired,
+        toggleSideNav: PropTypes.func.isRequired,
         /**
          * If true, then the small device navigation navbar is shown.
          */
-        smallDeviceNavigation: React.PropTypes.bool.isRequired
+        smallDeviceNavigation: PropTypes.bool.isRequired
     }
     render() {
         if (this.props.smallDeviceNavigation) {
