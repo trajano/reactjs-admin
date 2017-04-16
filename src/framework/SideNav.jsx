@@ -118,7 +118,7 @@ export default class SideNav extends React.Component {
     render() {
         let item = []
         if (this.props.visible) {
-            item = [<nav key="nav" className="sidebar col-sm-4 col-md-4 col-lg-3 col-xl-2 bg-faded" role="navigation">
+            item = [<nav key="nav" className="sidebar" role="navigation">
                 <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} onClick={this.props.onLinkClick} />
             </nav>]
         }

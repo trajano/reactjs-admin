@@ -30,7 +30,51 @@ export default class Navbar extends React.Component {
          */
         smallDeviceNavigation: PropTypes.bool.isRequired
     }
+    //                <div className="collapse navbar-collapse" >
+    //                
+
+    //              </div>
+    constructor(props) {
+        super(props)
+        this.state = {
+            messagesDropdownOpen: false,
+            tasksDropdownOpen: false,
+            alertsDropdownOpen: false,
+            userDropdownOpen: false
+        }
+    }
+
     render() {
+        let leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt="" />{this.props.title}</Link>
+        if (this.props.smallDeviceNavigation) {
+            leftside = (<button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation" onClick={this.props.toggleSideNav}>
+                <span className="navbar-toggler-icon"></span>
+            </button>)
+        }
+        return (<nav className="navbar navbar-light navbar-toggleable bg-faded fixed-top" role="navigation">
+            {leftside}
+            <ul className="navbar-nav">
+                <li className="nav-item dropdown">
+                    <a className="nav-link" href="#" id="messagesDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.messagesDropdownOpen}><Icon name="envelope" fw /></a>
+                </li>
+                <li className="nav-item dropdown">
+                    <a className="nav-link" href="#" id="tasksDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.tasksDropdownOpen}><Icon name="tasks" fw /></a>
+                </li>
+                <li className="nav-item dropdown">
+                    <a className="nav-link" href="#" id="alertDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.alertDropdownOpen}><Icon name="bell" fw /></a>
+                </li>
+                <li className="nav-item dropdown">
+                    <a className="nav-link" href="#" id="userDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.userDropdownOpen}><Icon name="user" fw /></a>
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropDownMenuLink">
+                        <a className="dropdown-item" href="#">Action</a>
+                        <a className="dropdown-item" href="#">Another action</a>
+                        <a className="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>)
+    }
+    render2() {
         if (this.props.smallDeviceNavigation) {
             return (<nav className="navbar navbar-light bg-faded fixed-top" role="navigation">
                 <div className="navbar-header">

@@ -17,10 +17,13 @@ body {
         margin-top: -5px;
         margin-right: 15px;
     }
+    .navbar-nav {
+        @extend .ml-auto;
+        flex-direction: row;
+    }
 }
 
 $nav-transition: all 0.3s ease-out;
-
 .slide-animation-enter {
     overflow: hidden;
     height: 1px;

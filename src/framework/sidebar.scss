@@ -1,4 +1,11 @@
+@import '~bootstrap/scss/bootstrap.scss';
 .sidebar {
+    @extend .col-sm-4;
+    @extend .col-md-4;
+    @extend .col-lg-3;
+    @extend .col-xl-2;
+    @extend .bg-faded;
+    
     box-shadow: $nav-shadow;
     position: fixed;
     top: $navbar-height + 7px;
