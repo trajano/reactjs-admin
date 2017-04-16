@@ -9,81 +9,14 @@ body {
     padding-top: $navbar-height;
 }
 
-.navbar-brand>img {
-    display: inline-block;
-    height: 30px;
-    margin-top: -5px;
-    margin-right: 15px;
-}
-
 .navbar {
     box-shadow: $nav-shadow;
+    .navbar-brand>img {
+        display: inline-block;
+        height: 30px;
+        margin-top: -5px;
+        margin-right: 15px;
+    }
 }
 
-.sidebar {
-    box-shadow: $nav-shadow;
-    position: fixed;
-    top: $navbar-height + 7px;
-    bottom: 0;
-    left: 0;
-    z-index: $zindex-navbar + 100;
-    overflow-x: hidden;
-    overflow-y: auto;
-    /* Scrollable contents if viewport is shorter than content. */
-    border-right: 1px solid $nav-tabs-border-color;
-    padding-left: 0;
-    padding-right: 0;
-    .arrow {
-        float: right;
-    }
-    .fa.arrow:before {
-        content: "\f104";
-    }
-    .active>a>.fa.arrow:before {
-        content: "\f107";
-    }
-    .nav li {
-        a {
-            color: $body-color;
-            font-size: $font-size-sm;
-            overflow-x: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            display: block;
-            padding: 10px 15px;
-            @include hover-focus {
-                background-color: $nav-link-hover-bg;
-                text-decoration: none;
-            }
-            &.active {
-                background-color: darken($nav-link-hover-bg, 5%);
-                @include hover-focus {
-                    background-color: $nav-link-hover-bg;
-                }
-            }
-        }
-    }
-    .nav>li {
-        &>.nav>li {
-            border-bottom: none;
-            &>a {
-                padding-left: 37px;
-            }
-            &>.nav>li {
-                border-bottom: none;
-                &>a {
-                    padding-left: 52px;
-                }
-            }
-        }
-    }
-    ul {
-        @extend .flex-column;
-    }
-    ul li {
-        border-bottom: 1px solid $nav-tabs-border-color;
-    }
-    a:focus {
-        text-decoration: none;
-    }
-}
+@import './sidebar.scss';
