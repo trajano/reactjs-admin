@@ -19,4 +19,32 @@ body {
     }
 }
 
+$nav-transition: all 0.3s ease-out;
+
+.slide-animation-enter {
+    overflow: hidden;
+    height: 1px;
+    opacity: 0.01;
+}
+
+.slide-animation-enter.slide-animation-enter-active {
+    opacity: 1;
+    overflow: hidden;
+    transition: $nav-transition;
+    transition-property: opacity min-height, max-height, height;
+}
+
+.slide-animation-leave {
+    overflow: hidden;
+    opacity: 1;
+    transition: $nav-transition;
+    transition-property: opacity min-height, max-height, height;
+}
+
+.slide-animation-leave.slide-animation-leave-active {
+    overflow: hidden;
+    height: 1px;
+    opacity: 0.01;
+}
+
 @import './sidebar.scss';

@@ -10,6 +10,7 @@ import ThirdLevelItem from './myapp/ThirdLevelItem'
 import FourOhFour from './myapp/FourOhFour'
 import logo from './myapp/logo-2048x2048.png'
 
+import './myapp/app.css'
 /** @type {ModuleConfig} */
 const moduleConfig = {
     title: "Sample Module",

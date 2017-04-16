@@ -50,7 +50,7 @@ export default class Navbar extends React.Component {
         } else {
             return (<nav className="navbar navbar-light bg-faded fixed-top" role="navigation">
                 <div className="navbar-header">
-                    <Link className="navbar-brand mr-auto" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} />{this.props.title}</Link>
+                    <Link className="navbar-brand mr-auto" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt="" />{this.props.title}</Link>
                     <div className="pull-right">
                         <span className="pull-right"><a className="nav-link" href="#"><Icon name="user" fw /></a>
                         </span>

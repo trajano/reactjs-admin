@@ -7,6 +7,7 @@ import {
     Router
 } from 'react-router-dom'
 import createBrowserHistory from 'history/createBrowserHistory'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 import Navbar from './Navbar'
 import SideNav from './SideNav'
@@ -29,7 +30,7 @@ class Module extends React.Component {
         this.state = {
             activePath: [],
             smallDeviceNavigation: false,
-            sideNavVisisble: true
+            sideNavVisible: true
         }
     }
 
@@ -55,6 +56,7 @@ class Module extends React.Component {
                 }
             }
         })
+        document.title = this.props.config.title
         window.addEventListener("resize", this.updateStatesBasedOnWindowSize)
     }
 
@@ -78,13 +80,13 @@ class Module extends React.Component {
             if (this.state.smallDeviceNavigation) {
                 this.setState({ smallDeviceNavigation: false })
             }
-            if (!this.state.sideNavVisisble) {
-                this.setState({ sideNavVisisble: true })
+            if (!this.state.sideNavVisible) {
+                this.setState({ sideNavVisible: true })
             }
         } else {
             if (!this.state.smallDeviceNavigation) {
                 // Force hide the side nav if the smallDeviceNavigation was false before.
-                this.setState({ sideNavVisisble: false })
+                this.setState({ sideNavVisible: false })
             }
             if (!this.state.smallDeviceNavigation) {
                 this.setState({ smallDeviceNavigation: true })
@@ -108,7 +110,7 @@ class Module extends React.Component {
      * Toggles the side nav for smaller screens.
      */
     toggleSideNav() {
-        this.setState(({ sideNavVisisble }) => ({ sideNavVisisble: !sideNavVisisble }))
+        this.setState(({ sideNavVisible }) => ({ sideNavVisible: !sideNavVisible }))
     }
 
     /**
@@ -116,7 +118,7 @@ class Module extends React.Component {
      */
     onSideNavLinkClick() {
         if (this.state.smallDeviceNavigation) {
-            this.setState({ sideNavVisisble: false })
+            this.setState({ sideNavVisible: false })
         }
     }
     /**
@@ -144,9 +146,9 @@ class Module extends React.Component {
         return <Router history={this.history}>
             <div className="container">
                 <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
-                <div className="container-fluid"><div className="row">
-                    <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
-                    <ContentSwitcher content={this.props.config.content} sideNavVisisble={this.state.sideNavVisisble} notFoundComponent={this.props.config.notFoundComponent} /></div>
+                <div className="container-fluid">
+                    <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
+                    <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} />
                 </div>
             </div>
         </Router>
