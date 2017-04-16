@@ -147,7 +147,7 @@ class Module extends React.Component {
                 <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
                 <div className="container-fluid"><div className="row">
                     <SideNav content={this.props.config.content} visible={this.state.sideNavVisisble} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
-                    <ContentSwitcher content={this.props.config.content} sideNavVisisble={this.state.sideNavVisisble} /></div>
+                    <ContentSwitcher content={this.props.config.content} sideNavVisisble={this.state.sideNavVisisble} notFoundComponent={this.props.config.notFoundComponent} /></div>
                 </div>
             </div>
         </Router>

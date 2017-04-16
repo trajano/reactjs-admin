@@ -67,12 +67,12 @@ class MenuGroup extends React.PureComponent {
                 </li>)
             } else if (elem.to !== undefined && elem.externalLink) {
                 items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
-                    <a href={elem.to}>{icon} {elem.label}{toggle}</a>
+                    <a href={elem.to}>{toggle}{icon} {elem.label}</a>
                     {menuGroup}
                 </li>)
             } else if (elem.to === undefined && elem.content && elem.content[0] && elem.content[0].to !== undefined && !elem.content[0].externalLink) {
                 items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
-                    <Link to={elem.content[0].to}>{icon} {elem.label}{toggle}</Link>
+                    <Link to={elem.content[0].to}>{toggle}{icon} {elem.label}</Link>
                     {menuGroup}
                 </li>)
             } else {
@@ -115,10 +115,9 @@ export default class SideNav extends React.Component {
     render() {
         if (this.props.visible) {
             return (
-            <SlideAnimation><nav className="sidebar col-sm-4 col-md-4 col-lg-3 bg-faded" role="navigaton">
-                <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} onClick={this.props.onLinkClick}/>
-                </nav>
-            </SlideAnimation>)
+                <nav className="sidebar col-sm-4 col-md-4 col-lg-3 bg-faded" role="navigaton">
+                    <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} onClick={this.props.onLinkClick} />
+                </nav>)
         } else {
             return null
         }

@@ -9,6 +9,17 @@ import {
  * This switches between contents based on the route.  It will assemble the routes from the configuration.
  */
 export default class ContentSwitcher extends React.Component {
+    static propTypes = {
+        /**
+         * Menu contents
+         */
+        content: PropTypes.array.isRequired,
+        /**
+         * Component to render when the URL is not found.
+         */
+        notFoundComponent: PropTypes.element
+    }
+
     componentWillMount() {
         this.routes = this.reduceRouteConfiguration(this.props.content)
     }
@@ -38,6 +49,7 @@ export default class ContentSwitcher extends React.Component {
         return (<main className="col-sm-8 offset-sm-4 col-md-8 offset-md-4 col-lg-9 offset-lg-3 pt-3">
             <Switch>
                 {this.routes}
+                this.props.notFoundComponent && <Route component={this.props.notFoundComponent} />
             </Switch>
         </main>)
     }
