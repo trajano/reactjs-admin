@@ -42,6 +42,18 @@ export default class Navbar extends React.Component {
             alertsDropdownOpen: false,
             userDropdownOpen: false
         }
+        this.toggleMessagesDropdown = this.toggleMessagesDropdown.bind(this)
+        this.toggleUserDropdown = this.toggleUserDropdown.bind(this)
+    }
+
+    toggleMessagesDropdown(e) {
+        e.preventDefault()
+        this.setState(({ messagesDropdownOpen }) => ({ messagesDropdownOpen: !messagesDropdownOpen }))
+    }
+
+    toggleUserDropdown(e) {
+        e.preventDefault()
+        this.setState(({ userDropdownOpen }) => ({ userDropdownOpen: !userDropdownOpen }))
     }
 
     render() {
@@ -63,8 +75,8 @@ export default class Navbar extends React.Component {
                 <li className="nav-item dropdown">
                     <a className="nav-link" href="#" id="alertDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.alertDropdownOpen}><Icon name="bell" fw /></a>
                 </li>
-                <li className="nav-item dropdown">
-                    <a className="nav-link" href="#" id="userDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.userDropdownOpen}><Icon name="user" fw /></a>
+                <li className={"nav-item dropdown " + (this.state.userDropdownOpen ? "show" : "")}>
+                    <a className="nav-link" href="#" onClick={this.toggleUserDropdown} id="userDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.userDropdownOpen}><Icon name="user" fw /></a>
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropDownMenuLink">
                         <a className="dropdown-item" href="#">Action</a>
                         <a className="dropdown-item" href="#">Another action</a>
