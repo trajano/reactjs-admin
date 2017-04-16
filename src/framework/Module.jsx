@@ -144,11 +144,13 @@ class Module extends React.Component {
 
     render() {
         return <Router history={this.history}>
-            <div className="container">
+            <div>
                 <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
                 <div className="container-fluid">
-                    <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
-                    <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} />
+                    <div className="row">
+                        <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
+                        <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} />
+                    </div>
                 </div>
             </div>
         </Router>
