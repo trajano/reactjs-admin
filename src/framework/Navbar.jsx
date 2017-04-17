@@ -7,6 +7,27 @@ import {
 import SlideAnimation from 'react-slide-animation'
 import Icon from './Icon'
 
+class Dropdown extends React.Component {
+    static propTypes = {
+        id: PropTypes.string.isRequired,
+        icon: PropTypes.string.isRequired,
+        open: PropTypes.bool.isRequired,
+        onDropdownClick: PropTypes.func.isRequired
+    }
+    render() {
+        let dropdownContents = [<a key="toggle" className="nav-link" href="#" onClick={this.props.onDropdownClick} id={this.props.id} aria-haspopup="true" aria-expanded={this.props.open}><Icon name={this.props.icon} fw /></a>]
+        if (this.props.open) {
+            dropdownContents.push(<div key="menu" className="dropdown-menu dropdown-menu-right" aria-labelledby={this.props.id}>
+                {this.props.children}
+            </div>)
+        }
+
+        return <SlideAnimation component="li" className="nav-item dropdown show">
+            {dropdownContents}
+        </SlideAnimation>
+    }
+}
+
 /**
  * This provides the navigation bar of the framework.  The navigation bar 
  * consists of an icon/toggle, title and notification icons.  The brand title
@@ -49,12 +70,22 @@ export default class Navbar extends React.Component {
 
     toggleMessagesDropdown(e) {
         e.preventDefault()
-        this.setState(({ messagesDropdownOpen }) => ({ messagesDropdownOpen: !messagesDropdownOpen }))
+        this.setState(({ messagesDropdownOpen }) => ({
+            messagesDropdownOpen: !messagesDropdownOpen,
+            tasksDropdownOpen: false,
+            alertsDropdownOpen: false,
+            userDropdownOpen: false
+        }))
     }
 
     toggleUserDropdown(e) {
         e.preventDefault()
-        this.setState(({ userDropdownOpen }) => ({ userDropdownOpen: !userDropdownOpen }))
+        this.setState(({ userDropdownOpen }) => ({
+            messagesDropdownOpen: false,
+            tasksDropdownOpen: false,
+            alertsDropdownOpen: false,
+            userDropdownOpen: !userDropdownOpen
+        }))
     }
 
     render() {
@@ -89,7 +120,11 @@ export default class Navbar extends React.Component {
                 <li className="nav-item dropdown">
                     <a className="nav-link" href="#" id="alertDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.alertDropdownOpen}><Icon name="bell" fw /></a>
                 </li>
-                {userDropdown2}
+                <Dropdown id="userDropDownMenuLink" open={this.state.userDropdownOpen} onDropdownClick={this.toggleUserDropdown} icon="user">
+                    <a className="dropdown-item" href="#">Action</a>
+                    <a className="dropdown-item" href="#">Another action</a>
+                    <a className="dropdown-item" href="#">Something else here</a>
+                </Dropdown>
             </ul>
         </nav>)
     }

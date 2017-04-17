@@ -20,10 +20,14 @@ body {
     .navbar-nav {
         @extend .ml-auto;
         flex-direction: row;
+        .nav-link {
+            padding-right: .5rem;
+            padding-left: .5rem;
+        }
     }
 }
 
-$nav-transition: all 0.3s ease-out;
+$nav-transition: all 0.2s ease-out;
 .slide-animation-enter {
     overflow: hidden;
     height: 1px;
