@@ -38,14 +38,14 @@ $nav-transition: all 0.2s ease-out;
     opacity: 1;
     overflow: hidden;
     transition: $nav-transition;
-    transition-property: opacity min-height, max-height, height;
+    transition-property: opacity min-height, max-height, height, transform;
 }
 
 .slide-animation-leave {
     overflow: hidden;
     opacity: 1;
     transition: $nav-transition;
-    transition-property: opacity min-height, max-height, height;
+    transition-property: opacity min-height, max-height, height, transform;
 }
 
 .slide-animation-leave.slide-animation-leave-active {

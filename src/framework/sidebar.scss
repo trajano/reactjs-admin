@@ -5,7 +5,6 @@
     @extend .col-lg-3;
     @extend .col-xl-2;
     @extend .bg-faded;
-    
     box-shadow: $nav-shadow;
     position: fixed;
     top: $navbar-height + 7px;
@@ -24,8 +23,8 @@
     .fa.arrow:before {
         content: "\f104";
     }
-    .active>a>.fa.arrow:before {
-        content: "\f107";
+    .active>a>.fa.arrow {
+        transform: rotate(-90deg);
     }
     .nav li {
         a {

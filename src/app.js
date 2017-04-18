@@ -8,6 +8,7 @@ import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
 import ThirdLevelItem from './myapp/ThirdLevelItem'
 import FourOhFour from './myapp/FourOhFour'
+import WritingAPage from './myapp/WritingAPage'
 import logo from './myapp/logo-2048x2048.png'
 
 import './myapp/app.css'
@@ -59,10 +60,10 @@ const moduleConfig = {
             label: 'Multi-Level Dropdown',
             content: [
                 {
-                    label: 'Second Level Item',
+                    label: 'Writing a Page',
                     to: '/s1',
-                    aliases: ['/index2.html'],
-                    component: ThirdLevelItem
+                    aliases: ['/index2.html', '/writing'],
+                    component: WritingAPage
                 },
                 {
                     label: 'Second Level Item',
