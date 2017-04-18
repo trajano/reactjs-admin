@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const yargs = require("yargs")
 
@@ -65,6 +66,7 @@ module.exports = {
                 html5: true
             }
         }),
+        new FaviconsWebpackPlugin('./src/myapp/logo-2048x2048.png'),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'

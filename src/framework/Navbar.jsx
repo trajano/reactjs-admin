@@ -12,6 +12,7 @@ import { enableUniqueIds } from 'react-html-id'
 class InternalDropdown extends React.Component {
     static propTypes = {
         icon: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
         open: PropTypes.bool
     }
     constructor(props) {
@@ -34,6 +35,7 @@ class InternalDropdown extends React.Component {
             className="nav-link" href="#"
             onClick={this.toggleOpen}
             id={this.nextUniqueId()}
+            title={this.props.title}
             aria-haspopup="true"
             aria-expanded={this.state.open}><Icon name={this.props.icon} fw /></a>]
         if (this.state.open) {
@@ -118,30 +120,30 @@ export default class Navbar extends React.Component {
     render() {
         let leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt="" />{this.props.title}</Link>
         if (this.props.smallDeviceNavigation) {
-            leftside = (<button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle navigation" onClick={this.props.toggleSideNav}>
+            leftside = (<button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle Navigation" onClick={this.props.toggleSideNav}>
                 <span className="navbar-toggler-icon"></span>
             </button>)
         }
 
-        return (<nav className="navbar navbar-light navbar-toggleable bg-faded fixed-top" role="navigation">
+        return (<nav className="navbar navbar-light navbar-toggleable bg-faded fixed-top" role="toolbar">
             {leftside}
             <ul className="navbar-nav">
-                <Dropdown icon="envelope" defaultOpen={false}>
+                <Dropdown icon="envelope" title="Messages" defaultOpen={false}>
                     <a className="dropdown-item" href="#">Action</a>
                     <a className="dropdown-item" href="#">Another action</a>
                     <a className="dropdown-item" href="#">Something else here</a>
                 </Dropdown>
-                <Dropdown icon="tasks">
+                <Dropdown icon="tasks" title="Tasks">
                     <a className="dropdown-item" href="#">Action</a>
                     <a className="dropdown-item" href="#">Another action</a>
                     <a className="dropdown-item" href="#">Something else here</a>
                 </Dropdown>
-                <Dropdown icon="bell">
+                <Dropdown icon="bell" title="Alerts">
                     <a className="dropdown-item" href="#">Action</a>
                     <a className="dropdown-item" href="#">Another action</a>
                     <a className="dropdown-item" href="#">Something else here</a>
                 </Dropdown>
-                <Dropdown icon="user">
+                <Dropdown icon="user" title="User Settings">
                     <a className="dropdown-item" href="#">Action</a>
                     <a className="dropdown-item" href="#">Another action</a>
                     <a className="dropdown-item" href="#">Something else here</a>
