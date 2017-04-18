@@ -3,21 +3,41 @@ import PropTypes from 'prop-types'
 import {
     Link
 } from 'react-router-dom'
+import onClickOutside from 'react-onclickoutside'
 
 import SlideAnimation from 'react-slide-animation'
 import Icon from './Icon'
+import { enableUniqueIds } from 'react-html-id'
 
-class Dropdown extends React.Component {
+class InternalDropdown extends React.Component {
     static propTypes = {
-        id: PropTypes.string.isRequired,
         icon: PropTypes.string.isRequired,
-        open: PropTypes.bool.isRequired,
-        onDropdownClick: PropTypes.func.isRequired
+        open: PropTypes.bool
+    }
+    constructor(props) {
+        super(props)
+        enableUniqueIds(this)
+        this.state = { open: false }
+        this.toggleOpen = this.toggleOpen.bind(this)
+    }
+    toggleOpen(e) {
+        e.preventDefault()
+        this.setState(({ open }) => ({ open: !open }))
+    }
+    handleClickOutside(e) {
+        if (this.state.open) {
+            this.setState({ open: false })
+        }
     }
     render() {
-        let dropdownContents = [<a key="toggle" className="nav-link" href="#" onClick={this.props.onDropdownClick} id={this.props.id} aria-haspopup="true" aria-expanded={this.props.open}><Icon name={this.props.icon} fw /></a>]
-        if (this.props.open) {
-            dropdownContents.push(<div key="menu" className="dropdown-menu dropdown-menu-right" aria-labelledby={this.props.id}>
+        let dropdownContents = [<a key="toggle"
+            className="nav-link" href="#"
+            onClick={this.toggleOpen}
+            id={this.nextUniqueId()}
+            aria-haspopup="true"
+            aria-expanded={this.state.open}><Icon name={this.props.icon} fw /></a>]
+        if (this.state.open) {
+            dropdownContents.push(<div key="menu" className="dropdown-menu dropdown-menu-right" aria-labelledby={this.lastUniqueId()}>
                 {this.props.children}
             </div>)
         }
@@ -27,6 +47,8 @@ class Dropdown extends React.Component {
         </SlideAnimation>
     }
 }
+
+const Dropdown = onClickOutside(InternalDropdown)
 
 /**
  * This provides the navigation bar of the framework.  The navigation bar 
@@ -52,10 +74,6 @@ export default class Navbar extends React.Component {
          */
         smallDeviceNavigation: PropTypes.bool.isRequired
     }
-    //                <div className="collapse navbar-collapse" >
-    //                
-
-    //              </div>
     constructor(props) {
         super(props)
         this.state = {
@@ -66,6 +84,15 @@ export default class Navbar extends React.Component {
         }
         this.toggleMessagesDropdown = this.toggleMessagesDropdown.bind(this)
         this.toggleUserDropdown = this.toggleUserDropdown.bind(this)
+    }
+
+    toggleOpen(event, eventDetails) {
+        let open = !this.props.open;
+
+        if (open) {
+            this.lastOpenEventType = eventDetails.source;
+        }
+        console.log("HERE")
     }
 
     toggleMessagesDropdown(e) {
@@ -95,32 +122,26 @@ export default class Navbar extends React.Component {
                 <span className="navbar-toggler-icon"></span>
             </button>)
         }
-        let userDropdownContents = [<a key="toggle" className="nav-link" href="#" onClick={this.toggleUserDropdown} id="userDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.userDropdownOpen}><Icon name="user" fw /></a>]
-        if (this.state.userDropdownOpen) {
-            userDropdownContents.push(<div key="menu" className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropDownMenuLink">
-                <a className="dropdown-item" href="#">Action</a>
-                <a className="dropdown-item" href="#">Another action</a>
-                <a className="dropdown-item" href="#">Something else here</a>
-            </div>)
-        }
-
-        let userDropdown2 = <SlideAnimation component="li" className="nav-item dropdown show">
-            {userDropdownContents}
-        </SlideAnimation>
 
         return (<nav className="navbar navbar-light navbar-toggleable bg-faded fixed-top" role="navigation">
             {leftside}
             <ul className="navbar-nav">
-                <li className="nav-item dropdown">
-                    <a className="nav-link" href="#" id="messagesDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.messagesDropdownOpen}><Icon name="envelope" fw /></a>
-                </li>
-                <li className="nav-item dropdown">
-                    <a className="nav-link" href="#" id="tasksDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.tasksDropdownOpen}><Icon name="tasks" fw /></a>
-                </li>
-                <li className="nav-item dropdown">
-                    <a className="nav-link" href="#" id="alertDropDownMenuLink" aria-haspopup="true" aria-expanded={this.state.alertDropdownOpen}><Icon name="bell" fw /></a>
-                </li>
-                <Dropdown id="userDropDownMenuLink" open={this.state.userDropdownOpen} onDropdownClick={this.toggleUserDropdown} icon="user">
+                <Dropdown icon="envelope" defaultOpen={false}>
+                    <a className="dropdown-item" href="#">Action</a>
+                    <a className="dropdown-item" href="#">Another action</a>
+                    <a className="dropdown-item" href="#">Something else here</a>
+                </Dropdown>
+                <Dropdown icon="tasks">
+                    <a className="dropdown-item" href="#">Action</a>
+                    <a className="dropdown-item" href="#">Another action</a>
+                    <a className="dropdown-item" href="#">Something else here</a>
+                </Dropdown>
+                <Dropdown icon="bell">
+                    <a className="dropdown-item" href="#">Action</a>
+                    <a className="dropdown-item" href="#">Another action</a>
+                    <a className="dropdown-item" href="#">Something else here</a>
+                </Dropdown>
+                <Dropdown icon="user">
                     <a className="dropdown-item" href="#">Action</a>
                     <a className="dropdown-item" href="#">Another action</a>
                     <a className="dropdown-item" href="#">Something else here</a>

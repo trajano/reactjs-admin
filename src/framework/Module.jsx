@@ -40,7 +40,7 @@ class Module extends React.Component {
             basename: ((typeof this.props.config.basename === "function") ? this.props.config.basename() : this.props.config.basename) || ""
         })
 
-        this.updateStatesBasedOnWindowSize();
+        this.updateStatesBasedOnWindowSize()
     }
 
     componentDidMount() {
