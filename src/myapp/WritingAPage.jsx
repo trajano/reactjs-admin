@@ -6,6 +6,12 @@ export default (props) => {
     // extract the translation code
     const {t} = props
     return <div>{t('translated text')}</div>
+
+    return <Page title="page.title">
+        then show non-editable.
+        To allow edit show a button that would bring up the modal editor
+        <EditForm someid maybe?>
+    </Page>
 }
 `
     return <div className="container-fluid">
