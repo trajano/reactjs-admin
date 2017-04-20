@@ -8,7 +8,10 @@ html {
 body {
     padding-top: $navbar-height;
 }
-
+#app .modal {
+    //@extend .in;
+    display: block;
+}
 .navbar {
     box-shadow: $nav-shadow;
     .navbar-brand>img {
