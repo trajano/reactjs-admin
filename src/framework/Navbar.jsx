@@ -52,6 +52,17 @@ class InternalDropdown extends React.Component {
 
 const Dropdown = onClickOutside(InternalDropdown)
 
+class DebugIcon extends React.PureComponent {
+    render() {
+        return <li className="nav-item dropdown show"><a className="nav-link">
+            <span className="hidden-md-up hidden-xs-down">sm</span>
+            <span className="hidden-lg-up hidden-sm-down">md</span>
+            <span className="hidden-xl-up hidden-md-down">lg</span>
+            <span className="hidden-lg-down">xl</span>
+        </a></li>
+    }
+}
+
 /**
  * This provides the navigation bar of the framework.  The navigation bar 
  * consists of an icon/toggle, title and notification icons.  The brand title
@@ -148,6 +159,7 @@ export default class Navbar extends React.Component {
                     <a className="dropdown-item" href="#">Another action</a>
                     <a className="dropdown-item" href="#">Something else here</a>
                 </Dropdown>
+                <DebugIcon />
             </ul>
         </nav>)
     }

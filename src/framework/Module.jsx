@@ -10,6 +10,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 import Navbar from './Navbar'
+import Modal from './Modal'
 import SideNav from './SideNav'
 import ContentSwitcher from './ContentSwitcher'
 
@@ -27,6 +28,8 @@ class Module extends React.Component {
         this.onSideNavLinkClick = this.onSideNavLinkClick.bind(this)
         this.toggleSideNav = this.toggleSideNav.bind(this)
         this.updateStatesBasedOnWindowSize = this.updateStatesBasedOnWindowSize.bind(this)
+        this.showModal = this.showModal.bind(this)
+        this.dismissModal = this.dismissModal.bind(this)
         this.state = {
             activePath: [],
             smallDeviceNavigation: false,
@@ -69,7 +72,6 @@ class Module extends React.Component {
      * This will trigger a state change based on the device size.
      */
     updateStatesBasedOnWindowSize() {
-
         const w = window,
             d = document,
             documentElement = d.documentElement,
@@ -112,6 +114,17 @@ class Module extends React.Component {
     toggleSideNav() {
         this.setState(({ sideNavVisible }) => ({ sideNavVisible: !sideNavVisible }))
     }
+    /**
+     * Note this will be a function that builds a function.
+     */
+    showModal(title, bodyComponent, footerComponent) {
+        return (event) => {
+            this.setState({ modal: { title, bodyComponent, footerComponent } })
+        }
+    }
+    dismissModal() {
+        this.setState({ modal: null })
+    }
 
     /**
      * When the side nav link is clicked and smallDeviceNavigation state is true then set the result to false otherwise set it to true.
@@ -144,37 +157,23 @@ class Module extends React.Component {
 
     render() {
         let modalComponents = []
-        modalComponents.push(<div key="modal" className="modal" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="modalTitle">Modal title</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                        ...
-      </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>)
-        modalComponents.push(
-            <div key="backdrop" className="modal-backdrop fade show"></div>)
-
+        if (this.state.modal) {
+            modalComponents.push(
+                <Modal key="modal" title={this.state.modal.title} dismissModal={this.dismissModal} bodyComponent={this.state.modal.bodyComponent} />
+            )
+            modalComponents.push(
+                <div key="backdrop" className="modal-backdrop fade show"></div>)
+        }
         return <Router history={this.history}>
             <div>
                 <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
                 <div className="container-fluid">
                     <div className="row">
                         <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
-                        <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} />
+                        <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} showModal={this.showModal} />
                     </div>
                 </div>
+                {modalComponents}
             </div>
         </Router>
     }

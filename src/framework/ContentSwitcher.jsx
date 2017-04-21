@@ -17,7 +17,8 @@ export default class ContentSwitcher extends React.Component {
         /**
          * Component to render when the URL is not found.
          */
-        notFoundComponent: PropTypes.func
+        notFoundComponent: PropTypes.func,
+        showModal: PropTypes.func
     }
 
     componentWillMount() {
@@ -36,7 +37,8 @@ export default class ContentSwitcher extends React.Component {
                 routes.push(...this.reduceRouteConfiguration(elem.content))
             }
             if (!elem.externalLink && elem.to && elem.component) {
-                routes.push(<Route key={elem.to} exact path={elem.to} component={elem.component} />)
+                const MyComponent = elem.component
+                routes.push(<Route key={elem.to} exact path={elem.to} component={(props) => <MyComponent {...props} showModal={this.props.showModal} />} />)
                 elem.aliases && elem.aliases.forEach(alias => {
                     routes.push(<Route key={alias} exact path={alias} render={() => <Redirect to={elem.to} />} />)
                 })

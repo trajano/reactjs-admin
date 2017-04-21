@@ -1,0 +1,11 @@
+@import '~bootstrap/scss/bootstrap.scss';
+$modal-xl: 1100px !default;
+@include media-breakpoint-only(xl) {
+    .modal-xl {
+        max-width: $modal-xl;
+    }
+}
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
