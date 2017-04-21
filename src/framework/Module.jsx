@@ -61,10 +61,12 @@ class Module extends React.Component {
         })
         document.title = this.props.config.title
         window.addEventListener("resize", this.updateStatesBasedOnWindowSize)
+        window.addEventListener("orientationchange", this.updateStatesBasedOnWindowSize)
     }
 
     componentWillUnmount() {
         this.unlisten()
+        window.removeEventListener("orientationchange", this.updateStatesBasedOnWindowSize)
         window.removeEventListener("resize", this.updateStatesBasedOnWindowSize)
     }
 
