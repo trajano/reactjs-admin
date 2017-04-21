@@ -54,12 +54,16 @@ const Dropdown = onClickOutside(InternalDropdown)
 
 class DebugIcon extends React.PureComponent {
     render() {
-        return <li className="nav-item dropdown show"><a className="nav-link">
-            <span className="hidden-md-up hidden-xs-down">sm</span>
-            <span className="hidden-lg-up hidden-sm-down">md</span>
-            <span className="hidden-xl-up hidden-md-down">lg</span>
-            <span className="hidden-lg-down">xl</span>
-        </a></li>
+        if (this.props.show) {
+            return <li className="nav-item dropdown show"><a className="nav-link">
+                <span className="hidden-md-up hidden-xs-down">sm</span>
+                <span className="hidden-lg-up hidden-sm-down">md</span>
+                <span className="hidden-xl-up hidden-md-down">lg</span>
+                <span className="hidden-lg-down">xl</span>
+            </a></li>
+        } else {
+            return null
+        }
     }
 }
 
@@ -159,7 +163,7 @@ export default class Navbar extends React.Component {
                     <a className="dropdown-item" href="#">Another action</a>
                     <a className="dropdown-item" href="#">Something else here</a>
                 </Dropdown>
-                <DebugIcon />
+                <DebugIcon show={!this.props.smallDeviceNavigation} />
             </ul>
         </nav>)
     }
