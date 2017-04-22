@@ -72,11 +72,7 @@ module.exports = {
                 html5: true
             }
         }),
-//        new FaviconsWebpackPlugin('./src/myapp/logo-2048x2048.png'),
-//        new webpack.ProvidePlugin({
-//            $: 'jquery',
-//            jQuery: 'jquery'
-//        })
+        new FaviconsWebpackPlugin('./src/myapp/logo-2048x2048.png'),
     ],
     devtool: 'source-map',
     devServer: {
