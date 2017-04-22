@@ -25,7 +25,6 @@ class Module extends React.Component {
     constructor(props) {
         super(props)
         this.isPathActive = this.isPathActive.bind(this)
-        this.onSideNavLinkClick = this.onSideNavLinkClick.bind(this)
         this.toggleSideNav = this.toggleSideNav.bind(this)
         this.updateStatesBasedOnWindowSize = this.updateStatesBasedOnWindowSize.bind(this)
         this.showModal = this.showModal.bind(this)
@@ -46,11 +45,18 @@ class Module extends React.Component {
         this.updateStatesBasedOnWindowSize()
     }
 
+    /**
+     * When the side nav link is clicked and smallDeviceNavigation state is true then set the result to false otherwise set it to true.
+     */
     componentDidMount() {
         this.setState({ activePath: this.pathToRoutes[location.pathname] })
 
-        this.unlisten = this.history.listen((location, action) => {
+        this.unlistenHistory = this.history.listen((location, action) => {
             if (action === "PUSH") {
+                if (this.state.smallDeviceNavigation) {
+                    console.log("HERE")
+                    this.setState({ sideNavVisible: false })
+                }
                 const newActivePath = this.pathToRoutes[location.pathname]
                 if (newActivePath === undefined) {
                     this.setState({ activePath: [] })
@@ -65,7 +71,7 @@ class Module extends React.Component {
     }
 
     componentWillUnmount() {
-        this.unlisten()
+        this.unlistenHistory()
         window.removeEventListener("orientationchange", this.updateStatesBasedOnWindowSize)
         window.removeEventListener("resize", this.updateStatesBasedOnWindowSize)
     }
@@ -129,14 +135,6 @@ class Module extends React.Component {
     }
 
     /**
-     * When the side nav link is clicked and smallDeviceNavigation state is true then set the result to false otherwise set it to true.
-     */
-    onSideNavLinkClick() {
-        if (this.state.smallDeviceNavigation) {
-            this.setState({ sideNavVisible: false })
-        }
-    }
-    /**
      * This will recursively scan the content array to determine and activation paths
      * @param {MenuItem[]} content menu content array
      * @param {number[]} parentPath parent path
@@ -171,7 +169,7 @@ class Module extends React.Component {
                 <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
                 <div className="container-fluid">
                     <div className="row">
-                        <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} onLinkClick={this.onSideNavLinkClick} />
+                        <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} />
                         <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} showModal={this.showModal} />
                     </div>
                 </div>

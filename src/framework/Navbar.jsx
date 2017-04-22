@@ -134,37 +134,40 @@ export default class Navbar extends React.Component {
 
     render() {
         let leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt="" />{this.props.title}</Link>
+        let rightside = <ul className="navbar-nav">
+            <Dropdown icon="envelope" title="Messages" defaultOpen={false}>
+                <a className="dropdown-item" href="#">Action</a>
+                <a className="dropdown-item" href="#">Another action</a>
+                <a className="dropdown-item" href="#">Something else here</a>
+            </Dropdown>
+            <Dropdown icon="tasks" title="Tasks">
+                <a className="dropdown-item" href="#">Action</a>
+                <a className="dropdown-item" href="#">Another action</a>
+                <a className="dropdown-item" href="#">Something else here</a>
+            </Dropdown>
+            <Dropdown icon="bell" title="Alerts">
+                <a className="dropdown-item" href="#">Action</a>
+                <a className="dropdown-item" href="#">Another action</a>
+                <a className="dropdown-item" href="#">Something else here</a>
+            </Dropdown>
+            <Dropdown icon="user" title="User Settings">
+                <a className="dropdown-item" href="#">Action</a>
+                <a className="dropdown-item" href="#">Another action</a>
+                <a className="dropdown-item" href="#">Something else here</a>
+            </Dropdown>
+            <DebugIcon show={!this.props.smallDeviceNavigation} />
+        </ul>
+
         if (this.props.smallDeviceNavigation) {
-            leftside = (<button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle Navigation" onClick={this.props.toggleSideNav}>
+            leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt=""/>{this.props.title}</Link>
+            rightside = <button type="button" className="navbar-toggler navbar-toggler-right" aria-label="Toggle Navigation" onClick={this.props.toggleSideNav}>
                 <span className="navbar-toggler-icon"></span>
-            </button>)
+            </button>
         }
 
         return (<nav className="navbar navbar-light navbar-toggleable bg-faded fixed-top" role="toolbar">
             {leftside}
-            <ul className="navbar-nav">
-                <Dropdown icon="envelope" title="Messages" defaultOpen={false}>
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <a className="dropdown-item" href="#">Something else here</a>
-                </Dropdown>
-                <Dropdown icon="tasks" title="Tasks">
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <a className="dropdown-item" href="#">Something else here</a>
-                </Dropdown>
-                <Dropdown icon="bell" title="Alerts">
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <a className="dropdown-item" href="#">Something else here</a>
-                </Dropdown>
-                <Dropdown icon="user" title="User Settings">
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <a className="dropdown-item" href="#">Something else here</a>
-                </Dropdown>
-                <DebugIcon show={!this.props.smallDeviceNavigation} />
-            </ul>
+            {rightside}
         </nav>)
     }
 }

@@ -24,10 +24,6 @@ class MenuGroup extends React.PureComponent {
          * Path. This is an array of indices that would indicate the path to the menu group or item.
          */
         path: PropTypes.array.isRequired,
-        /**
-         * Click handler.  See Module for definition.
-         */
-        onClick: PropTypes.func.isRequired,
     }
     constructor(props) {
         super(props)
@@ -55,7 +51,7 @@ class MenuGroup extends React.PureComponent {
             if (elem.content) {
                 toggle = <span className="fa arrow"></span>
                 if (pathActive) {
-                    menuGroup = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} path={path} isPathActive={this.props.isPathActive} onClick={this.props.onClick} />
+                    menuGroup = <MenuGroup content={elem.content} level={this.props.level + 1} classes={this.props.classes} path={path} isPathActive={this.props.isPathActive} />
                     groupActiveClass = "active"
                 }
             }
@@ -107,10 +103,6 @@ export default class SideNav extends React.Component {
          */
         hideOnSelect: PropTypes.bool,
         /**
-         * Click handler.  See Module for definition.
-         */
-        onLinkClick: PropTypes.func.isRequired,
-        /**
          * Side nav is visible
          */
         visible: PropTypes.bool.isRequired
@@ -119,7 +111,7 @@ export default class SideNav extends React.Component {
         let item = []
         if (this.props.visible) {
             item = [<nav key="nav" className="sidebar" role="navigation">
-                <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} onClick={this.props.onLinkClick} />
+                <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive}/>
             </nav>]
         }
         return <SlideAnimation>
