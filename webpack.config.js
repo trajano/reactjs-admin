@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const yargs = require("yargs")
@@ -19,11 +20,15 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loaders: ["style-loader", "css-loader"]
+                use: ExtractTextPlugin.extract({
+                    use: ["css-loader"]
+                })
             },
             {
                 test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"]
+                use: ExtractTextPlugin.extract({
+                    use: ["css-loader", "sass-loader"]
+                })
             },
             {
                 test: /\.jsx?$/,
@@ -56,6 +61,7 @@ module.exports = {
             from: './src/assets',
             to: 'assets'
         }]),
+        new ExtractTextPlugin('styles.css'),
         new HtmlWebpackPlugin({
             template: "./src/app.html",
             minify: {
@@ -66,7 +72,7 @@ module.exports = {
                 html5: true
             }
         }),
-        new FaviconsWebpackPlugin('./src/myapp/logo-2048x2048.png'),
+//        new FaviconsWebpackPlugin('./src/myapp/logo-2048x2048.png'),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
