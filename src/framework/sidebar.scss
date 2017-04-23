@@ -8,9 +8,11 @@
     box-shadow: $nav-shadow;
     position: fixed;
     top: $navbar-height + 7px;
-    bottom: 0;
     left: 0;
-    z-index: $zindex-fixed + 1;
+    @include media-breakpoint-between(sm, xl) {
+        bottom: 0;
+    }
+    z-index: $zindex-fixed+1;
     overflow-x: hidden;
     overflow-y: auto;
     /* Scrollable contents if viewport is shorter than content. */

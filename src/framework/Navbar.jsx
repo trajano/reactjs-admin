@@ -153,7 +153,7 @@ export default class Navbar extends React.Component {
             <Dropdown icon="user" title="User Settings">
                 <a className="dropdown-item" href="#">Action</a>
                 <a className="dropdown-item" href="#">Another action</a>
-                <a className="dropdown-item" href="#">Something else here</a>
+                <a className="dropdown-item" href="#">Sign Out</a>
             </Dropdown>
             <DebugIcon show={!this.props.smallDeviceNavigation} />
         </div>
