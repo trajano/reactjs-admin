@@ -44,7 +44,7 @@ class InternalDropdown extends React.Component {
             </div>)
         }
 
-        return <SlideAnimation component="li" className="nav-item dropdown show">
+        return <SlideAnimation component="span" className="nav-item dropdown show">
             {dropdownContents}
         </SlideAnimation>
     }
@@ -134,7 +134,7 @@ export default class Navbar extends React.Component {
 
     render() {
         let leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt="" />{this.props.title}</Link>
-        let rightside = <ul className="navbar-nav">
+        let rightside = <div className="navbar-nav">
             <Dropdown icon="envelope" title="Messages" defaultOpen={false}>
                 <a className="dropdown-item" href="#">Action</a>
                 <a className="dropdown-item" href="#">Another action</a>
@@ -156,7 +156,7 @@ export default class Navbar extends React.Component {
                 <a className="dropdown-item" href="#">Something else here</a>
             </Dropdown>
             <DebugIcon show={!this.props.smallDeviceNavigation} />
-        </ul>
+        </div>
 
         if (this.props.smallDeviceNavigation) {
             leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt=""/>{this.props.title}</Link>
