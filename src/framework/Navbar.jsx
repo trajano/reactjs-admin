@@ -165,7 +165,7 @@ export default class Navbar extends React.Component {
             </button>
         }
 
-        return (<nav className="navbar navbar-light navbar-toggleable bg-faded fixed-top" role="toolbar">
+        return (<nav className="navbar navbar-light bg-faded fixed-top navbar-toggleable" role="toolbar">
             {leftside}
             {rightside}
         </nav>)

@@ -14,12 +14,16 @@ body {
 }
 .navbar {
     box-shadow: $nav-shadow;
+/*
+    flex-direction: row;
+*/
     .navbar-brand>img {
         display: inline-block;
         height: 30px;
         margin-top: -5px;
         margin-right: 15px;
     }
+    /*
     .navbar-nav {
         @extend .ml-auto;
         flex-direction: row;
@@ -28,6 +32,7 @@ body {
             padding-left: .5rem;
         }
     }
+*/
 }
 
 $nav-transition: all 0.2s ease-out;
