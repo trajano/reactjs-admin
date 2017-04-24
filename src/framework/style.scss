@@ -31,8 +31,8 @@ html, body {
         @extend .ml-auto;
         flex-direction: row;
         .nav-link {
-            padding-right: .5rem;
-            padding-left: .5rem;
+            padding-right: 1rem;
+            padding-left: 1rem;
         }
     }
 }
