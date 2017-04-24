@@ -4,9 +4,11 @@ $nav-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.2) !default;
 html {
     overflow-y: scroll;
 }
-
 body {
     padding-top: $navbar-height;
+}
+html, body {
+  -webkit-tap-highlight-color: transparent;
 }
 
 #app .modal {
