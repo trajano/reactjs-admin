@@ -77,8 +77,8 @@ class Module extends React.Component {
         window.removeEventListener("resize", this.updateStatesBasedOnWindowSize)
     }
 
-    handleClickOutsideSideNav() {
-        if (this.state.smallDeviceNavigation) {
+    handleClickOutsideSideNav(e) {
+        if (this.state.smallDeviceNavigation && e.target.className != "navbar-toggler-icon") {
             this.setState({sideNavVisible: false})
         }
     }
