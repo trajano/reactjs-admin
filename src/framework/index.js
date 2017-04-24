@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 
 import './style.scss'
 import Module from './Module'
+import initReactFastclick from 'react-fastclick'
 
 /**
  * Bootstrap the application
@@ -13,6 +14,7 @@ import Module from './Module'
  * @param {Object|function} modules 
  */
 function bootstrap(config, modules) {
+    initReactFastclick()
     ReactDOM.render(<Module config={config} />,
         document.getElementById("app"))
 }
