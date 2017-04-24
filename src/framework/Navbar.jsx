@@ -31,8 +31,12 @@ class InternalDropdown extends React.Component {
         }
     }
     render() {
+        let className = "nav-link" 
+        if (this.state.open) {
+             className = "nav-link active" 
+        }
         let dropdownContents = [<a key="toggle"
-            className="nav-link" href="#"
+            className={className} href="#"
             onClick={this.toggleOpen}
             id={this.nextUniqueId()}
             title={this.props.title}

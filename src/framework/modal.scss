@@ -5,7 +5,13 @@ $modal-xl: 1100px !default;
         max-width: $modal-xl;
     }
 }
+
 .modal-body {
-    max-height: calc(100vh - 210px);
+    @include media-breakpoint-only(xs) {
+        max-height: calc(100vh - 150px);
+    }
+    @include media-breakpoint-between(sm, xl) {
+        max-height: calc(100vh - 210px);
+    }
     overflow-y: auto;
 }
