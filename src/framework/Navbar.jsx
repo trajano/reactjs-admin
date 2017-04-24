@@ -159,8 +159,7 @@ export default class Navbar extends React.Component {
         </div>
 
         if (this.props.smallDeviceNavigation) {
-            leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt=""/>{this.props.title}</Link>
-            rightside = <button type="button" className="navbar-toggler navbar-toggler-right" aria-label="Toggle Navigation" onClick={this.props.toggleSideNav}>
+            leftside = <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle Navigation" onClick={this.props.toggleSideNav}>
                 <span className="navbar-toggler-icon"></span>
             </button>
         }

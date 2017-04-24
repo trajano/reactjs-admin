@@ -27,6 +27,7 @@ class Module extends React.Component {
         this.isPathActive = this.isPathActive.bind(this)
         this.toggleSideNav = this.toggleSideNav.bind(this)
         this.updateStatesBasedOnWindowSize = this.updateStatesBasedOnWindowSize.bind(this)
+        this.handleClickOutsideSideNav = this.handleClickOutsideSideNav.bind(this)
         this.showModal = this.showModal.bind(this)
         this.dismissModal = this.dismissModal.bind(this)
         this.state = {
@@ -74,6 +75,12 @@ class Module extends React.Component {
         this.unlistenHistory()
         window.removeEventListener("orientationchange", this.updateStatesBasedOnWindowSize)
         window.removeEventListener("resize", this.updateStatesBasedOnWindowSize)
+    }
+
+    handleClickOutsideSideNav() {
+        if (this.state.smallDeviceNavigation) {
+            this.setState({sideNavVisible: false})
+        }
     }
 
     /**
@@ -169,7 +176,7 @@ class Module extends React.Component {
                 <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
                 <div className="container-fluid">
                     <div className="row">
-                        <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} />
+                        <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} onClickOutsideSideNav={this.handleClickOutsideSideNav} />
                         <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} showModal={this.showModal} />
                     </div>
                 </div>

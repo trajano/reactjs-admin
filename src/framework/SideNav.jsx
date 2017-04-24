@@ -6,6 +6,7 @@ import {
     Link,
     NavLink
 } from 'react-router-dom'
+import onClickOutside from 'react-onclickoutside'
 
 /**
  * Menu group for the side menu scomponent.
@@ -88,7 +89,7 @@ class MenuGroup extends React.PureComponent {
     }
 }
 
-export default class SideNav extends React.Component {
+class SideNav extends React.Component {
     static propTypes = {
         /**
          * Menu content
@@ -99,19 +100,24 @@ export default class SideNav extends React.Component {
          */
         isPathActive: PropTypes.func.isRequired,
         /**
-         * If this is true then the side nav will make itself hidden.
+         * Function to determine if the path is active.
          */
-        hideOnSelect: PropTypes.bool,
+        onClickOutsideSideNav: PropTypes.func,
         /**
          * Side nav is visible
          */
         visible: PropTypes.bool.isRequired
     }
+    handleClickOutside(e) {
+        if (this.props.onClickOutsideSideNav) {
+            this.props.onClickOutsideSideNav(e)
+        }
+    }
     render() {
         let item = []
         if (this.props.visible) {
             item = [<nav key="nav" className="sidebar" role="navigation">
-                <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive}/>
+                <MenuGroup level={0} path={[]} content={this.props.content} isPathActive={this.props.isPathActive} />
             </nav>]
         }
         return <SlideAnimation>
@@ -119,3 +125,5 @@ export default class SideNav extends React.Component {
         </SlideAnimation>
     }
 }
+
+export default onClickOutside(SideNav)
