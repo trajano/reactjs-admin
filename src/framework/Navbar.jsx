@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-    Link
+    Link,
+    withRouter
 } from 'react-router-dom'
 import onClickOutside from 'react-onclickoutside'
 
@@ -20,6 +21,16 @@ class InternalDropdown extends React.Component {
         enableUniqueIds(this)
         this.state = { open: false }
         this.toggleOpen = this.toggleOpen.bind(this)
+    }
+    componentDidMount() {
+        this.unlistenHistory = this.props.history.listen((location, action) => {
+            if (action === "PUSH") {
+                this.setState({ open: false })
+            }
+        })
+    }
+    componentWillUnmount() {
+        this.unlistenHistory()
     }
     toggleOpen(e) {
         e.preventDefault()
@@ -54,7 +65,7 @@ class InternalDropdown extends React.Component {
     }
 }
 
-const Dropdown = onClickOutside(InternalDropdown)
+const Dropdown = withRouter(onClickOutside(InternalDropdown))
 
 class DebugIcon extends React.PureComponent {
     render() {
@@ -79,7 +90,7 @@ class DebugIcon extends React.PureComponent {
  * 
  * There are 
  */
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
     static propTypes = {
         /**
          * Module title
@@ -113,7 +124,6 @@ export default class Navbar extends React.Component {
         if (open) {
             this.lastOpenEventType = eventDetails.source;
         }
-        console.log("HERE")
     }
 
     toggleMessagesDropdown(e) {
@@ -137,6 +147,13 @@ export default class Navbar extends React.Component {
     }
 
     render() {
+        const userDropdown = <Dropdown icon="user" title="User">
+            <h6 className="dropdown-header">Signed in as <b>trajano</b></h6>
+            <div className="dropdown-divider"></div>
+            <Link className="dropdown-item" to="/settings">Settings</Link>
+            <a className="dropdown-item" href="#">Sign out</a>
+        </Dropdown>
+
         let leftside = <Link className="navbar-brand" to="/"><img src={this.props.logo} srcSet={this.props.logo.srcSet} alt="" />{this.props.title}</Link>
         let rightside = <div className="navbar-nav">
             <Dropdown icon="envelope" title="Messages" defaultOpen={false}>
@@ -154,11 +171,7 @@ export default class Navbar extends React.Component {
                 <a className="dropdown-item" href="#">Another action</a>
                 <a className="dropdown-item" href="#">Something else here</a>
             </Dropdown>
-            <Dropdown icon="user" title="User Settings">
-                <a className="dropdown-item" href="#">Action</a>
-                <a className="dropdown-item" href="#">Another action</a>
-                <a className="dropdown-item" href="#">Sign Out</a>
-            </Dropdown>
+            {userDropdown}
             <DebugIcon show={!this.props.smallDeviceNavigation} />
         </div>
 
@@ -170,11 +183,7 @@ export default class Navbar extends React.Component {
                 <Link to="/messages" title="Messages" className="nav-link"><Icon name="envelope" /></Link>
                 <Link to="/tasks" title="Tasks" className="nav-link"><Icon name="tasks" /></Link>
                 <Link to="/alerts" title="Alerts" className="nav-link"><Icon name="bell" /></Link>
-                <Dropdown icon="user" title="User Settings">
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <a className="dropdown-item" href="#">Sign Out</a>
-                </Dropdown>
+                {userDropdown}
                 <DebugIcon show={!this.props.smallDeviceNavigation} />
             </div>
         }
@@ -185,3 +194,5 @@ export default class Navbar extends React.Component {
         </nav>)
     }
 }
+
+export default Navbar

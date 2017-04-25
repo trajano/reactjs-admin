@@ -55,7 +55,6 @@ class Module extends React.Component {
         this.unlistenHistory = this.history.listen((location, action) => {
             if (action === "PUSH") {
                 if (this.state.smallDeviceNavigation) {
-                    console.log("HERE")
                     this.setState({ sideNavVisible: false })
                 }
                 const newActivePath = this.pathToRoutes[location.pathname]

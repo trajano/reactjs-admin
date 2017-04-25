@@ -4,6 +4,7 @@ import {
     Route,
     Switch
 } from 'react-router-dom'
+import UserSettings from './UserSettings'
 
 /**
  * This switches between contents based on the route.  It will assemble the routes from the configuration.
@@ -57,6 +58,7 @@ export default class ContentSwitcher extends React.Component {
                 <Route exact path="/messages" component={(props) => <Messages {...this.props} showModal={this.props.showModal} />} />
                 <Route exact path="/tasks" component={(props) => <Tasks {...this.props} showModal={this.props.showModal} />} />
                 <Route exact path="/alerts" component={(props) => <Alerts {...this.props} showModal={this.props.showModal} />} />
+                <Route exact path="/settings" component={(props) => <UserSettings {...this.props} showModal={this.props.showModal} />} />
                 <Route component={this.props.notFoundComponent} />
             </Switch>
         </main>)
