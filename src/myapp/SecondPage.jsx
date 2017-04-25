@@ -60,7 +60,7 @@ export default (props) => (
             <div className="col-lg-12">
                 <h1 className="page-header">Second Page</h1>
                 <p>My dashboard</p>
-                <button onClick={props.showModal("title", modalBody)}>show modal</button>
+                <button className="btn" onClick={props.showModal("title", modalBody)}>show modal</button>
             </div>
         </div>
     </div>

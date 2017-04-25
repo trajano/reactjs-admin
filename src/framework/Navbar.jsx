@@ -150,7 +150,7 @@ class Navbar extends React.Component {
         const userDropdown = <Dropdown icon="user" title="User">
             <h6 className="dropdown-header">Signed in as <b>trajano</b></h6>
             <div className="dropdown-divider"></div>
-            <Link className="dropdown-item" to="/settings">Settings</Link>
+            <Link className="dropdown-item" to="/settings">Your profile</Link>
             <a className="dropdown-item" href="#">Sign out</a>
         </Dropdown>
 
