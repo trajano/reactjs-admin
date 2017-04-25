@@ -31,9 +31,9 @@ class InternalDropdown extends React.Component {
         }
     }
     render() {
-        let className = "nav-link" 
+        let className = "nav-link"
         if (this.state.open) {
-             className = "nav-link active" 
+            className = "nav-link active"
         }
         let dropdownContents = [<a key="toggle"
             className={className} href="#"
@@ -166,6 +166,17 @@ export default class Navbar extends React.Component {
             leftside = <button type="button" className="navbar-toggler navbar-toggler-left" aria-label="Toggle Navigation" onClick={this.props.toggleSideNav}>
                 <span className="navbar-toggler-icon"></span>
             </button>
+            rightside = <div className="navbar-nav">
+                <Link to="/messages" title="Messages" className="nav-link"><Icon name="envelope" /></Link>
+                <Link to="/tasks" title="Tasks" className="nav-link"><Icon name="tasks" /></Link>
+                <Link to="/alerts" title="Alerts" className="nav-link"><Icon name="bell" /></Link>
+                <Dropdown icon="user" title="User Settings">
+                    <a className="dropdown-item" href="#">Action</a>
+                    <a className="dropdown-item" href="#">Another action</a>
+                    <a className="dropdown-item" href="#">Sign Out</a>
+                </Dropdown>
+                <DebugIcon show={!this.props.smallDeviceNavigation} />
+            </div>
         }
 
         return (<nav className="navbar navbar-light bg-faded fixed-top" role="toolbar">

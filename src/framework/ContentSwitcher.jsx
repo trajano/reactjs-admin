@@ -48,10 +48,16 @@ export default class ContentSwitcher extends React.Component {
     }
 
     render() {
+        const Messages = this.props.messagesComponent
+        const Tasks = this.props.tasksComponent
+        const Alerts = this.props.alertsComponent
         return (<main className="col-sm-8 offset-sm-4 col-md-8 offset-md-4 col-lg-9 offset-lg-3 col-xl-10 offset-xl-2 pt-3" role="main">
             <Switch>
                 {this.routes}
-                this.props.notFoundComponent && <Route component={this.props.notFoundComponent} />
+                <Route exact path="/messages" component={(props) => <Messages {...this.props} showModal={this.props.showModal} />} />
+                <Route exact path="/tasks" component={(props) => <Tasks {...this.props} showModal={this.props.showModal} />} />
+                <Route exact path="/alerts" component={(props) => <Alerts {...this.props} showModal={this.props.showModal} />} />
+                <Route component={this.props.notFoundComponent} />
             </Switch>
         </main>)
     }

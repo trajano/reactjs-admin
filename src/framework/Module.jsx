@@ -79,7 +79,7 @@ class Module extends React.Component {
 
     handleClickOutsideSideNav(e) {
         if (this.state.smallDeviceNavigation && e.target.className != "navbar-toggler-icon") {
-            this.setState({sideNavVisible: false})
+            this.setState({ sideNavVisible: false })
         }
     }
 
@@ -177,7 +177,12 @@ class Module extends React.Component {
                 <div className="container-fluid">
                     <div className="row">
                         <SideNav key="sideNav" content={this.props.config.content} visible={this.state.sideNavVisible} isPathActive={this.isPathActive} onClickOutsideSideNav={this.handleClickOutsideSideNav} />
-                        <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible} notFoundComponent={this.props.config.notFoundComponent} showModal={this.showModal} />
+                        <ContentSwitcher key="content" content={this.props.config.content} sideNavVisible={this.state.sideNavVisible}
+                            notFoundComponent={this.props.config.notFoundComponent}
+                            messagesComponent={this.props.config.messagesComponent}
+                            tasksComponent={this.props.config.tasksComponent}
+                            alertsComponent={this.props.config.alertsComponent}
+                            showModal={this.showModal} />
                     </div>
                 </div>
                 {modalComponents}
