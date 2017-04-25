@@ -38,6 +38,7 @@ class Module extends React.Component {
     }
 
     componentWillMount() {
+        this.loadUserProfilePromise = new Promise(this.props.config.loadUserProfileExecutor)
         this.pathToRoutes = this.determinePathToRoutesFromContent(this.props.config.content, [])
         this.history = createBrowserHistory({
             basename: ((typeof this.props.config.basename === "function") ? this.props.config.basename() : this.props.config.basename) || ""
@@ -50,6 +51,12 @@ class Module extends React.Component {
      * When the side nav link is clicked and smallDeviceNavigation state is true then set the result to false otherwise set it to true.
      */
     componentDidMount() {
+        this.loadUserProfilePromise.then((user) => {
+            this.setState({user})
+        }, (rejectUrl) => {
+            // when rejecting the expectation is the URL will be the reject object and will redirect to it.
+            window.location.href = rejectUrl
+        })
         this.setState({ activePath: this.pathToRoutes[location.pathname] })
 
         this.unlistenHistory = this.history.listen((location, action) => {

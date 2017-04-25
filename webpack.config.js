@@ -35,7 +35,8 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['es2015', 'react', 'stage-1']
+                    presets: ['es2015', 'react', 'stage-1'],
+                    plugins: ['transform-async-to-generator']
                 }
             },
             {
@@ -78,7 +79,7 @@ module.exports = {
     devServer: {
         inline: true,
         historyApiFallback: {
-            verbose: true,
+            verbose: false,
             disableDotRule: true
         }
     }

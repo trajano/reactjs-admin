@@ -10,9 +10,9 @@ import Module from './Module'
 /**
  * Bootstrap the application
  * @param {ModuleConfig} config configuration for the module
- * @param {Object|function} modules 
+ * @param {Object|function} modules
  */
-function bootstrap(config, modules) {
+function bootstrap(config, loadUserProfileCallback, modules) {
     ReactDOM.render(<Module config={config} />,
         document.getElementById("app"))
 }

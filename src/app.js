@@ -3,9 +3,9 @@ import bootstrap from './framework'
 import MyBlank from './myapp/Blank'
 import Index from './myapp/Index'
 import Main from './myapp/Main'
-import MyTasks  from './myapp/MyTasks'
+import MyTasks from './myapp/MyTasks'
 import MyAlerts from './myapp/MyAlerts'
-import MyMessages  from './myapp/MyMessages'
+import MyMessages from './myapp/MyMessages'
 import Forms from './myapp/Forms'
 import SamplePages from './myapp/SamplePages'
 import SecondPage from './myapp/SecondPage'
@@ -25,6 +25,12 @@ const moduleConfig = {
         } else {
             return ""
         }
+    },
+    loadUserProfileExecutor: (resolve, reject) => {
+        resolve ({
+            username: "trajano"
+        })
+        // callback function to retrieve the user profile.  The user profile callback will return either a userprofile object or a URL to redirect to.
     },
     notFoundComponent: FourOhFour,
     messagesComponent: MyMessages,
