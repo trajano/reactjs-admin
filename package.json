@@ -55,9 +55,11 @@
     "react-fastclick": "^3.0.1",
     "react-html-id": "^0.1.0",
     "react-onclickoutside": "^5.11.1",
+    "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-slide-animation": "^15.5.0",
-    "react-transition-group": "^1.1.2"
+    "react-transition-group": "^1.1.2",
+    "redux": "^3.6.0"
   }
 }
