@@ -13,6 +13,7 @@ import Navbar from './Navbar'
 import Modal from './Modal'
 import SideNav from './SideNav'
 import ContentSwitcher from './ContentSwitcher'
+import Loader from './Loader'
 
 class Module extends React.Component {
     static propTypes = {
@@ -20,6 +21,9 @@ class Module extends React.Component {
          * Module configuration
          */
         config: PropTypes.object.isRequired
+    }
+    static contextTypes = {
+        store: PropTypes.object
     }
 
     constructor(props) {
@@ -52,7 +56,11 @@ class Module extends React.Component {
      */
     componentDidMount() {
         this.loadUserProfilePromise.then((user) => {
-            this.setState({user})
+            this.context.store.dispatch({
+                type: 'UPDATE_USER_INFO',
+                username: user.username
+            })
+            this.setState({ user })
         }, (rejectUrl) => {
             // when rejecting the expectation is the URL will be the reject object and will redirect to it.
             window.location.href = rejectUrl
@@ -169,6 +177,10 @@ class Module extends React.Component {
     }
 
     render() {
+        if (!this.context.store.getState().user.loggedIn) {
+            return <Loader />
+        }
+
         let modalComponents = []
         if (this.state.modal) {
             modalComponents.push(

@@ -5,7 +5,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import './style.scss'
+import frameworkRedux from './reducers'
 import Module from './Module'
+
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 
 /**
  * Bootstrap the application
@@ -13,7 +17,10 @@ import Module from './Module'
  * @param {Object|function} modules
  */
 function bootstrap(config, loadUserProfileCallback, modules) {
-    ReactDOM.render(<Module config={config} />,
+    const store = createStore(frameworkRedux)
+    ReactDOM.render(<Provider store={store}>
+        <Module config={config} />
+    </Provider>,
         document.getElementById("app"))
 }
 export default bootstrap

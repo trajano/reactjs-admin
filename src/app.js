@@ -27,9 +27,13 @@ const moduleConfig = {
         }
     },
     loadUserProfileExecutor: (resolve, reject) => {
-        resolve ({
-            username: "trajano"
-        })
+        console.log("will set user in 5 seconds")
+        setTimeout(() => {
+        console.log("set user now")
+            resolve({
+                username: "trajano"
+            })
+        }, 5000)
         // callback function to retrieve the user profile.  The user profile callback will return either a userprofile object or a URL to redirect to.
     },
     notFoundComponent: FourOhFour,

@@ -106,6 +106,10 @@ class Navbar extends React.Component {
          */
         smallDeviceNavigation: PropTypes.bool.isRequired
     }
+    static contextTypes = {
+        store: PropTypes.object
+    }
+
     constructor(props) {
         super(props)
         this.state = {
@@ -147,8 +151,9 @@ class Navbar extends React.Component {
     }
 
     render() {
+        const username = this.context.store.getState().user.username
         const userDropdown = <Dropdown icon="user" title="User">
-            <h6 className="dropdown-header">Signed in as <b>trajano</b></h6>
+            <h6 className="dropdown-header">Signed in as <b>{username}</b></h6>
             <div className="dropdown-divider"></div>
             <Link className="dropdown-item" to="/settings">Your profile</Link>
             <a className="dropdown-item" href="#">Sign out</a>
