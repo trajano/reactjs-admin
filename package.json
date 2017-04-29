@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "build": "webpack",
-    "prepublish": "webpack -p",
+    "prepare": "webpack -p",
     "start": "webpack-dev-server"
   },
   "repository": {
