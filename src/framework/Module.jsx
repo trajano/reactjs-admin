@@ -39,22 +39,19 @@ class Module extends React.Component {
             smallDeviceNavigation: false,
             sideNavVisible: true
         }
-    }
 
-    componentWillMount() {
         this.loadUserProfilePromise = new Promise(this.props.config.loadUserProfileExecutor)
         this.pathToRoutes = this.determinePathToRoutesFromContent(this.props.config.content, [])
         this.history = createBrowserHistory({
             basename: ((typeof this.props.config.basename === "function") ? this.props.config.basename() : this.props.config.basename) || ""
         })
-
-        this.updateStatesBasedOnWindowSize()
     }
 
     /**
      * When the side nav link is clicked and smallDeviceNavigation state is true then set the result to false otherwise set it to true.
      */
     componentDidMount() {
+        this.updateStatesBasedOnWindowSize()
         this.loadUserProfilePromise.then((user) => {
             this.context.store.dispatch({
                 type: 'UPDATE_USER_INFO',
@@ -169,7 +166,7 @@ class Module extends React.Component {
             if (elem.content) {
                 Object.assign(routes, this.determinePathToRoutesFromContent(elem.content, currentPath))
             }
-            if (!elem.externalLink && elem.to && elem.component) {
+            if (!elem.externalLink && elem.to) {
                 routes[elem.to] = currentPath
             }
         })

@@ -56,7 +56,6 @@ class MenuGroup extends React.PureComponent {
                     groupActiveClass = "active"
                 }
             }
-
             if (elem.to !== undefined && !elem.externalLink) {
                 items.push(<li key={i + groupActiveClass} className={groupActiveClass}>
                     <NavLink exact to={elem.to}

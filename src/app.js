@@ -27,13 +27,11 @@ const moduleConfig = {
         }
     },
     loadUserProfileExecutor: (resolve, reject) => {
-        console.log("will set user in 5 seconds")
         setTimeout(() => {
-        console.log("set user now")
             resolve({
                 username: "trajano"
             })
-        }, 5000)
+        }, 500)
         // callback function to retrieve the user profile.  The user profile callback will return either a userprofile object or a URL to redirect to.
     },
     notFoundComponent: FourOhFour,
@@ -90,9 +88,8 @@ const moduleConfig = {
                     label: 'Third Level',
                     content: [
                         {
-                            label: 'Third Level Item',
-                            to: '/t1',
-                            component: ThirdLevelItem,
+                            label: 'Messages',
+                            to: '/messages'
                         },
                         {
                             label: 'Third Level Item', to: '/t2',
@@ -103,8 +100,8 @@ const moduleConfig = {
                             component: ThirdLevelItem,
                         },
                         {
-                            label: 'Third Level Item', to: '/t4',
-                            component: ThirdLevelItem,
+                            label: 'User Settings', 
+                            to: '/settings'
                         }
                     ]
                 }
