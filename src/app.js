@@ -29,7 +29,8 @@ const moduleConfig = {
     loadUserProfileExecutor: (resolve, reject) => {
         setTimeout(() => {
             resolve({
-                username: "trajano"
+                username: "trajano",
+                language: "en"
             })
         }, 500)
         // callback function to retrieve the user profile.  The user profile callback will return either a userprofile object or a URL to redirect to.

@@ -23,7 +23,8 @@ class Module extends React.Component {
         config: PropTypes.object.isRequired
     }
     static contextTypes = {
-        store: PropTypes.object
+        store: PropTypes.object,
+        i18n: PropTypes.object
     }
 
     constructor(props) {
@@ -32,6 +33,7 @@ class Module extends React.Component {
         this.toggleSideNav = this.toggleSideNav.bind(this)
         this.updateStatesBasedOnWindowSize = this.updateStatesBasedOnWindowSize.bind(this)
         this.handleClickOutsideSideNav = this.handleClickOutsideSideNav.bind(this)
+        this.handleUserLanguageChange = this.handleUserLanguageChange.bind(this)
         this.showModal = this.showModal.bind(this)
         this.dismissModal = this.dismissModal.bind(this)
         this.state = {
@@ -47,15 +49,25 @@ class Module extends React.Component {
         })
     }
 
+    handleUserLanguageChange() {
+        const currentLanguage = this.context.store.getState().user.language
+        console.log( this.context.store.getState(), currentLanguage, this.context.i18n.language)
+        if (this.context.i18n.language != currentLanguage) {
+            this.context.i18n.changeLanguage(currentLanguage)
+        }
+    }
+
     /**
      * When the side nav link is clicked and smallDeviceNavigation state is true then set the result to false otherwise set it to true.
      */
     componentDidMount() {
         this.updateStatesBasedOnWindowSize()
         this.loadUserProfilePromise.then((user) => {
+            console.log("firing", user)
             this.context.store.dispatch({
                 type: 'UPDATE_USER_INFO',
-                username: user.username
+                username: user.username,
+                language: user.language
             })
             this.setState({ user })
         }, (rejectUrl) => {
@@ -64,6 +76,7 @@ class Module extends React.Component {
         })
         this.setState({ activePath: this.pathToRoutes[location.pathname] })
 
+        this.unlistenStore = this.context.store.subscribe(this.handleUserLanguageChange)
         this.unlistenHistory = this.history.listen((location, action) => {
             if (action === "PUSH") {
                 if (this.state.smallDeviceNavigation) {
@@ -84,6 +97,7 @@ class Module extends React.Component {
 
     componentWillUnmount() {
         this.unlistenHistory()
+        this.unlistenStore()
         window.removeEventListener("orientationchange", this.updateStatesBasedOnWindowSize)
         window.removeEventListener("resize", this.updateStatesBasedOnWindowSize)
     }

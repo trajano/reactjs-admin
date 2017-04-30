@@ -5,6 +5,7 @@ const user = (state = {}, action) => {
             return {
                 ...state,
                 username: action.username,
+                language: action.language,
                 loggedIn: true
             }
         default:
