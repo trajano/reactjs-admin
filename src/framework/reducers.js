@@ -12,6 +12,22 @@ const user = (state = {}, action) => {
             return state
     }
 }
+const page = (state = {}, action) => {
+    switch (action.type) {
+        case 'PAGE_CLEAR':
+            return {
+                loaded: false
+            }
+        case 'PAGE_LOAD':
+            return {
+                data: action.data,
+                loaded: true
+            }
+        default:
+            return state
+    }
+}
 export default combineReducers({
-    user
+    user,
+    page
 })

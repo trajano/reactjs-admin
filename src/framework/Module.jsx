@@ -51,7 +51,6 @@ class Module extends React.Component {
 
     handleUserLanguageChange() {
         const currentLanguage = this.context.store.getState().user.language
-        console.log( this.context.store.getState(), currentLanguage, this.context.i18n.language)
         if (this.context.i18n.language != currentLanguage) {
             this.context.i18n.changeLanguage(currentLanguage)
         }
@@ -63,7 +62,6 @@ class Module extends React.Component {
     componentDidMount() {
         this.updateStatesBasedOnWindowSize()
         this.loadUserProfilePromise.then((user) => {
-            console.log("firing", user)
             this.context.store.dispatch({
                 type: 'UPDATE_USER_INFO',
                 username: user.username,

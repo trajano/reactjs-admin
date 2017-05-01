@@ -2,7 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 let modalBody = <form>Show application in this language
-
+    <div className="custom-controls-stacked" >
+        <label className="custom-control custom-radio">
+            <input id="radio1" name="radio" type="radio" className="custom-control-input" />
+            <span className="custom-control-indicator"></span>
+            <span className="custom-control-description">Toggle this custom radio</span>
+        </label>
+        <label className="custom-control custom-radio">
+            <input id="radio2" name="radio" type="radio" className="custom-control-input" />
+            <span className="custom-control-indicator"></span>
+            <span className="custom-control-description">Or toggle this other custom radio</span>
+        </label>
+    </div>
 </form>
 
 export default class UserSettings extends React.Component {
@@ -16,6 +27,30 @@ export default class UserSettings extends React.Component {
         super(props)
     }
 
+    pageLoad() {
+        setTimeout(() => {
+            resolve({
+                username: "trajano",
+                firstName: "Archimedes",
+                language: this.context.store.getState().user.language
+            })
+        }, 500)
+    }
+    componentDidMount() {
+        this.context.store.dispatch({
+            type: 'PAGE_CLEAR'
+        })
+        this.pageLoadPromise = new Promise(this.pageLoad)
+        this.pageLoadPromise.then((data) => {
+            this.context.store.dispatch({
+                type: 'PAGE_LOAD',
+                data
+            })
+        })
+        this.context.store.dispatch({
+            type: 'PAGE_CLEAR'
+        })
+    }
     render() {
 
         return (
@@ -40,7 +75,7 @@ export default class UserSettings extends React.Component {
                                         <form role="form">
                                             <div className="form-group">
                                                 <label>Text Input</label>
-                                                <input className="form-control" defaultValue={this.context.store.getState().user.language}/>
+                                                <input className="form-control" defaultValue={this.context.store.getState().user.language} />
                                                 <p className="help-block">Example block-level help text here.</p>
                                             </div>
                                             <div className="form-group">
