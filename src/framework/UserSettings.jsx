@@ -17,7 +17,7 @@ let modalBody = <form>Show application in this language
     </div>
 </form>
 
-export default class UserSettings extends React.Component {
+export default class UserSettings extends React.PureComponent {
     static propTypes = {
         showModal: PropTypes.func.isRequired
     }
@@ -36,7 +36,8 @@ export default class UserSettings extends React.Component {
     }
     handleStoreChange() {
         const pageFromRedux = this.context.store.getState().page
-        if (JSON.stringify(this.state.pageFromRedux) !== JSON.stringify(pageFromRedux)) {
+        if (JSON.stringify(this.state.page) !== JSON.stringify(pageFromRedux)) {
+            console.log("about to set state", pageFromRedux)
             this.setState({ page: pageFromRedux })
         }
     }
@@ -67,6 +68,7 @@ export default class UserSettings extends React.Component {
     }
     componentWillUnmount() {
         this.unsubscribeStore()
+        console.log("Will unmount page")
     }
     render() {
         if (!this.state.page.loaded) {

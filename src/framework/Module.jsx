@@ -15,7 +15,7 @@ import SideNav from './SideNav'
 import ContentSwitcher from './ContentSwitcher'
 import Loader from './Loader'
 
-class Module extends React.Component {
+class Module extends React.PureComponent {
     static propTypes = {
         /**
          * Module configuration
