@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Loader from './Loader'
 let modalBody = <form>Show application in this language
     <div className="custom-controls-stacked" >
         <label className="custom-control custom-radio">
@@ -25,9 +26,21 @@ export default class UserSettings extends React.Component {
     }
     constructor(props) {
         super(props)
+        this.handleStoreChange = this.handleStoreChange.bind(this)
+        this.pageLoad = this.pageLoad.bind(this)
+        this.state = {
+            page: {
+                loaded: false
+            }
+        }
     }
-
-    pageLoad() {
+    handleStoreChange() {
+        const pageFromRedux = this.context.store.getState().page
+        if (JSON.stringify(this.state.pageFromRedux) !== JSON.stringify(pageFromRedux)) {
+            this.setState({ page: pageFromRedux })
+        }
+    }
+    pageLoad(resolve, reject) {
         setTimeout(() => {
             resolve({
                 username: "trajano",
@@ -40,6 +53,7 @@ export default class UserSettings extends React.Component {
         this.context.store.dispatch({
             type: 'PAGE_CLEAR'
         })
+        this.unsubscribeStore = this.context.store.subscribe(this.handleStoreChange)
         this.pageLoadPromise = new Promise(this.pageLoad)
         this.pageLoadPromise.then((data) => {
             this.context.store.dispatch({
@@ -51,8 +65,13 @@ export default class UserSettings extends React.Component {
             type: 'PAGE_CLEAR'
         })
     }
+    componentWillUnmount() {
+        this.unsubscribeStore()
+    }
     render() {
-
+        if (!this.state.page.loaded) {
+            return <Loader />
+        }
         return (
             <div className="container-fluid">
                 <div className="row">
