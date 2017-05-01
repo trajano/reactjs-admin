@@ -37,7 +37,6 @@ export default class UserSettings extends React.PureComponent {
     handleStoreChange() {
         const pageFromRedux = this.context.store.getState().page
         if (JSON.stringify(this.state.page) !== JSON.stringify(pageFromRedux)) {
-            console.log("about to set state", pageFromRedux)
             this.setState({ page: pageFromRedux })
         }
     }
@@ -68,7 +67,6 @@ export default class UserSettings extends React.PureComponent {
     }
     componentWillUnmount() {
         this.unsubscribeStore()
-        console.log("Will unmount page")
     }
     render() {
         if (!this.state.page.loaded) {

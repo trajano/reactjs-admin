@@ -79,6 +79,7 @@ class Module extends React.PureComponent {
         this.setState({ activePath: this.pathToRoutes[location.pathname] })
 
         this.unlistenHistory = this.history.listen((location, action) => {
+            //console.log(location, action)
             if (action === "PUSH") {
                 if (this.state.smallDeviceNavigation) {
                     this.setState({ sideNavVisible: false })
@@ -97,6 +98,7 @@ class Module extends React.PureComponent {
     }
 
     componentWillUnmount() {
+        console.log("componentWillUnmount Module")
         this.unlistenHistory()
         this.unsubscribeStore()
         window.removeEventListener("orientationchange", this.updateStatesBasedOnWindowSize)
@@ -193,14 +195,6 @@ class Module extends React.PureComponent {
             return <Loader />
         }
 
-        let modalComponents = []
-        if (this.state.modal) {
-            modalComponents.push(
-                <Modal key="modal" title={this.state.modal.title} dismissModal={this.dismissModal} bodyComponent={this.state.modal.bodyComponent} />
-            )
-            modalComponents.push(
-                <div key="backdrop" className="modal-backdrop fade show"></div>)
-        }
         return <Router history={this.history}>
             <div>
                 <Navbar title={this.props.config.title} smallDeviceNavigation={this.state.smallDeviceNavigation} logo={this.props.config.logo} toggleSideNav={this.toggleSideNav} />
@@ -215,7 +209,10 @@ class Module extends React.PureComponent {
                             showModal={this.showModal} />
                     </div>
                 </div>
-                {modalComponents}
+                <div>
+                    {this.state.modal && <Modal title={this.state.modal.title} dismissModal={this.dismissModal} bodyComponent={this.state.modal.bodyComponent} />}
+                    {this.state.modal && <div className="modal-backdrop fade show"></div>}
+                </div>
             </div>
         </Router>
     }

@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './modal.scss'
 
+/**
+ * While inside a modal, do not change state of any top level components otherwise it will trigger a remount.
+ */
 export default class Modal extends React.Component {
     static propTypes = {
         dismissModal: PropTypes.func.isRequired,
