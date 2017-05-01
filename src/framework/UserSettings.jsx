@@ -94,7 +94,7 @@ export default class UserSettings extends React.Component {
                                         <form role="form">
                                             <div className="form-group">
                                                 <label>Text Input</label>
-                                                <input className="form-control" defaultValue={this.context.store.getState().user.language} />
+                                                <input className="form-control" defaultValue={this.state.page.data.language} />
                                                 <p className="help-block">Example block-level help text here.</p>
                                             </div>
                                             <div className="form-group">
