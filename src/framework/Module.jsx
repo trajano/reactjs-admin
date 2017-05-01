@@ -33,7 +33,7 @@ class Module extends React.Component {
         this.toggleSideNav = this.toggleSideNav.bind(this)
         this.updateStatesBasedOnWindowSize = this.updateStatesBasedOnWindowSize.bind(this)
         this.handleClickOutsideSideNav = this.handleClickOutsideSideNav.bind(this)
-        this.handleUserLanguageChange = this.handleUserLanguageChange.bind(this)
+        this.handleStoreChange = this.handleStoreChange.bind(this)
         this.showModal = this.showModal.bind(this)
         this.dismissModal = this.dismissModal.bind(this)
         this.state = {
@@ -49,10 +49,14 @@ class Module extends React.Component {
         })
     }
 
-    handleUserLanguageChange() {
-        const currentLanguage = this.context.store.getState().user.language
+    handleStoreChange() {
+        const userFromRedux = this.context.store.getState().user
+        const currentLanguage = userFromRedux.language
         if (this.context.i18n.language != currentLanguage) {
             this.context.i18n.changeLanguage(currentLanguage)
+        }
+        if (JSON.stringify(this.state.user) !== JSON.stringify(userFromRedux)) {
+            this.setState({ user: userFromRedux })
         }
     }
 
@@ -67,14 +71,13 @@ class Module extends React.Component {
                 username: user.username,
                 language: user.language
             })
-            this.setState({ user })
         }, (rejectUrl) => {
             // when rejecting the expectation is the URL will be the reject object and will redirect to it.
             window.location.href = rejectUrl
         })
+        this.unsubscribeStore = this.context.store.subscribe(this.handleStoreChange)
         this.setState({ activePath: this.pathToRoutes[location.pathname] })
 
-        this.unlistenStore = this.context.store.subscribe(this.handleUserLanguageChange)
         this.unlistenHistory = this.history.listen((location, action) => {
             if (action === "PUSH") {
                 if (this.state.smallDeviceNavigation) {
@@ -95,7 +98,7 @@ class Module extends React.Component {
 
     componentWillUnmount() {
         this.unlistenHistory()
-        this.unlistenStore()
+        this.unsubscribeStore()
         window.removeEventListener("orientationchange", this.updateStatesBasedOnWindowSize)
         window.removeEventListener("resize", this.updateStatesBasedOnWindowSize)
     }
@@ -186,7 +189,7 @@ class Module extends React.Component {
     }
 
     render() {
-        if (!this.context.store.getState().user.loggedIn) {
+        if (!this.state.user) {
             return <Loader />
         }
 
