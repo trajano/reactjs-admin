@@ -35,34 +35,32 @@ export default class UserSettings extends React.PureComponent {
                 loaded: false
             }
         }
+
+        // TODO make this configurable.
+        this.pageLoadExecutor = function (resolve, reject) {
+            fakeServer.get().then(result => { resolve(result.user) })
+        }
+
     }
     handleStoreChange() {
         const pageFromRedux = this.context.store.getState().page
-        if (JSON.stringify(this.state.page) !== JSON.stringify(pageFromRedux)) {
-            this.setState({ page: pageFromRedux })
+        if (!pageFromRedux.loaded) {
+            new Promise(this.pageLoadExecutor).then((data) => {
+                this.context.store.dispatch({
+                    type: 'PAGE_LOAD',
+                    data
+                })
+            })
+        } else {
+            if (JSON.stringify(this.state.page) !== JSON.stringify(pageFromRedux)) {
+                this.setState({ page: pageFromRedux })
+            }
         }
     }
-    pageLoad(resolve, reject) {
-        setTimeout(() => {
-            resolve({
-                username: "trajano",
-                firstName: "Archimedes",
-                language: this.context.store.getState().user.language
-            })
-        }, 500)
-    }
     componentDidMount() {
-        this.context.store.dispatch({
-            type: 'PAGE_CLEAR'
-        })
         this.unsubscribeStore = this.context.store.subscribe(this.handleStoreChange)
-        // TODO make this configurable.
-        this.pageLoadPromise = fakeServer.get().then((result) => { return result.user })
-        this.pageLoadPromise.then((data) => {
-            this.context.store.dispatch({
-                type: 'PAGE_LOAD',
-                data
-            })
+        this.context.store.dispatch({
+            type: 'PAGE_RELOAD'
         })
     }
     componentWillUnmount() {

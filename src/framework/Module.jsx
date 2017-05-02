@@ -64,7 +64,7 @@ class Module extends React.PureComponent {
      */
     componentDidMount() {
         this.updateStatesBasedOnWindowSize()
-        this.props.config.loadUserProfilePromise.then((user) => {
+        new Promise(this.props.config.loadUserProfileExecutor).then((user) => {
             this.context.store.dispatch({
                 type: 'UPDATE_USER_INFO',
                 username: user.username,

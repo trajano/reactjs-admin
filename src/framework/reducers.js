@@ -20,7 +20,7 @@ const user = (state = {}, action) => {
 }
 const page = (state = {}, action) => {
     switch (action.type) {
-        case 'PAGE_CLEAR':
+        case 'PAGE_RELOAD':
             return {
                 loaded: false
             }

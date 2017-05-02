@@ -36,7 +36,11 @@ const moduleConfig = {
             return ""
         }
     },
-    loadUserProfilePromise: fakeServer.get(),
+    loadUserProfileExecutor: function (resolve, reject) {
+        fakeServer.get().then(data => {
+            resolve(data.user)
+        })
+    },
     notFoundComponent: FourOhFour,
     messagesComponent: MyMessages,
     tasksComponent: MyTasks,
