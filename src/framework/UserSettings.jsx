@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Loader from './Loader'
 // TODO remove this later
+import { translate } from 'react-i18next';
 import fakeServer from '../fake-server'
 
 let modalBody = <form>Show application in this language
@@ -19,7 +20,7 @@ let modalBody = <form>Show application in this language
     </div>
 </form>
 
-export default class UserSettings extends React.PureComponent {
+class UserSettings extends React.PureComponent {
     static propTypes = {
         showModal: PropTypes.func.isRequired
     }
@@ -96,7 +97,7 @@ export default class UserSettings extends React.PureComponent {
                                                 <p className="help-block">Example block-level help text here.</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>{this.context.i18n.t('appName')}</label>
+                                                <label>{this.props.t('appName')}</label>
                                                 <input className="form-control" placeholder="Enter text" />
                                                 <button className="btn" onClick={(event) => { event.preventDefault(); this.context.store.dispatch({ type: 'UPDATE_USER_LANGUAGE', language: 'fr' }) }}>Change to fr</button>
                                                 <button className="btn" onClick={(event) => { event.preventDefault(); fakeServer.set("user.language", 'fr') }}>Change to fr on server</button>
@@ -275,3 +276,4 @@ export default class UserSettings extends React.PureComponent {
         )
     }
 }
+export default translate()(UserSettings)
