@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import Loader from './Loader'
+// TODO remove this later
+import fakeServer from '../fake-server'
+
 let modalBody = <form>Show application in this language
     <div className="custom-controls-stacked" >
         <label className="custom-control custom-radio">
@@ -22,12 +24,12 @@ export default class UserSettings extends React.PureComponent {
         showModal: PropTypes.func.isRequired
     }
     static contextTypes = {
-        store: PropTypes.object
+        store: PropTypes.object,
+        i18n: PropTypes.object
     }
     constructor(props) {
         super(props)
         this.handleStoreChange = this.handleStoreChange.bind(this)
-        this.pageLoad = this.pageLoad.bind(this)
         this.state = {
             page: {
                 loaded: false
@@ -54,7 +56,8 @@ export default class UserSettings extends React.PureComponent {
             type: 'PAGE_CLEAR'
         })
         this.unsubscribeStore = this.context.store.subscribe(this.handleStoreChange)
-        this.pageLoadPromise = new Promise(this.pageLoad)
+        // TODO make this configurable.
+        this.pageLoadPromise = fakeServer.get().then((result) => { return result.user })
         this.pageLoadPromise.then((data) => {
             this.context.store.dispatch({
                 type: 'PAGE_LOAD',
@@ -98,7 +101,7 @@ export default class UserSettings extends React.PureComponent {
                                                 <p className="help-block">Example block-level help text here.</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Text Input with Placeholder</label>
+                                                <label>{this.context.i18n.t('appName')}</label>
                                                 <input className="form-control" placeholder="Enter text" />
                                             </div>
                                             <div className="form-group">

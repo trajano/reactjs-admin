@@ -42,7 +42,6 @@ class Module extends React.PureComponent {
             sideNavVisible: true
         }
 
-        this.loadUserProfilePromise = new Promise(this.props.config.loadUserProfileExecutor)
         this.pathToRoutes = this.determinePathToRoutesFromContent(this.props.config.content, [])
         this.history = createBrowserHistory({
             basename: ((typeof this.props.config.basename === "function") ? this.props.config.basename() : this.props.config.basename) || ""
@@ -65,7 +64,7 @@ class Module extends React.PureComponent {
      */
     componentDidMount() {
         this.updateStatesBasedOnWindowSize()
-        this.loadUserProfilePromise.then((user) => {
+        this.props.config.loadUserProfilePromise.then((user) => {
             this.context.store.dispatch({
                 type: 'UPDATE_USER_INFO',
                 username: user.username,

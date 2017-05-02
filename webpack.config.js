@@ -73,6 +73,7 @@ module.exports = {
                 html5: true
             }
         }),
+        new CopyWebpackPlugin([{ from: './src/framework/locales', to: 'locales' }]),
         new FaviconsWebpackPlugin('./src/myapp/logo-2048x2048.png'),
     ],
     devtool: 'source-map',

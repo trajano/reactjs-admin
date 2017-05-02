@@ -14,7 +14,17 @@ import FourOhFour from './myapp/FourOhFour'
 import WritingAPage from './myapp/WritingAPage'
 import logo from './myapp/logo-2048x2048.png'
 
+import fakeServer from './fake-server'
+
 import './myapp/app.css'
+
+fakeServer.init({
+    user: {
+        username: 'trajano',
+        language: 'en'
+    }
+})
+
 /** @type {ModuleConfig} */
 const moduleConfig = {
     title: "Sample Module",
@@ -26,15 +36,7 @@ const moduleConfig = {
             return ""
         }
     },
-    loadUserProfileExecutor: (resolve, reject) => {
-        setTimeout(() => {
-            resolve({
-                username: "trajano",
-                language: "en"
-            })
-        }, 500)
-        // callback function to retrieve the user profile.  The user profile callback will return either a userprofile object or a URL to redirect to.
-    },
+    loadUserProfilePromise: fakeServer.get(),
     notFoundComponent: FourOhFour,
     messagesComponent: MyMessages,
     tasksComponent: MyTasks,
@@ -101,7 +103,7 @@ const moduleConfig = {
                             component: ThirdLevelItem,
                         },
                         {
-                            label: 'User Settings', 
+                            label: 'User Settings',
                             to: '/settings'
                         }
                     ]
