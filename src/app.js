@@ -26,6 +26,7 @@ fakeServer.init({
 })
 
 /** @type {ModuleConfig} */
+// TODO Make this a class eventually
 const moduleConfig = {
     title: "Sample Module",
     logo,
@@ -139,3 +140,6 @@ const moduleConfig = {
     ]
 }
 bootstrap(moduleConfig)
+
+
+// TODO b = new ModuleConfig(); bootstrap(b)
