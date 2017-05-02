@@ -64,9 +64,6 @@ export default class UserSettings extends React.PureComponent {
                 data
             })
         })
-        this.context.store.dispatch({
-            type: 'PAGE_CLEAR'
-        })
     }
     componentWillUnmount() {
         this.unsubscribeStore()
@@ -103,10 +100,14 @@ export default class UserSettings extends React.PureComponent {
                                             <div className="form-group">
                                                 <label>{this.context.i18n.t('appName')}</label>
                                                 <input className="form-control" placeholder="Enter text" />
+                                                <button className="btn" onClick={(event) => { event.preventDefault(); this.context.store.dispatch({ type: 'UPDATE_USER_LANGUAGE', language: 'fr' }) }}>Change to fr</button>
+                                                <button className="btn" onClick={(event) => { event.preventDefault(); fakeServer.set("user.language", 'fr') }}>Change to fr on server</button>
                                             </div>
                                             <div className="form-group">
                                                 <label>Static Control</label>
-                                                <p className="form-control-static">email@example.com</p>
+                                                <p className="form-control-static">{this.context.i18n.language}</p>
+                                                <button className="btn" onClick={(event) => { event.preventDefault(); this.context.store.dispatch({ type: 'UPDATE_USER_LANGUAGE', language: 'en' }) }}>Change to en</button>
+                                                <button className="btn" onClick={(event) => { event.preventDefault(); fakeServer.set("user.language", 'en') }}>Change to en on server</button>
                                             </div>
                                             <div className="form-group">
                                                 <label>File input</label>
@@ -115,6 +116,7 @@ export default class UserSettings extends React.PureComponent {
                                             <div className="form-group">
                                                 <label>Text area</label>
                                                 <textarea className="form-control" rows="3"></textarea>
+                                                <pre>{JSON.stringify(this.context.store.getState())}</pre>
                                             </div>
                                             <div className="form-group">
                                                 <label>Checkboxes</label>

@@ -13,7 +13,18 @@ export class FakeServer {
     get() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
+                console.log("retrieved data")
                 resolve(this.data)
+            }, this.delayInMillis)
+        })
+    }
+    /**
+     * Returns a promise to get the data that was inputted.
+     */
+    getJson(json) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(json)
             }, this.delayInMillis)
         })
     }
@@ -37,6 +48,7 @@ export class FakeServer {
                 } else {
                     this.data = newData;
                 }
+                console.log("setServer", this.data)
                 resolve(this.data)
             }, this.delayInMillis)
         })

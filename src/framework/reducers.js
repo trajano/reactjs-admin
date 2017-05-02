@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+// TODO change strings to Symbols
 const user = (state = {}, action) => {
     switch (action.type) {
         case 'UPDATE_USER_INFO':
@@ -7,6 +8,11 @@ const user = (state = {}, action) => {
                 username: action.username,
                 language: action.language,
                 loggedIn: true
+            }
+        case 'UPDATE_USER_LANGUAGE':
+            return {
+                ...state,
+                language: action.language
             }
         default:
             return state
