@@ -3,9 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-    Router
-} from 'react-router-dom'
+import Router from 'react-router-dom/Router'
 import createBrowserHistory from 'history/createBrowserHistory'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 

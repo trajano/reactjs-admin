@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from './Icon'
 import SlideAnimation from 'react-slide-animation'
-import {
-    Link,
-    NavLink
-} from 'react-router-dom'
+import Link from 'react-router-dom/Link'
+import NavLink from 'react-router-dom/NavLink'
 import onClickOutside from 'react-onclickoutside'
 
 /**

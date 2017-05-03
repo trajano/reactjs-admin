@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-    Link,
-    withRouter
-} from 'react-router-dom'
+import Link from 'react-router-dom/Link'
+import withRouter from 'react-router-dom/withRouter'
 import onClickOutside from 'react-onclickoutside'
 
 import SlideAnimation from 'react-slide-animation'

@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-    Route,
-    Switch
-} from 'react-router-dom'
+import Route from 'react-router-dom/Route'
+import Switch from 'react-router-dom/Switch'
 import UserSettings from './UserSettings'
 
 /**

@@ -65,6 +65,7 @@ class UserSettings extends React.PureComponent {
         })
     }
     componentWillUnmount() {
+        console.log("componentWillUnmount")
         this.unsubscribeStore()
     }
     render() {
