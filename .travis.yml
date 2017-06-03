@@ -4,6 +4,7 @@ jdk:
 - oraclejdk8
 node_js: node
 cache:
+  yarn: true
   directories:
   - "$HOME/.sonar/cache"
   - node_modules
@@ -17,11 +18,12 @@ branches:
   - master
 env:
   global:
-  - secure: GtSzc3G9INcQwfN/ta2Go2wVFApQpAsH3rLZeWmgrMVL/Hp/yLEwgz17aPaThNM7F57A9om8C6SUjKoPWdSLZuTPtp/whpvmnyubQhkposAtcKnMyC8z/0Bh6tYjTUWOnHHVzXgw55oIb7lh/prtMKNT2GyW6FCNpPkBuawVonfjJxu1CqWS1ugDcKSzu9BvoA41NaHVPvFYmdF082urR99gUl1FPH4KmwLqrwMD4csCNKvVW/X5RffeYL9+yX2EoM/GOk1w0TwOiWOE7tgoetomgw64jQ6yhXdT6I6EqOBI60Am72tZ+Mrfzm+Y7SHZbgQupxYYiSF9FTDCZ/Q74TMsDZ1cyC0969/yltmEIvY2kGNAO3+lDhWHiErXT0149CcJ5CLIXZa8g270o1MySBrG+TKfyfYW8Ws0+5VBZ/T1oW0oDrYTxEVwvgYMGwipbsfUTjwoqpzm6r6mBuz75dZtL5LeaxKLuiTi6PZdzoDkna3nZB70305E5pxdZ21KR7CpdZW+sxbuaXDYlXf0rI23S+8/4ncJdsYlpme1IYKx0CVi8foIGoOb02Zaz74oL0/ezSdrMt6HpR1whgZ9hD9QHCCCkbv83W/0jXdeegaKoOB6E4Xfi6bfDkuH7RgJB0AAU3sDPqVYN25qHvqHtBQXSW1jyLNqqoFQaSV/zdM=
+  - secure: dE4ZMTvk1BfgGJr4TOWGSZnD0QAZMkMNEvCuP9ws/fMlrPSvuWzDTtBd2rfAlcX3DC/O7oRNlr3DdQO4aYr6e1nKUJHuDDJ/Q5QL041VIE1N2UswG7RcXDKmah/FWSOqog31yryj/X103Pqr0ydluKpEK72U5lx9Vt3usnkamvV7I001E35MXbhr0VYTd93YK3moOzuKI3hQvElzRmDPhUKZm/8r5KVZieN9HOwoozBmeIvH4kNZpIDGUnunHgits3ySneelaun3A3Dhee0eP/Y9efVduc9hn1OzVdos7RvOqgVS45FCaa9egpC/jDxr/Q08/bYRrt9CU4VfbXi0VmGmD4Mi/D85r42bxX7/K1xMVU8X83kphRi26gPjTG+P0e3zyj0nRzVrd2q+s+woi2TmVNwLnGs4qFU6U8WeIQbIcv6ZRbZT8R9HTUMdnZD5QLTTPaTwBbhZM53OvoF+b89yvtpO4Z8vN6bqnw+8cnapvQ2afmH1qHEJfTLLI8GmK9iUnBGlzs0FlCwa5ccPfTKahlhR/YrQ4t82hNdPWHI5gNzn91EDetI2aKVtWHVRuOP3kIY/exJKTNZSAWPX0q4YP/fCReI6W1JVkP5JYB5SwVtd0a/9eGwDnHR8MMKaljVNccjLt8P9eGJpDePqEqyQldQaxROeqiRqqOD8LnQ=
 before_install:
 - nvm install node
+- npm install --global yarn
 install:
-- npm install
+- yarn
 script:
 - sonar-scanner
 - cp dist/index.html dist/404.html
